@@ -1,0 +1,31 @@
+<div class="">
+    <h2 class="mb-3"> {{(isUpdate) ? "Update":"Add"}} Category</h2>
+    <form action="" (ngSubmit)="OnFormSubmit()" method="post">
+        <div class="row">
+            <div class="col-4 mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="" name="name"
+                 [(ngModel)]="categoryObj.name">
+              </div>
+              <div class="col-6 mb-3">
+                <label for="desc" class="form-label">Description</label>
+                <textarea class="form-control" id="desc" placeholder="" name="desc"
+                 [(ngModel)]="categoryObj.description" ></textarea>
+              </div>
+              <div class="col-4 mb-3">
+                <label for="picture" class="form-label">Picture</label>
+                <input type="file" class="form-control" id="picture" placeholder="" name="picture"
+                 [(ngModel)]="categoryObj.picture" (change)="UploadPicture($event)">
+              </div>
+              <div *ngIf="categoryObj.picture">
+                  <img [src]="categoryObj.picture" alt="">
+              </div>
+
+              <div class="col-12 text-center mt-3">
+                <button class="theme-btn">Save</button>
+              </div>
+
+        </div>
+    </form>
+
+</div>

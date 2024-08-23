@@ -1,0 +1,66 @@
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-2">
+            <h2 class="mb-3">Products</h2>
+        </div>
+        <div class="col-6">
+            <input type="text" [(ngModel)]="searchValue" (change)="SearchProduct()" placeholder="Search" class="form-control">
+        </div>
+        <div class="col-2">
+            <button [routerLink]="['/product',0]" class="btn btn-success">Add</button>
+        </div>
+    </div>
+
+
+
+    <div class="d-flex mb-3">
+      <div class="">
+        Filter  
+      </div>
+      <div class="mx-3">
+        <select [(ngModel)]="category" name="" class="form-control" id="" (change)="GetFilteredProducts()">
+            <option value="{{item._id}}" *ngFor="let item of categoryList">{{item.name}} </option>
+        </select>
+      </div>
+      <div class="">
+       <button (click)="ClearCategory()"> Reset</button>
+      </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category </th>
+            <th scope="col">Price </th>
+            <th scope="col">Description </th>
+            <th scope="col">Actions </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let product of productList;let i=index;">
+          <th scope="row">{{i+1}}</th>
+          <td>
+            <img src="{{product.coverImage.image}}" *ngIf="product.coverImage.image!=null" alt="">
+            {{product.name}}</td>
+            <td>{{product.category.name}}</td>
+          <td>${{product.price}}</td>
+          <td>{{product.description}}</td>
+          
+          <td>
+            <a class="edit-btn" [routerLink]="['/product', product._id]"><i class="las la-pen"></i></a>
+            <a class="del-btn" (click)="DeleteProduct(product._id)"><i class="las la-trash"></i></a>
+           </td>
+        </tr>
+    
+        </tbody>
+      </table>
+      <div class="text-center">
+        <mat-paginator [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+    </mat-paginator>
+      </div>
+</div>

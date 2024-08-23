@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles with default layout.
+@import "@coreui/coreui/scss/coreui";
+
+// Import Chart.js custom tooltips styles
+@import "@coreui/chartjs/scss/coreui-chartjs";
+
+// Custom styles for this theme
+@import "theme";
+
+// Some temp fixes
+//@import "fixes";
+
+// If you want to add custom CSS you can put it here.
+@import "custom";
+
+// Examples
+// We use those styles to show code examples, you should remove them in your application.
+@import "examples";
+
+
+.theme-btn{
+    width:150px;
+    border:0;
+    background:rgb(132, 247, 132);
+    color:white;
+    padding:5px 15px;
+    border-radius: 20px;
+}
+
+
+.edit-btn{
+    background:rgb(65, 251, 65);
+    color:white;
+    padding:7px;
+    width:70px;
+    border-radius: 50%;
+    height: 60px;
+    margin-right:10px;  
+    i{
+        font-size: 22px;
+        padding-top:2px;
+    }
+}
+
+.del-btn{
+    background:rgb(251, 65, 65);
+    color:white;
+    padding:5px;
+    width:70px;
+    border-radius: 50%;
+    height: 60px;
+    margin-right:10px;  
+    i{
+        font-size: 22px;
+        padding-top:2px;
+    }
+}

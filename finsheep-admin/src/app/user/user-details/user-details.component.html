@@ -1,0 +1,79 @@
+<div class="">
+    <h2 class="mb-3"> {{(isUpdate) ? "Update":"Add"}} User</h2>
+    <form action="" (ngSubmit)="OnFormSubmit()">
+        <div class="row">
+            <div class="col-4 mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="" name="name"
+                 [(ngModel)]="userDetailsObj.name">
+              </div>
+              <div class="col-4 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="" name="email"
+                 [(ngModel)]="userDetailsObj.email">
+              </div>
+              <!-- <div class="col-4 mb-3">
+                <label for="phone" class="form-label">Mobile</label>
+                <input type="tel" class="form-control" id="phone" placeholder="" name="phone"
+                 [(ngModel)]="userDetailsObj.phone">
+              </div> -->
+              <div class="col-4 mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="" name="password"
+                 [(ngModel)]="userDetailsObj.password">
+              </div>
+              <div class="col-4 mb-3">
+                <label for="mobile" class="form-label">Mobile</label>
+                <input type="text" class="form-control"  placeholder="" name="mobile"
+                 [(ngModel)]="userDetailsObj.mobile">
+              </div>
+              <div class="col-4 mb-3">
+                <label for="role" class="form-label">Role</label>
+                <select class="form-control" name="role" [(ngModel)]="userDetailsObj.role" id="">
+                  <option value="">Select role</option>
+                  <option value="0">Admin</option>
+                  <option value="1">SuperAdmin</option>
+                  <option value="2">Client</option>
+                </select> 
+              </div>
+              <div class="col-4 mb-3">
+                <label for="picture" class="form-label">Picture</label>
+                <input type="file" class="form-control" id="picture" placeholder="" name="picture"
+                 [(ngModel)]="userDetailsObj.picture" (change)="UploadPicture($event)">
+              </div>
+
+              <div *ngIf="userDetailsObj?.address?.length>0">
+
+              </div>
+              
+              <div class="col-12 mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea type="text" class="form-control"  placeholder="123 Main Street, City, State, Zip Code" name="address"
+                 [(ngModel)]="userDetailsObj.address"></textarea>
+              </div>
+              <!-- <div class="col-4 mb-3">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control"  placeholder="" name="state"
+                 [(ngModel)]="address.state">
+              </div>
+              <div class="col-4 mb-3">
+                <label for="City" class="form-label">City</label>
+                <input type="text" class="form-control"  placeholder="" name="City"
+                 [(ngModel)]="address.city">
+              </div>
+
+              <div class="col-4 mb-3">
+                <label for="zip" class="form-label">Zip Code</label>
+                <input type="text" class="form-control"  placeholder="" name="zip"
+                 [(ngModel)]="address.zipCode">
+              </div> -->
+           
+
+              <div class="col-12 text-center mt-3">
+                <button class="theme-btn">Save</button>
+              </div>
+
+        </div>
+    </form>
+
+</div>

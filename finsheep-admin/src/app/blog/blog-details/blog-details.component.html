@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <h2 class="mb-3"> {{(updateForm) ? "Update":"Add"}} Blog</h2>
+
+  
+    <!-- event body -->
+   <div class="container">
+    <div class="row mt-4">
+        <div class="col-12">
+          <form (ngSubmit)="OnFormSubmit()" enctype="multipart/form-data" method="post">
+            <div class="row">
+              
+              <div class="form-group col-md-6 col-sm-12">
+                <label for="eventName">Title<em>*</em></label>
+                <input type="text" class="form-control" [(ngModel)]="blogDetails.title" name="title" id="title"
+                  required />
+              </div>
+
+              <div class="form-group col-md-6 col-sm-12">
+                <label for="eventName">Author<em>*</em></label>
+                <input type="text" class="form-control" [(ngModel)]="blogDetails.author" name="author" id="author"
+                  required />
+              </div>
+  
+              <div class="form-group col-md-12 col-sm-12 mt-3">
+                <label for="eventName">Description<em>*</em></label>
+             <ckeditor  #description [data]="blogDetails.body" name="body" [ngModel]="blogDetails.body"></ckeditor>
+                <!-- <ckeditor id="description"
+                [editor]="editor"
+                [data]="blogDetails.body"
+                (change)="onEditorChange($event)"
+              ></ckeditor> -->
+              </div>
+         
+             
+              <div class="col-12"></div>
+              <div class="col-12 text-center mt-3">
+                <button type="submit" class="col-md-1 col-6 saveBtn">Save</button>
+              </div>
+            </div>
+    
+          </form>
+        </div>
+      </div>
+   </div>
+  </div>

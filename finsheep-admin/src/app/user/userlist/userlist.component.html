@@ -1,0 +1,52 @@
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-2">
+            <h2 class="mb-3">Users</h2>
+        </div>
+        <div class="col-6">
+            <input  [(ngModel)]="searchValue" (change)="SearchUser()" type="text" placeholder="Search" class="form-control">
+        </div>
+        <div class="col-2">
+            <button [routerLink]="['/user',0]" class="btn btn-success">Add</button>
+        </div>
+    </div>
+
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Role </th>
+            <th scope="col">Email </th>
+            <th scope="col">Mobile </th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of userList;let i=index;">
+          <th scope="row">{{i+1}}</th>
+          <td>{{item.name}}</td>
+          <td *ngIf="item.role==0"><span>Admin</span></td>
+          <td *ngIf="item.role==1"><span>SuperAdmin</span></td>
+          <td *ngIf="item.role==2"><span>Client</span></td>
+          <td>{{item.email}}</td>
+          <td>{{item.mobile}}</td>
+          <td>
+           <a class="edit-btn" [routerLink]="['/user', item._id]"><i class="las la-pen"></i></a>
+           <a class="del-btn" (click)="DeleteUser(item._id)"><i class="las la-trash"></i></a>
+          </td>
+        </tr>
+    
+        </tbody>
+      </table>
+      <div class="text-center">
+        <!-- <mat-paginator [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+    </mat-paginator> -->
+      </div>
+</div>
