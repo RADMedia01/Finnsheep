@@ -10,14 +10,16 @@ export function CalculateOrderTotalPrice(order:any){
     },0)
     order.deliveryCharges=(order.subTotal>150) ? 0: 4;
     order.total=order.subTotal+order.deliveryCharges;
+
+    //write freezer box logic depending on volume of product and box
     return order.total;
 }
 
 let CreateOrder=async (req:Request, res:Response) => {
     //calculate total cost of order
-    CalculateOrderTotalPrice(req.body)
+    let total=CalculateOrderTotalPrice(req.body)
     const options = {
-      amount: req.body.total * 100, // convert amount to paise
+      amount: total * 100, // convert amount to paise
       currency: req.body.currency, // convert currency to paise
       receipt: `order_`, //append order id
       payment_capture: 1,
@@ -44,11 +46,6 @@ let CreateOrder=async (req:Request, res:Response) => {
          //redirect to newpayment/orderId
          res.redirect(`${baseUrl}payment/new/${createdOrder.id}`)
 
-        // return res.json({
-        //     order_id: createdOrder.id,
-        //     currency: createdOrder.currency,
-        //     amount: createdOrder.amount,
-        //   });
       }
       else{
         return res.status(400).json({

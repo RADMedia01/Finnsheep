@@ -72,12 +72,14 @@ let NewPayment=async(req: Request,res: Response) =>{
                     paymentId:payment.id,
                     amount:order.amount,                    
                 })
-
+                res.redirect(payment.url)
                 //redirect user to payment gateway
                 //const paymentUrl = `${razorPayGatewayUrl}${paymentObj.id}`;
                 //res.redirect(paymentUrl);
 
         }
+
+        
         
     } catch (error:any) {
         return res.status(500).json({
@@ -102,14 +104,10 @@ let VerifyPayment=async(req: Request,res: Response)=>{
                  //update payment and transaction status
                  let paymentObj=await Payment.findById(paymentId)
                  if(paymentObj) paymentObj.paymentStatus=PaymentStatus.Success
-                 await paymentObj.save()
-
-
+                 
                  let transactionObj=await Transaction.findOne({paymentId:paymentId})
                  if(transactionObj) transactionObj.status=TransactionStatus.Initiated
-                 await transactionObj.save() 
-
-
+                
                 //update order status to paid, payment and transaction status to successful 
                 let orderObj=await Order.findById(orderId)
                 if(orderObj){
@@ -118,8 +116,8 @@ let VerifyPayment=async(req: Request,res: Response)=>{
                     orderObj.status=OrderStatus.OrderReceived;
                     orderObj.isPaid=true;
                 }
-                await orderObj.save()
-
+                
+               let saveData= Promise.all([await paymentObj.save(), await transactionObj.save(),await orderObj.save()])
 
                 return res.status(200).json({
                     success:true,
@@ -131,11 +129,9 @@ let VerifyPayment=async(req: Request,res: Response)=>{
                 //update payment and transaction status
                 let paymentObj=await Payment.findById(paymentId)
                 if(paymentObj) paymentObj.paymentStatus=PaymentStatus.Failed
-                await paymentObj.save()
 
                 let transactionObj=await Transaction.findOne({paymentId:paymentId})
                 if(transactionObj) transactionObj.status=TransactionStatus.Failed
-                await transactionObj.save() 
 
                 //update order 
                 let orderObj=await Order.findById(orderId)
@@ -144,10 +140,10 @@ let VerifyPayment=async(req: Request,res: Response)=>{
                     orderObj.status=OrderStatus.Pending;
                     orderObj.isPaid=false;
                 }
-                await orderObj.save()
+                let saveData= Promise.all([await paymentObj.save(), await transactionObj.save(),await orderObj.save()])
 
 
-                return res.status(400).json({
+                res.status(500).json({
                     success:false,
                     message:"Payment failed "
                 })
