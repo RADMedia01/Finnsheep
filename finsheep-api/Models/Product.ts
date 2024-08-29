@@ -7,7 +7,6 @@ const ProductSchema= new mongoose.Schema({
     description:{type:Joi.string(),required: true,},
     price:{type:Joi.number(),default:0,required: true,},
     category:{type:mongoose.Schema.Types.ObjectId,ref:'Category',required: true,},
-    quantity:{type:Joi.number(),default:1,},
     stock:{type:Number,required: true},
     material:{type:Joi.string(),required: true,},
     isTrending:{type:Boolean,default:false},

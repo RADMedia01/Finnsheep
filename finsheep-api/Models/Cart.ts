@@ -7,7 +7,6 @@ const mongoose=require('mongoose');
 export const ProductItemSchema=new mongoose.Schema({
     productId:{type:mongoose.Schema.Types.ObjectId,ref:`Product`},
     qty:{type:Number,default:1},
-    price:{type:Number},
 })
   
 
@@ -19,7 +18,6 @@ const CartSchema=new mongoose.Schema({
           type:Number,
           default:1
         },
-        price:{type:Number},
     }],    
     totalPrice:{type:Number},
     createdOn:{

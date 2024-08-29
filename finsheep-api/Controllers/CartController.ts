@@ -177,12 +177,32 @@ let GetUserCartData=async(req:Request, res:Response)=>{
     }
 }
 
+//remove cart items after placing successful order from user
+// let RemoveCart=async(req:Request, res:Response)=>{
+//     const {id}=req.params;
+//     try {
+        
+//     } catch (err:any) {
+        
+//     }
+// }
+
+let ClearUserCart=async(userId:string)=>{
+    let userCart=await Cart.findOne({userId:userId})
+    if(userCart){
+        let removeCart=await Cart.deleteOne({userId:userId})
+    }
+}
+
+
+
 
 export {
     AddProductToCart,
     RemoveProductFromCart,
     UpdateProductQuantity,
-    GetUserCartData
+    GetUserCartData,
+    ClearUserCart
 }
 
 

@@ -1,4 +1,4 @@
-import { ItemSize } from './../Models/ItemSize';
+import { ProductsVariation } from './../Models/ProductsVariation';
 
 import { Request,Response,NextFunction } from "express";
 
@@ -9,7 +9,7 @@ let AddUpdateItemSize=async(req:Request, res:Response)=>{
         if(req.body._id){
             isUpdate=true;
             //update
-            let sizeObj=await ItemSize.findByIdAndUpdate(req.body._id,
+            let sizeObj=await ProductsVariation.findByIdAndUpdate(req.body._id,
                 { $set: {
                     ...req.body,
                     modifiedOn:Date.now()
@@ -18,7 +18,7 @@ let AddUpdateItemSize=async(req:Request, res:Response)=>{
         }
         else{
             //add 
-            let model=await ItemSize.create({
+            let model=await ProductsVariation.create({
                 size:req.body.size,
                 price:req.body.price,
                 product:req.body.product,
@@ -40,7 +40,7 @@ let AddUpdateItemSize=async(req:Request, res:Response)=>{
 
 let ItemSizeList=async(req:Request, res:Response)=>{
     try {
-        let sizes=await ItemSize.find({}).populate('product')
+        let sizes=await ProductsVariation.find({}).populate('product')
         if(!sizes){
             return res.status(404).json({
                 success:false,
@@ -67,9 +67,9 @@ let DeleteItemSize=async(req:Request, res:Response)=>{
     const {id}=req.params
     try {
         if(id){
-            let size=await ItemSize.findById(id)
+            let size=await ProductsVariation.findById(id)
             if(size){
-                let removedSize=await ItemSize.deleteOne({_id:id});
+                let removedSize=await ProductsVariation.deleteOne({_id:id});
                 if(removedSize){
                     return res.status(200).json({
                         success:true,
@@ -105,7 +105,7 @@ let ItemSizeDetails=async(req:Request, res:Response)=>{
     const {id}=req.params
     try {
         if(id){
-            let category=await ItemSize.findById(id)
+            let category=await ProductsVariation.findById(id)
             if(category){
                 return res.status(200).json({
                     success:true,

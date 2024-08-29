@@ -6,6 +6,9 @@ import crypto from 'crypto'
 import { Order } from "../Models/Order";
 import { Payment } from "../Models/Payment";
 import { OrderStatus, PaymentStatus, TransactionStatus, baseUrl, razorPayGatewayUrl } from "../Common/Common";
+import { Product } from '../Models/Product';
+import { StockMaster } from '../Models/StockMaster';
+import { ClearUserCart } from './CartController';
 
 
 
@@ -117,6 +120,18 @@ let VerifyPayment=async(req: Request,res: Response)=>{
                     orderObj.isPaid=true;
                 }
                 
+                //update product stock
+                let updateStocksOfProducts =orderObj.items.forEach(async(product:any)=>{
+                        let currentProductStock=await StockMaster.findOne({product:product.productId})
+                        if(currentProductStock){
+                            currentProductStock.quantity-=product.quantity
+                            await currentProductStock.save();
+                        }
+                })
+
+                //clear user cart
+                ClearUserCart(orderObj.userId);
+
                let saveData= Promise.all([await paymentObj.save(), await transactionObj.save(),await orderObj.save()])
 
                 return res.status(200).json({

@@ -21,7 +21,8 @@ export enum PaymentStatus{
     Success=2,
     UnPaid=3,
     Expired=4,
-    Failed=5
+    Failed=5,
+    COD=6
 }
 
 export enum TransactionStatus{
@@ -29,6 +30,37 @@ export enum TransactionStatus{
     Success=1,
     Failed=2
 }
+
+export enum StockStatus{
+    inStock=0,
+    outOfStock=1
+}
+
+export const BoxInfoList:IBoxItem[]=[{
+    type:"Small",
+    length:5,
+    width:5,
+    height:5,
+    price:5,
+    volume:5
+},
+{
+    type:"Medium",
+    length:5,
+    width:5,
+    height:5,
+    price:5,
+    volume:5
+},
+{
+    type:"Large",
+    length:5,
+    width:5,
+    height:5,
+    price:5,
+    volume:5
+}]
+
 
 export const rootDir = process.cwd();
 export const baseUrl = `http://localhost:2000`;
@@ -45,3 +77,17 @@ export const razorPayGatewayUrl="https://api.razorpay.com/v1/checkout/embedded?p
 export const FilePaths = {
     productFilePath: `/uploads/products`,
 };
+
+
+//------------------ box section --------------------------------
+
+
+export interface IBoxItem{
+    type:string,
+    length:number,
+    width:number,
+    height:number,
+    price:number,
+    weight?:number,
+    volume:number
+}
