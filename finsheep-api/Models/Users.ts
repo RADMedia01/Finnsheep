@@ -1,12 +1,12 @@
 const Joi=require('joi');
 const mongoose=require('mongoose');
 
-export const AddressSchema=new mongoose.Schema({
+export const AddressSchema={
   address:{type:String},
   state:{type:String},
   city:{type:String},
   zipCode:{type:String},  
-})
+}
 
 
 const UserSchema = new mongoose.Schema(

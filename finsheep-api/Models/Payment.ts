@@ -1,3 +1,4 @@
+import { string } from "joi";
 import { PaymentStatus } from "../Common/Common";
 
 const Joi=require('joi');
@@ -6,7 +7,7 @@ const mongoose=require('mongoose');
 const PaymentSchema=new mongoose.Schema({
     id:{type:String},
     userId:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
-    orderId:{type:mongoose.Schema.Types.ObjectId,ref:'Order'},
+    orderId:{type:String},
     paymentMethod:{type:Joi.string()},
     paymentStatus:{type:Joi.string(),default:PaymentStatus.Processing},
     amount:{type:Number},

@@ -24,20 +24,20 @@ let CreateOrder=async (req:Request, res:Response) => {
     //calculate total cost of order
 
   //check if each selected product has stock
-    req.body.items.forEach(async(item:any)=>{
-      let productStock=await StockMaster.findOne({product:item.productId})
-      if(productStock){
-        if(productStock.quantity<item.quantity){
-          return res.status(400).json({success:false,message:"Insufficient stock for product "+productStock.name})
-        }
-      } 
-    })
+    // req.body.items.forEach(async(item:any)=>{
+    //   let productStock=await StockMaster.findOne({product:item.productId})
+    //   if(productStock){
+    //     if(productStock.quantity<item.quantity){
+    //       return res.status(400).json({success:false,message:"Insufficient stock for product "+productStock.name})
+    //     }
+    //   } 
+    // })
 
 
 
-    let total=CalculateOrderTotalPrice(req.body)
+    //let total=CalculateOrderTotalPrice(req.body)
     const options = {
-      amount: total * 100, // convert amount to paise
+      amount: req.body.total * 100, // convert amount to paise
       currency: req.body.currency, // convert currency to paise
       receipt: `order_`, //append order id
       payment_capture: 1,
@@ -47,7 +47,9 @@ let CreateOrder=async (req:Request, res:Response) => {
         
          
          //creating a order in razorpay
+      //console.log(options);
       const createdOrder = await razorpayInstance.orders.create(options);
+      //console.log(createdOrder);
       if(createdOrder){         
          //create order object and save in db for info
          let model=await Order.create({
@@ -61,7 +63,10 @@ let CreateOrder=async (req:Request, res:Response) => {
             paymentMethod:req.body.paymentMethod,            
          })
 
-         if(model.paymentMethod!='cash') res.redirect(`${baseUrl}payment/new/${createdOrder.id}`)
+         if(model.paymentMethod!='cash') {
+          console.log(`${baseUrl}/payment/new/${createdOrder.id}`)
+          res.redirect(`/payment/new/${createdOrder.id}`)
+         }
         
           //payment via cash (COD)
           else{
@@ -102,6 +107,7 @@ let CreateOrder=async (req:Request, res:Response) => {
       }
       
     } catch (err:any) {
+      console.log(err.message);
       return res.status(400).json({
         success:false,
         message: err.message

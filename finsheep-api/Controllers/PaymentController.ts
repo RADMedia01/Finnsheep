@@ -18,9 +18,11 @@ let NewPayment=async(req: Request,res: Response) =>{
     const {orderId}=req.params;
     const {paymentMethod,amount,currency}=req.body
     try {
-
+        console.log(orderId)
         //check if order is abandoned or expired
-        let order=await Order.findById(orderId);
+        let order=await Order.findOne({
+            id: orderId
+        });
 
         if(!order) return res.status(404).json({message:"Order not found"})
 
@@ -59,6 +61,7 @@ let NewPayment=async(req: Request,res: Response) =>{
                     paymentMethod:payment.method,
                     amount:order.amount,               
                 })
+                console.log(paymentObj);
 
                 if(payment.method=='card'){
                     paymentObj.card=payment.card
@@ -85,6 +88,7 @@ let NewPayment=async(req: Request,res: Response) =>{
         
         
     } catch (error:any) {
+        console.log(error.message);
         return res.status(500).json({
             success:false,
             message:error.message

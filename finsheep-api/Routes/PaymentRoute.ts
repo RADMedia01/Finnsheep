@@ -5,7 +5,7 @@ import {  NewPayment,
 } from '../Controllers/PaymentController';
 
 
-paymentRouter.post('/new/:id',NewPayment)
+paymentRouter.post('/new/:orderId',NewPayment)
 paymentRouter.post('/verify',VerifyPayment)
 
 export default paymentRouter
