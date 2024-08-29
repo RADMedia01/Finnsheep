@@ -12,8 +12,7 @@ import {
 
 const userRouter = express.Router();
 
-// Route to create or update a user
-//userRouter.put('/upsert', CreateEditUser);
+
 
 // Route for user registration
 userRouter.post('/register', register);
