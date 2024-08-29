@@ -69,34 +69,34 @@ export const login = catchAsync(async (req: Request, res: Response, next: NextFu
 });
 
 // Protect middleware (for authenticated routes)
-// export const protect = catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//   let token: string | undefined;
+export const protect = catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  let token: string | undefined;
 
-//   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-//     token = req.headers.authorization.split(' ')[1];
-//   }
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
 
-//   if (!token) {
-//     return next(new AppError('You are not logged in! Please log in to get access.', 401));
-//   }
+  if (!token) {
+    return next(new AppError('You are not logged in! Please log in to get access.', 401));
+  }
 
-//   const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+  const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
 
-//   const currentUser = await Users.findById(decoded.id);
-//   if (!currentUser) {
-//     return next(new AppError('The user belonging to this token no longer exists.', 401));
-//   }
+  const currentUser = await Users.findById(decoded.id);
+  if (!currentUser) {
+    return next(new AppError('The user belonging to this token no longer exists.', 401));
+  }
 
-//   req.user = currentUser;
-//   next();
-// });
+  req.user = currentUser;
+  next();
+});
 
-// // Middleware to restrict routes to specific roles
-// export const restrictTo = (...roles: number[]) => {
-//   return (req: Request, res: Response, next: NextFunction) => {
-//     if (!req.user || !roles.includes(req.user.role)) {
-//       return next(new AppError('You do not have permission to perform this action', 403));
-//     }
-//     next();
-//   };
-// };
+// Middleware to restrict routes to specific roles
+export const restrictTo = (...roles: number[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      return next(new AppError('You do not have permission to perform this action', 403));
+    }
+    next();
+  };
+};
