@@ -15,11 +15,78 @@ const CartPage = () => {
         // Ensure client-side data is used
         setProducts(cartItems);
       }, [cartItems]);
+      useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = () => {
+          console.log('Razorpay script loaded successfully.');
+        };
+        script.onerror = () => {
+          console.error('Failed to load Razorpay script.');
+        };
+        document.body.appendChild(script);
+    
+        return () => {
+          document.body.removeChild(script);
+        };
+      }, []);
+      const handlePayment = async () => {
+        try {
+          // Fetch order details from your server
+        //   const response = await fetch('/api/create-order', { method: 'POST' });
+        //   const data = await response.json();
+            
+            debugger
+            const options = {
+              key: 'rzp_test_UGSYTrORpbHQTS', // Enter the Key ID generated from the Dashboard
+              amount: 10000, // Amount is in currency subunits
+              currency: 'INR',
+              name: 'Your Business Name',
+              description: 'Test Transaction',
+              image: 'https://example.com/your_logo',
+              order_id: 'order_OrENmORSOYZqxT', // Pass the `id` obtained from the server
+              callback_url: '/api/payment-callback', // Your server-side callback URL
+              prefill: {
+                name: 'Customer Name',
+                email: 'customer@example.com',
+                contact: '+919830822490',
+              },
+              notes: {
+                address: 'Razorpay Corporate Office',
+              },
+              theme: {
+                color: '#3399cc',
+              },
+              handler: function (response) {
+                debugger
+                // Handle successful payment here
+                console.log('Payment ID:', response.razorpay_payment_id);
+                console.log('Order ID:', response.razorpay_order_id);
+                console.log('Signature:', response.razorpay_signature);
+    
+                // Optionally send payment details to your server for verification
+              },
+              modal: {
+                ondismiss: function () {
+                  console.log('Payment modal closed');
+                  debugger
+                },
+              },
+            };
+    
+            const rzp1 = new window.Razorpay(options);
+            rzp1.open();
+        
+        } catch (error) {
+            debugger
+          console.error('Error handling payment:', error);
+        }
+      };
 
 
   return (
     <div className='containe'>
-     
+     <button onClick={handlePayment}>Pay with Razorpay</button>
 
      {products && products.length > 0 ? 
 <div

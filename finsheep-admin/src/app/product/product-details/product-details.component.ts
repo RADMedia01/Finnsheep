@@ -107,7 +107,7 @@ export class ProductDetailsComponent {
       Notiflix.Loading.circle()
       let response= (await this.common.UpsertProduct(this.product)).data
       debugger
-      this.route.navigate(['/product/list'])      
+      //this.route.navigate(['/product/list'])      
       Notiflix.Notify.success(response.message)
       Notiflix.Loading.remove()
     } catch (err:any) {

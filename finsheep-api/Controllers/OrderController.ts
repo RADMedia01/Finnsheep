@@ -61,7 +61,7 @@ let CreateOrder=async (req:Request, res:Response) => {
          if(model.paymentMethod!='cash') {
             return res.status(200).json({success:true,data:createdOrder})
          }
-        
+      
           //payment via cash (COD)
           else{
          //update order status with payment status info 
@@ -84,7 +84,12 @@ let CreateOrder=async (req:Request, res:Response) => {
           //update product stock
           let updateStock=UpdateProductStock(req.body);
           //clear user cart
-          ClearUserCart(req.body.userId);
+
+          //ClearUserCart(req.body.userId);
+          return res.status(200).json({
+            success:true,
+            message:`Order Created with Cash on delivery`
+          })
         }
       }
       else{

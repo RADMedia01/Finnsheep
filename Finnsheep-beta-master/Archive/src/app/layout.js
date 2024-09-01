@@ -9,6 +9,9 @@ import Layout from "./ui/layout/layout";
 import Head from 'next/head';
 import SessionWrapper from "@/components/SessionWrapper";
 
+import RazorpayButton from "@/components/razorpay/razorpay";
+import { Button } from "react-day-picker";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,18 +25,24 @@ export default function RootLayout({ children }) {
     <html lang="en">
        <head>
        <link rel="icon" href="/favicon.ico" sizes="any" />
+       {/* <script src="https://checkout.razorpay.com/v1/checkout.js">
+       </script> */}
       </head>
       
       <body className={inter.classNam}>
+      
       <Layout>
       {/* <SessionWrapper> */}
+      <RazorpayButton>
+        
+        </RazorpayButton>
         {children}
       {/* </SessionWrapper> */}
         </Layout>
       {/* <script src="/menu.js" /> */}
       <Toaster />
         </body>
-        
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     </html>
     
   );
