@@ -8,7 +8,8 @@ import { Payment } from "../Models/Payment";
 import { OrderStatus, PaymentStatus, TransactionStatus, baseUrl, razorPayGatewayUrl } from "../Common/Common";
 import { Product } from '../Models/Product';
 import { StockMaster } from '../Models/StockMaster';
-import { ClearUserCart } from './CartController';
+import { UpdateProductStock } from '../Services/StockService';
+import { ClearUserCart } from '../Services/CartService';
 
 
 
@@ -51,7 +52,7 @@ let NewPayment=async(req: Request,res: Response) =>{
         }
 
         
-        let payment=await razorpayInstance.payments.create(paymentData);
+        let payment=await razorpayInstance.payment.create(paymentData);
         if(payment){
                 //create payment object 
                 let paymentObj=new Payment({
@@ -97,9 +98,9 @@ let NewPayment=async(req: Request,res: Response) =>{
 }
 
 let VerifyPayment=async(req: Request,res: Response)=>{
-    const {order_id,payment_id,signature}=req.body;
-    const orderId=order_id;
-    const paymentId=payment_id;
+    const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body;
+    const orderId=razorpay_order_id;
+    const paymentId=razorpay_payment_id;
     try {
         const secretKey=process.env.RAZORPAY_KEY_SECRET;
         if(secretKey) {
@@ -107,44 +108,95 @@ let VerifyPayment=async(req: Request,res: Response)=>{
             hmac.update(orderId+"|"+paymentId);
             const generatedSignature=hmac.digest("hex");
 
-            if(generatedSignature===signature){
-                 //update payment and transaction status
-                 let paymentObj=await Payment.findById(paymentId)
-                 if(paymentObj) paymentObj.paymentStatus=PaymentStatus.Success
-                 
-                 let transactionObj=await Transaction.findOne({paymentId:paymentId})
-                 if(transactionObj) transactionObj.status=TransactionStatus.Initiated
+            if(generatedSignature===razorpay_signature){               
+             //   let payment=await razorpayInstance.payment.fetch(paymentId)
+             //   if(payment.status=='authorized')
+                let orderObj=await Order.findByOne({id:orderId})
+
+                const options = {
+                    amount:orderObj.total,
+                    currency:orderObj.currency,
+                    payment_id: paymentId
+                };
                 
-                //update order status to paid, payment and transaction status to successful 
-                let orderObj=await Order.findById(orderId)
-                if(orderObj){
+
+                let paymentInfo=razorpayInstance.payment.capture(options)
+               
+                if(paymentInfo.capture){
+                    //payment success
+                let paymentObj=new Payment({
+                    id: razorpay_payment_id,
+                    userId:orderObj.userId,
+                    orderId:razorpay_order_id,
+                    paymentMethod:orderObj.paymentMethod,
+                    amount:orderObj.total,   
+                        
+                })
+
+                let transaction=new Transaction({
+                    orderId:razorpay_order_id,
+                    paymentId:razorpay_payment_id,
+                    amount:orderObj.total,  
+                              
+                })
+
+                if(paymentInfo.status=='authorized') paymentObj.paymentStatus=PaymentStatus.Authorized
+          
+                if(paymentInfo.status=='captured') {
+                    paymentObj.paymentStatus=PaymentStatus.Success
+                    paymentObj.paidAt=Date.now()
+                    //update order
                     orderObj.paidAt=Date.now;
                     orderObj.paymentStatus=PaymentStatus.Success;
                     orderObj.status=OrderStatus.OrderReceived;
                     orderObj.isPaid=true;
+
+                    transaction.status=TransactionStatus.Success        
                 }
                 
-                //update product stock
-                let updateStocksOfProducts =orderObj.items.forEach(async(product:any)=>{
-                        let currentProductStock=await StockMaster.findOne({product:product.productId})
-                        if(currentProductStock){
-                            currentProductStock.quantity-=product.quantity
-                            await currentProductStock.save();
-                        }
-                })
+                //update stock
+                let updateStock=UpdateProductStock(orderObj);
 
-                //clear user cart
-                ClearUserCart(orderObj.userId);
+                //clear cart
+                let removeCart=ClearUserCart(orderObj.userId)
 
-               let saveData= Promise.all([await paymentObj.save(), await transactionObj.save(),await orderObj.save()])
+                let saveData= Promise.all([await paymentObj.save(), await transaction.save(),await orderObj.save()])
 
                 return res.status(200).json({
                     success:true,
-                    message:"Payment Successful "
+                    message:"Payment Successful"
                 })
+                }
+                else{
+                    //payment failed
+                    let paymentObj=new Payment({
+                        id: razorpay_payment_id,
+                        userId:orderObj.userId,
+                        orderId:razorpay_order_id,
+                        paymentMethod:orderObj.paymentMethod,
+                        amount:orderObj.total,   
+                        paymentStatus:PaymentStatus.Failed,
+                    })
+                    let transaction=new Transaction({
+                        orderId:razorpay_order_id,
+                        paymentId:razorpay_payment_id,
+                        amount:orderObj.total,  
+                        status:TransactionStatus.Failed                  
+                    })
+                    orderObj.paymentStatus=PaymentStatus.Failed
+                    orderObj.status=OrderStatus.PaymentFailed;
+
+                    let saveData= Promise.all([await paymentObj.save(), await transaction.save(),await orderObj.save()])
+                   
+                    return res.status(400).json({
+                        success:false,
+                        message:"Payment Failed "
+                    })
+                }
+              
             }
             else{
-                console.log(`PAYMENT FAILED`)
+                console.log(`Invalid signature`)
                 //update payment and transaction status
                 let paymentObj=await Payment.findById(paymentId)
                 if(paymentObj) paymentObj.paymentStatus=PaymentStatus.Failed

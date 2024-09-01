@@ -44,6 +44,69 @@
                 <input type="text" class="form-control"  id="cut"  name="cut"
                  [(ngModel)]="product.cut">
               </div>
+
+              <div class="col-12 mb-2 mt-2">
+                <h4>Product Variations</h4>
+              </div>   
+              <div class="col-3 mb-3">
+                <label for="weight" class="form-label">Weight</label>
+                <input type="number" class="form-control"  id="weight"  name="weight"
+                 [(ngModel)]="productSizeObject.weight">
+              </div>
+              <div class="col-3 mb-3">
+                <label for="size" class="form-label">Size</label>
+                <input type="text" class="form-control"  id="size" placeholder=" Product Size"  name="size"
+                 [(ngModel)]="productSizeObject.size">
+              </div>
+              <div class="col-3 mb-3">
+                <label for="length" class="form-label">Length</label>
+                <input type="number" class="form-control"  id="length"  name="length"
+                 [(ngModel)]="productSizeObject.length">
+              </div>
+              <div class="col-3 mb-3">
+                <label for="width" class="form-label">Width</label>
+                <input type="number" class="form-control"  id="width"  name="width"
+                 [(ngModel)]="productSizeObject.width">
+              </div>
+              <div class="col-3 mb-3">
+                <label for="height" class="form-label">Height</label>
+                <input type="number" class="form-control"  id="height"  name="height"
+                 [(ngModel)]="productSizeObject.height">
+              </div>
+              <div class="col-3 mb-3">
+                <label for="price" class="form-label">Price (in $)</label>
+                <input type="number" class="form-control"  id="price"  name="price"
+                 [(ngModel)]="productSizeObject.price">
+              </div>
+              <div class="col-3 mb-3">
+                <label for="quantity" class="form-label">Quantity (units)</label>
+                <input type="number" class="form-control"  id="quantity"  name="quantity"
+                 [(ngModel)]="productSizeObject.quantity">
+              </div>
+
+              <div class="col-12">
+                <button type="button" (click)="AddProductVariation($event)" class="btn btn-primary">Add variation</button>
+              </div>
+
+              <!-- product sizes -->
+              <div class="mt-5 row" *ngIf="productSizeList.length>0">
+                  <div class="col-4  " *ngFor="let size of productSizeList">
+                  <div class="card size-info">
+                    <div class="text-end">
+                      <a (click)="RemoveProductSize(size)"> <i class="las la-trash"></i></a>
+                     </div>
+                     <p *ngIf="size.weight"> Weight - {{size.weight}}</p>
+                     <p *ngIf="size.size"> Size - {{size.size}}</p>
+                       <p>Dimensions - {{size.length}} x {{size.width}} x {{size.height}}</p>
+                      <p> Price - {{size.price}}</p>
+                       <p>Quantity - {{size.quantity}}</p>
+                  </div>
+                  </div>
+              </div>
+
+
+
+
               <div class="col-12 text-center mt-3">
                 <button class="theme-btn">Save</button>
               </div>

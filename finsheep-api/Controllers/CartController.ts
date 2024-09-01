@@ -187,12 +187,6 @@ let GetUserCartData=async(req:Request, res:Response)=>{
 //     }
 // }
 
-let ClearUserCart=async(userId:string)=>{
-    let userCart=await Cart.findOne({userId:userId})
-    if(userCart){
-        let removeCart=await Cart.deleteOne({userId:userId})
-    }
-}
 
 
 
@@ -202,7 +196,7 @@ export {
     RemoveProductFromCart,
     UpdateProductQuantity,
     GetUserCartData,
-    ClearUserCart
+    
 }
 
 

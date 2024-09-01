@@ -4,8 +4,7 @@ const mongoose=require('mongoose');
 
 const StockMasterSchema= new mongoose.Schema({
     product:{type:mongoose.Schema.Types.ObjectId,ref:'Product',required: true,},
-    //quantity:{type:Number,required: true},
-    productVariation:[{type:mongoose.Schema.Types.ObjectId,ref:'ProductVariation',}],
+    productVariation:[{type:mongoose.Schema.Types.ObjectId,ref:'ProductVariation'}],
     sku:{type:Joi.string(),required: true,},  
     retailPrice:{type:Number,},
     wholesalePrice:{type:Number,},

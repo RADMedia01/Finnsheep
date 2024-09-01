@@ -12,14 +12,15 @@ export enum OrderStatus{
     Processing=2,
     Delivered=3,
     Cancelled=4,
-    Expired=5
+    Expired=5,
+    PaymentFailed=6
 }
 
 export enum PaymentStatus{
     Pending=0,
     Processing=1,
     Success=2,
-    UnPaid=3,
+    Authorized=3,
     Expired=4,
     Failed=5,
     COD=6

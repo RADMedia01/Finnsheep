@@ -22,6 +22,17 @@ export class ProductDetailsComponent {
   coverImageFile:any;
   otherImageFile:any[]=[]
   otherImages:any[]=[]
+  productSizeList:any[]=[]
+  productSizeObject:any={
+      weight:0,
+      length:0,
+      height:0,
+      width:0,
+      price:0,
+      quantity:0,
+      size:``
+  }
+  
   constructor(private activatedRoute:ActivatedRoute,private common:CommonService,
     private route:Router,private helper:HelperService
   ){
@@ -43,8 +54,6 @@ export class ProductDetailsComponent {
       let response=(await this.common.GetProductDetails(id)).data;
       debugger
       this.product=response.data;
-      console.log(this.product.coverImage.image)
-      console.log(this.product.otherImages)
       Notiflix.Loading.remove()
      // this.route.navigate(['/category/list'])
     }
@@ -147,4 +156,25 @@ export class ProductDetailsComponent {
       Notiflix.Notify.failure(err.response.data.message)
     }
   }
+
+  AddProductVariation(e:any){
+    debugger
+   
+    if(!this.productSizeObject.width) return Notiflix.Notify.failure(`width is required`)
+    if(!this.productSizeObject.length) return Notiflix.Notify.failure(`Length is required`)
+    if(!this.productSizeObject.height) return Notiflix.Notify.failure(`Height is required`)
+    if(!this.productSizeObject.price) return Notiflix.Notify.failure(`Price is required`)
+    if(!this.productSizeObject.quantity) return Notiflix.Notify.failure(`Quantity is required`)
+
+    this.productSizeList.push(this.productSizeObject)
+      //e.preventDefault()
+      this.productSizeObject={}
+
+    }
+
+    RemoveProductSize(sizeObj:any){
+        this.productSizeList=this.productSizeList
+        .filter((element:any)=> element!=sizeObj )
+    }
+
 }

@@ -3,9 +3,9 @@ const Joi=require('joi');
 const mongoose=require('mongoose');
 
 const ProductsVariationSchema=new mongoose.Schema({
+    product:{type:mongoose.Schema.Types.ObjectId,ref:'Product', required:true},
     size:{type:String},
     price:{type:Number, required:true},
-    product:{type:mongoose.Schema.Types.ObjectId,ref:'Product', required:true},
     width:{type:Number,required: true,},
     length:{type:Number,required: true,},
     height:{type:Number,required: true,},

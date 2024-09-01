@@ -5,7 +5,9 @@ import { baseUrl, OrderStatus, PaymentStatus,BoxInfoList,IBoxItem } from "../Com
 import { StockMaster } from "../Models/StockMaster";
 import { Product } from "../Models/Product";
 import { Payment } from "../Models/Payment";
-import { ClearUserCart } from "./CartController";
+import { IsProductsAvailable, UpdateProductStock } from "../Services/StockService";
+import { ClearUserCart } from "../Services/CartService";
+import { ChooseBox } from "../Services/OrderService";
 const razorpayInstance=CreateRazorPayInstance();
 
 export function CalculateOrderTotalPrice(order:any){
@@ -24,15 +26,8 @@ let CreateOrder=async (req:Request, res:Response) => {
     //calculate total cost of order
 
   //check if each selected product has stock
-    // req.body.items.forEach(async(item:any)=>{
-    //   let productStock=await StockMaster.findOne({product:item.productId})
-    //   if(productStock){
-    //     if(productStock.quantity<item.quantity){
-    //       return res.status(400).json({success:false,message:"Insufficient stock for product "+productStock.name})
-    //     }
-    //   } 
-    // })
-
+  let isAvailable=IsProductsAvailable(req.body.items)
+  if(!isAvailable) return res.status(400).json({success:false, message:`Stock unavailable`})
 
 
     //let total=CalculateOrderTotalPrice(req.body)
@@ -64,8 +59,7 @@ let CreateOrder=async (req:Request, res:Response) => {
          })
 
          if(model.paymentMethod!='cash') {
-          console.log(`${baseUrl}/payment/new/${createdOrder.id}`)
-          res.redirect(`/payment/new/${createdOrder.id}`)
+            return res.status(200).json({success:true,data:createdOrder})
          }
         
           //payment via cash (COD)
@@ -80,6 +74,7 @@ let CreateOrder=async (req:Request, res:Response) => {
           })
 
           let order=await Order.findById(model.id)
+         
           if(order){
             order.status=OrderStatus.OrderReceived;
             order.paymentStatus=PaymentStatus.COD;
@@ -87,14 +82,7 @@ let CreateOrder=async (req:Request, res:Response) => {
           }
 
           //update product stock
-          let item=req.body.items;
-          item.forEach(async(prod:any)=>{
-            let productStock=StockMaster.find({product:prod.productId})
-            if(productStock){
-              productStock.quantity-=prod.quantity
-              await productStock.save() 
-            }
-          })
+          let updateStock=UpdateProductStock(req.body);
           //clear user cart
           ClearUserCart(req.body.userId);
         }
@@ -204,7 +192,9 @@ let ChooseBoxForOrder=(req:Request, res:Response)=>{
     })
 
   } catch (err:any) {
-    
+      res.status(500).json({
+        success:true, message:err.message
+      })
   }
 }
 
@@ -212,57 +202,7 @@ let CalculateVolume=(length:number,width:number,height:number):number=>{
   return Number(length*width*height);
 }
 
-//choose box type from product orders
-const ChooseBox=(cartItems:any)=>{
-  let boxesRequired:IBoxItem[]=[] 
 
-  if(cartItems.length>0){
-
-    let totalVolumeOfProducts=cartItems.reduce(async(volume:number,item:any)=>{
-      let itemStockInfo=await StockMaster.findOne({product:item.productId})
-      if(itemStockInfo){
-        let productVolume=itemStockInfo.length*itemStockInfo.height*itemStockInfo.width;
-        volume+=productVolume;
-      } 
-    },0);
-
-    let boxVolumes:number[]=[];
-    let remainingVolume:number=totalVolumeOfProducts;   
-    let SmallBox=BoxInfoList[0];
-    let MediumBox=BoxInfoList[1];
-    let LargeBox=BoxInfoList[2];
-
-    while(remainingVolume>0){
-      //product is bigger than largest available box so get another one
-        if(remainingVolume>LargeBox.volume){
-          //get another box
-          remainingVolume-=LargeBox.volume;
-          boxesRequired.push(BoxInfoList[2])
-          continue;
-        }
-        else{
-          if(remainingVolume<SmallBox.volume) {
-            boxesRequired.push(BoxInfoList[0])
-            break;
-          }
-          if(remainingVolume>SmallBox.volume && remainingVolume<MediumBox.volume){
-            boxesRequired.push(BoxInfoList[1])
-            break;
-          }
-          if(remainingVolume>MediumBox.volume && remainingVolume<LargeBox.volume) {
-            boxesRequired.push(BoxInfoList[2])
-            break;
-          }
-
-        }
-
-       
-    }
-
-    return boxesRequired;
-  
-  }
-}
 
 export {
   CreateOrder,
