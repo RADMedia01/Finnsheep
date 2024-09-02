@@ -10,6 +10,8 @@ import orderRouter from './Routes/OrderRoute';
 import paymentRouter from './Routes/PaymentRoute';
 import userRouter from './Routes/UserRoute';
 import productVariationRouter from './Routes/ProductVariationRouter';
+import blogRouter from './Routes/BlogRouter';
+import reviewRouter from './Routes/ReviewRouter';
 
 dotenv.config();
 const port=process.env.PORT || 3000;

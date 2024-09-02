@@ -8,6 +8,8 @@ import mongoose from "mongoose";
 import { string } from "joi";
 import { ProductsVariation } from "../Models/ProductsVariation";
 import { AddSingleProductToStock } from "../Services/StockService";
+import catchAsync from "../utils/CatchAsync";
+import AppError from "../utils/AppError";
 
 
 export const GetProduct = catchAsync(async(req, res, next) => {
