@@ -10,6 +10,7 @@ import itemSizeRouter from './Routes/ItemSizeRoutes';
 import orderRouter from './Routes/OrderRoute';
 import paymentRouter from './Routes/PaymentRoute';
 import userRouter from './Routes/UserRoute';
+import blogRouter from './Routes/BlogRouter';
 
 dotenv.config();
 const port=process.env.PORT || 2000;
@@ -33,6 +34,7 @@ app.use('/api/size/',itemSizeRouter)
 app.use('/api/order/',orderRouter)
 app.use('/api/payment/',paymentRouter)
 app.use('/api/user/',userRouter)
+app.use('/api/blog/', blogRouter)
 
 
 app.listen(port,async()=>{
