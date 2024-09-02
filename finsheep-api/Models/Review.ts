@@ -6,7 +6,7 @@ import { Users } from './Users';
 
 // Interface for Review schema
 interface IReview extends Document {
-  review: string;
+  message: string;
   rating: number;
   createdAt?: Date;
   product: mongoose.Types.ObjectId;
@@ -15,7 +15,7 @@ interface IReview extends Document {
 
 // Review schema definition
 const reviewSchema: Schema<IReview> = new Schema({
-  review: {
+  message: {
     type: String,
     required: [true, 'Review cannot be empty!']
   },
@@ -46,13 +46,12 @@ const reviewSchema: Schema<IReview> = new Schema({
 // Unique index for preventing duplicate reviews by the same user for the same product
 reviewSchema.index({ product: 1, user: 1 }, { unique: true });
 
-// Pre-find middleware to populate user and product information
+// Pre-find middleware to populate user information
 reviewSchema.pre(/^find/, function(this: mongoose.Query<IReview[], IReview>, next) {
     this.populate({
       path: 'user',
       select: 'name' // Specify fields to select if needed
     });
-  
     next();
   });
 

@@ -12,22 +12,6 @@ import catchAsync from "../utils/CatchAsync";
 import AppError from "../utils/AppError";
 
 
-export const GetProduct = catchAsync(async(req, res, next) => {
-  const product = await Product.findById(req.params.id).populate('reviews');
-
-  if(!product){
-    return next(new AppError('No Tour found with this ID', 404));
-  }
-
-  res.status(200).json({
-    status:'success',
-    data: {
-      product
-    }
-  })
-})
-
-
 let AddUpdateProduct = async (req: Request, res: Response) => {
   let isUpdate: boolean = false;
   let {variations}=req.body
@@ -50,6 +34,7 @@ let AddUpdateProduct = async (req: Request, res: Response) => {
 
       if(variations){
         if(variations.length>0){
+          console.log('Hiii');
           variations =variations.map((element:any) =>({...element,product:req.body._id}  ));
           let addSizes=await ProductsVariation.create(variations)
           AddSingleProductToStock(addSizes);
@@ -69,14 +54,14 @@ let AddUpdateProduct = async (req: Request, res: Response) => {
         cut: req.body.cut,
         stock:req.body.stock
       });
-      
-      variations =variations.map((element:any) =>({...element,product:product._id}  ));
-
-      //save prod variations/sizes
-      let addSizes=await ProductsVariation.create(variations)
-
-      //add stock of prod in stock master
-      AddSingleProductToStock(addSizes);
+      if(variations){
+        if(variations.length>0){
+          console.log('Biii');
+          variations =variations.map((element:any) =>({...element,product:req.body._id}  ));
+          let addSizes=await ProductsVariation.create(variations)
+          AddSingleProductToStock(addSizes);
+        }
+      }
     }
 
     return res.status(200).json({
@@ -205,6 +190,7 @@ let GetProductDetails = async (req: Request, res: Response) => {
   let otherImageList: { id: any; image: string; }[]=[];
   try {
     let product = await Product.findById(id).populate('category').populate('reviews');
+    console.log(product);
     if (!product) {
       return res.status(404).json({
         success: false,
@@ -233,10 +219,10 @@ let GetProductDetails = async (req: Request, res: Response) => {
         success:true,
         data:{
             ...product._doc,
-            ...product.reviews,
             coverImage:(productImages && coverImage) ? {id:coverImage._id,image:`${baseUrl}${FilePaths.productFilePath}/${id}/${coverImage.image}`} : {image:null},
             otherImages:otherImageList.length>0? otherImageList:[],   
-            variationList:(variations.length>0) ? variations:[]
+            variationList:(variations.length>0) ? variations:[],
+            reviews: product.reviews
             }
        })
     }
@@ -245,9 +231,9 @@ let GetProductDetails = async (req: Request, res: Response) => {
             success:true,
             data:{
                 ...product._doc,
-                ...product.reviews,
                 coverImage:{ image:null},
-                otherImages:[]
+                otherImages:[],
+                reviews: product.reviews
             },
             variationList:(variations.length>0) ? variations:[]
         })

@@ -4,11 +4,11 @@ import * as factory from './HandlerFactory';
 // import catchAsync from './../utils/catchAsync';
 
 
-// Middleware to set tour and user IDs
-export const setTourUserIds = (req: Request, res: Response, next: NextFunction) => {
+// Middleware to set Product and user IDs
+export const setProductUserIds = (req: Request, res: Response, next: NextFunction) => {
   // Allow nested routes
-  if (!req.body.tour) req.body.tour = req.params.tourId;
-  if (!req.body.user) req.body.user = req.user.id; // Ensure req.user is typed correctly
+  if (!req.body.product) req.body.product = req.params.productId;
+  if (!req.body.user) req.body.user = req.user.id;
   next();
 };
 

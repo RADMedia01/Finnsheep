@@ -9,7 +9,6 @@ import {  AddUpdateProduct,
     GetProductDetails,
     AddProductImages,
     DeleteProductImage,
-    GetProduct,
     ProductDropdown } from "../Controllers/ProductController";
     
 productRouter.put('/upsert',AddUpdateProduct)   

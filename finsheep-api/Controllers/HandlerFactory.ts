@@ -13,7 +13,7 @@ type ModelType<T extends Document> = {
   find: (filter: object) => Query<T[], T>;
 };
 
-interface PopOptions {
+interface PopulateOptions {
   path: string;
   select?: string;
 }
@@ -67,10 +67,10 @@ export const createOne = (Model: ModelType<Document>) =>
   });
 
 // Get a single document by ID with optional population
-export const getOne = (Model: ModelType<Document>, popOptions?: PopOptions) =>
+export const getOne = (Model: ModelType<Document>, populateOptions?: PopulateOptions) =>
   catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     let query = Model.findById(req.params.id);
-    if (popOptions) query = query.populate(popOptions);
+    if (populateOptions) query = query.populate(populateOptions);
     const doc = await query;
 
     if (!doc) {

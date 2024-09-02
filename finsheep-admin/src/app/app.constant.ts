@@ -1,5 +1,5 @@
 export const  AppConstants={
-    baseUrl:`http://localhost:2000/api`,   
+    baseUrl:`http://localhost:3000/api`,   
 
     //users
     getAllUserList:`/user/all`,
