@@ -6,6 +6,7 @@ import {  NewPayment,
 
 
 paymentRouter.post('/new/:orderId',NewPayment)
+paymentRouter.get('/new/:orderId',NewPayment)
 paymentRouter.post('/verify',VerifyPayment)
 
 export default paymentRouter

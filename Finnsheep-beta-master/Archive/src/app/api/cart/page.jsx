@@ -6,6 +6,7 @@ import CartCount from '../ui/cart/cartCount'
 import { useAppSelector } from '@/lib/store/hooks'
 import Link from 'next/link'
 import OrderSummary from '../ui/cart/orderSummary'
+import RazorpayButton from '@/components/razorpay/razorpay'
 
 const CartPage = () => {
     const [products, setProducts] = useState();
@@ -15,12 +16,61 @@ const CartPage = () => {
         // Ensure client-side data is used
         setProducts(cartItems);
       }, [cartItems]);
-
+      const handlePayment = async () => {
+        try {
+          // Fetch order details from your server
+        //   const response = await fetch('/api/create-order', { method: 'POST' });
+        //   const data = await response.json();
+            
+         
+            const options = {
+              key: 'YOUR_KEY_ID', // Enter the Key ID generated from the Dashboard
+              amount: 100, // Amount is in currency subunits
+              currency: 'USD',
+              name: 'Your Business Name',
+              description: 'Test Transaction',
+              image: 'https://example.com/your_logo',
+              order_id: data.orderId, // Pass the `id` obtained from the server
+              callback_url: '/api/payment-callback', // Your server-side callback URL
+              prefill: {
+                name: 'Customer Name',
+                email: 'customer@example.com',
+                contact: '9000090000',
+              },
+              notes: {
+                address: 'Razorpay Corporate Office',
+              },
+              theme: {
+                color: '#3399cc',
+              },
+              handler: function (response) {
+                // Handle successful payment here
+                console.log('Payment ID:', response.razorpay_payment_id);
+                console.log('Order ID:', response.razorpay_order_id);
+                console.log('Signature:', response.razorpay_signature);
+    
+                // Optionally send payment details to your server for verification
+              },
+              modal: {
+                ondismiss: function () {
+                  console.log('Payment modal closed');
+                },
+              },
+            };
+    
+            const rzp1 = new window.Razorpay(options);
+            rzp1.open();
+        
+        } catch (error) {
+          console.error('Error handling payment:', error);
+        }
+      };
 
   return (
     <div className='containe'>
+    
      
-
+    
      {products && products.length > 0 ? 
 <div
         className=" relative z-10 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 ">
@@ -65,8 +115,9 @@ const CartPage = () => {
     </div>  
 :
     <div className="w-full flex flex-col gap-4 justify-center items-center p-16 md:p-20">
+            <button onClick={handlePayment}>Pay with Razorpay</button>
           <Image src="/cart_empty.svg" width={500} height={500} alt="Cart is empty" className="h-52 md:h-60" />
-          <h3 className="capitalize text-3xl text-gray-700 font-semibold text-center">Your Cart is empty!</h3>
+          <h3 className="capitalize text-3xl text-gray-700 font-semibold text-center"> Cart is empty!</h3>
           <p className="capitalize text-lg text-gray-700 font-normal text-center">When you add products, they'll appear here.</p>
           <Link href="/shop" className="bg-blue-700 hover:bg-blue-600 text-white px-6 py-2 rounded-full">Go Shop</Link>
         </div>

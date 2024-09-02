@@ -27,12 +27,14 @@ app.use(express.static('uploads'));
 app.use("/uploads",express.static('uploads'));
 
 //configure routes
-app.use('/api/product',productRouter)
+app.use('/api/product/',productRouter)
 app.use('/api/category',categoryRouter)
 app.use('/api/variation/',productVariationRouter)
 app.use('/api/order/',orderRouter)
 app.use('/api/payment/',paymentRouter)
 app.use('/api/user/',userRouter)
+app.use('/api/blog/', blogRouter)
+app.use('/api/review/', reviewRouter)
 
 
 app.listen(port,async()=>{

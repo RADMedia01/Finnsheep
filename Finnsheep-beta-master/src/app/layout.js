@@ -22,6 +22,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
        <head>
        <link rel="icon" href="/favicon.ico" sizes="any" />
+       <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       </head>
       
       <body className={inter.classNam}>
