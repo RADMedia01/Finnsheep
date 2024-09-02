@@ -6,6 +6,25 @@ import fs from 'fs';
 import  {ObjectId}  from 'mongodb';
 import mongoose from "mongoose";
 import { string } from "joi";
+import * as factory from './HandlerFactory'
+import catchAsync from "./../utils/CatchAsync";
+import AppError from "./../utils/AppError";
+
+
+export const GetProduct = catchAsync(async(req, res, next) => {
+  const product = await Product.findById(req.params.id).populate('reviews');
+
+  if(!product){
+    return next(new AppError('No Tour found with this ID', 404));
+  }
+
+  res.status(200).json({
+    status:'success',
+    data: {
+      product
+    }
+  })
+})
 
 
 let AddUpdateProduct = async (req: Request, res: Response) => {
@@ -156,7 +175,7 @@ let GetProductDetails = async (req: Request, res: Response) => {
   const { id } = req.params;
   let otherImageList: { id: any; image: string; }[]=[];
   try {
-    let product = await Product.findById(id).populate('category');
+    let product = await Product.findById(id).populate('category').populate('reviews');
     if (!product) {
       return res.status(404).json({
         success: false,
@@ -186,6 +205,7 @@ let GetProductDetails = async (req: Request, res: Response) => {
         success:true,
         data:{
             ...product._doc,
+            ...product.reviews,
             coverImage:(productImages && coverImage) ? {id:coverImage._id,image:`${baseUrl}${FilePaths.productFilePath}/${id}/${coverImage.image}`} : {image:null},
             otherImages:otherImageList.length>0? otherImageList:[],   
                }
@@ -196,6 +216,7 @@ let GetProductDetails = async (req: Request, res: Response) => {
             success:true,
             data:{
                 ...product._doc,
+                ...product.reviews,
                 coverImage:{ image:null},
                 otherImages:[]
             }

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import catchAsync from './../utils/CatchAsync';
 import AppError from './../utils/AppError';
+import APIFeatures from './../utils/ApiFeatures';
 import { Model, Document, Query } from 'mongoose';
 
 // Define a generic type for Mongoose models
@@ -84,26 +85,26 @@ export const getOne = (Model: ModelType<Document>, popOptions?: PopOptions) =>
     });
   });
 
-// Get all documents with filtering, sorting, and pagination
-// export const getAll = (Model: ModelType<Document>) =>
-//   catchAsync(async (req: Request, res: Response) => {
-//     // To allow for nested GET reviews on product (hack)
-//     let filter = {};
-//     if (req.params.productId) filter = { product: req.params.productId };
+//Get all documents with filtering, sorting, and pagination
+export const getAll = (Model: ModelType<Document>) =>
+  catchAsync(async (req: Request, res: Response) => {
+    // To allow for nested GET reviews on product (hack)
+    let filter = {};
+    if (req.params.productId) filter = { product: req.params.productId };
 
-//     const features = new APIFeatures(Model.find(filter), req.query as any)
-//       .filter()
-//       .sort()
-//       .limitFields()
-//       .paginate();
+    const features = new APIFeatures(Model.find(filter), req.query as any)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
 
-//     const doc = await features.getQuery();
+    const doc = await features.getQuery();
 
-//     res.status(200).json({
-//       status: 'success',
-//       results: doc.length,
-//       data: {
-//         data: doc
-//       }
-//     });
-//   });
+    res.status(200).json({
+      status: 'success',
+      results: doc.length,
+      data: {
+        data: doc
+      }
+    });
+  });

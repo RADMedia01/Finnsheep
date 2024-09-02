@@ -9,6 +9,7 @@ import {  AddUpdateProduct,
     GetProductDetails,
     AddProductImages,
     DeleteProductImage,
+    GetProduct,
     ProductDropdown } from "../Controllers/ProductController";
     
 productRouter.put('/upsert',AddUpdateProduct)   
@@ -17,6 +18,7 @@ productRouter.get('',GetProducts)
 productRouter.post('/image/:id',uploadProductImage.fields([{name:`coverImage`,maxCount:1},{name:`otherImages`,maxCount:10}]),AddProductImages)
 productRouter.delete('/image/:id',DeleteProductImage)
 productRouter.get('/dropdown/list',ProductDropdown)
+//productRouter.get('/:id', GetProduct)
 
 
 export default productRouter

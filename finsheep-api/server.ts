@@ -11,6 +11,7 @@ import orderRouter from './Routes/OrderRoute';
 import paymentRouter from './Routes/PaymentRoute';
 import userRouter from './Routes/UserRoute';
 import blogRouter from './Routes/BlogRouter';
+import reviewRouter from './Routes/ReviewRouter';
 
 dotenv.config();
 const port=process.env.PORT || 2000;
@@ -28,13 +29,14 @@ app.use(express.static('uploads'));
 app.use("/uploads",express.static('uploads'));
 
 //configure routes
-app.use('/api/product',productRouter)
+app.use('/api/product/',productRouter)
 app.use('/api/category',categoryRouter)
 app.use('/api/size/',itemSizeRouter)
 app.use('/api/order/',orderRouter)
 app.use('/api/payment/',paymentRouter)
 app.use('/api/user/',userRouter)
 app.use('/api/blog/', blogRouter)
+app.use('/api/review/', reviewRouter)
 
 
 app.listen(port,async()=>{
