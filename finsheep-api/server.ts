@@ -6,13 +6,13 @@ import * as dotenv from 'dotenv';
 //routes
 import productRouter from './Routes/ProductRoute';
 import categoryRouter from './Routes/CategoryRoute';
-import itemSizeRouter from './Routes/ItemSizeRoutes';
 import orderRouter from './Routes/OrderRoute';
 import paymentRouter from './Routes/PaymentRoute';
 import userRouter from './Routes/UserRoute';
+import productVariationRouter from './Routes/ProductVariationRouter';
 
 dotenv.config();
-const port=process.env.PORT || 2000;
+const port=process.env.PORT || 3000;
 
 //app config
 const app = express()
@@ -29,7 +29,7 @@ app.use("/uploads",express.static('uploads'));
 //configure routes
 app.use('/api/product',productRouter)
 app.use('/api/category',categoryRouter)
-app.use('/api/size/',itemSizeRouter)
+app.use('/api/variation/',productVariationRouter)
 app.use('/api/order/',orderRouter)
 app.use('/api/payment/',paymentRouter)
 app.use('/api/user/',userRouter)

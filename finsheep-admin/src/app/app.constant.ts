@@ -31,11 +31,8 @@ export const  AppConstants={
     deleteProductImage:`/product/image/`,
     productDropdown:`/product/dropdown/list`,
 
-    //item-size
-    itemSizeList:`/size/`,
-    itemSizeDetails:`/size/`,
-    upsertItemSize:`/size/upsert`,
-    deleteItemSize:`/size/`,
+   //product variation
+   deleteVariation:`/variation/`,
 
     //orders
     newOrder:`/order/new/`,

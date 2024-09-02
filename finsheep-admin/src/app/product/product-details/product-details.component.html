@@ -45,17 +45,32 @@
                  [(ngModel)]="product.cut">
               </div>
 
+              <div class="col-12 mb-2 mt-2" *ngIf="product?.variationList?.length>0">
+                <h4>Available Sizes</h4>
+              </div>   
+          
+              <div class="row" *ngIf="product?.variationList?.length>0">
+                  <div class="col-3 " *ngFor="let item of product?.variationList">
+                        <div class="size-info card">                         
+                          <p > Size - {{item.size}}</p>
+                            <p>Dimensions - {{item.length}} x {{item.width}} x {{item.height}} </p>
+                           <p> Price - ${{item.price}}</p>
+                            <p>Quantity - {{item.quantity}}</p>
+                        </div>
+                  </div>
+              </div>
+
+
+
+
+
               <div class="col-12 mb-2 mt-2">
                 <h4>Product Variations</h4>
               </div>   
+            
               <div class="col-3 mb-3">
-                <label for="weight" class="form-label">Weight</label>
-                <input type="number" class="form-control"  id="weight"  name="weight"
-                 [(ngModel)]="productSizeObject.weight">
-              </div>
-              <div class="col-3 mb-3">
-                <label for="size" class="form-label">Size</label>
-                <input type="text" class="form-control"  id="size" placeholder=" Product Size"  name="size"
+                <label for="size" class="form-label">Size </label> <small>(lb if meat, 'X' size if wool products)</small>
+                <input type="text" class="form-control"  id="size" placeholder=" Size"  name="size"
                  [(ngModel)]="productSizeObject.size">
               </div>
               <div class="col-3 mb-3">

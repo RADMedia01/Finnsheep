@@ -6,7 +6,11 @@ const ExcelJS = require('exceljs');
 
 let AddSingleStock=(req: Request, res: Response)=>{
   try {
-    
+    //add product
+
+    //add sizes
+
+    //add product stock
   } catch (err:any) {
     
   }

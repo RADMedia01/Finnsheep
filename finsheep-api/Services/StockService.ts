@@ -1,3 +1,4 @@
+import { StockMaster } from "../Models/StockMaster";
 import { ProductsVariation } from "../Models/ProductsVariation";
 
 let IsProductsAvailable = (orderObj: any): Boolean => {
@@ -37,7 +38,26 @@ let UpdateProductStock = (orderObj: any): Boolean => {
   }
 };
 
+let AddSingleProductToStock=(variations:[]):void=>{
+  try{
+   if(variations.length>0){
+      variations.forEach(async(size:any)=>{
+          let model=await StockMaster.create({
+            product:size.product,
+            variation:size.variation,
+            quantity:size.quantity
+          })
+      })
+   }
+      
+      
+  }catch(err:any){
+    throw new Error(err.message)
+  }
+}
+
 export {
     IsProductsAvailable,
-    UpdateProductStock  
+    UpdateProductStock  ,
+    AddSingleProductToStock
 }

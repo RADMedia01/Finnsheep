@@ -173,22 +173,11 @@ GetCityList(country:string,state:string){
   GetProductDropdown(){
     return axios.get(`${AppConstants.baseUrl}${AppConstants.productDropdown}`);
   }
- //------------------------ item size api -------------------->
- GetItemSizeList(pageNo:Number,search:string){
-  return axios.get(`${AppConstants.baseUrl}${AppConstants.itemSizeList}?page=${pageNo}&search=${search}`);
-}
-
-GetItemSizeDetails(id:any){
-  return axios.get(`${AppConstants.baseUrl}${AppConstants.itemSizeDetails}${id}`);
-}
-
-UpsertItemSize(data:any){
-  return axios.put(`${AppConstants.baseUrl}${AppConstants.upsertItemSize}`,data);
-}
+ //------------------------ variation api -------------------->
 
 
-DeleteItemSize(id:any){
-  return axios.delete(`${AppConstants.baseUrl}${AppConstants.deleteItemSize}${id}`);
+DeleteVariation(id:any){
+  return axios.delete(`${AppConstants.baseUrl}${AppConstants.deleteVariation}${id}`);
 }
 
 

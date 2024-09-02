@@ -3,9 +3,6 @@ import { BlogsComponent } from './blog/blogs/blogs.component';
 import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './layout';
 import {AuthGuard} from '../app/authGuard.service'
-import { ItemSizeDetailsComponent } from './item-size/item-size-details/item-size-details.component';
-import { ItemSizeListComponent } from './item-size/item-size-list/item-size-list.component';
-
 
 
 
@@ -37,15 +34,6 @@ export const routes: Routes = [
       {
         path: 'product',
         loadChildren: () => import('./product/routes').then((m) => m.routes)
-      },
-      //item-size
-      {
-        path: 'size/list',
-        component:ItemSizeListComponent,
-      },
-      {
-        path: 'size/:id',
-        component:ItemSizeDetailsComponent
       },
       {
         path: 'blogs',

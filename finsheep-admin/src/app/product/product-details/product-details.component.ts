@@ -24,7 +24,6 @@ export class ProductDetailsComponent {
   otherImages:any[]=[]
   productSizeList:any[]=[]
   productSizeObject:any={
-      weight:0,
       length:0,
       height:0,
       width:0,
@@ -105,6 +104,7 @@ export class ProductDetailsComponent {
   async OnFormSubmit(){
     try {
       Notiflix.Loading.circle()
+      if(this.productSizeList.length>0) this.product.variations=this.productSizeList
       let response= (await this.common.UpsertProduct(this.product)).data
       debugger
       this.route.navigate(['/product/list'])      

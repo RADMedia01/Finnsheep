@@ -6,20 +6,42 @@ import fs from 'fs';
 import  {ObjectId}  from 'mongodb';
 import mongoose from "mongoose";
 import { string } from "joi";
+import { ProductsVariation } from "../Models/ProductsVariation";
+import { AddSingleProductToStock } from "../Services/StockService";
 
 
 let AddUpdateProduct = async (req: Request, res: Response) => {
   let isUpdate: boolean = false;
+  let {variations}=req.body
   try {
     if (req.body._id) {
       isUpdate = true;
+
       let productObj = await Product.findByIdAndUpdate(req.body._id, {
         $set: {
-          ...req.body,
+          name: req.body.name,
+          description: req.body.description,
+          price: req.body.price,
+          category: req.body.category,
+          material: req.body.material,
+          cut: req.body.cut,
+          stock:req.body.stock,
           modifiedOn:Date.now()
         },
       });
+
+      if(variations){
+        if(variations.length>0){
+          variations =variations.map((element:any) =>({...element,product:req.body._id}  ));
+          let addSizes=await ProductsVariation.create(variations)
+          AddSingleProductToStock(addSizes);
+        }
+      }
+
+
+
     } else {
+
       let product = await Product.create({
         name: req.body.name,
         description: req.body.description,
@@ -29,6 +51,14 @@ let AddUpdateProduct = async (req: Request, res: Response) => {
         cut: req.body.cut,
         stock:req.body.stock
       });
+      
+      variations =variations.map((element:any) =>({...element,product:product._id}  ));
+
+      //save prod variations/sizes
+      let addSizes=await ProductsVariation.create(variations)
+
+      //add stock of prod in stock master
+      AddSingleProductToStock(addSizes);
     }
 
     return res.status(200).json({
@@ -165,6 +195,7 @@ let GetProductDetails = async (req: Request, res: Response) => {
     }
     //get product cover 
     let productImages = await ProductImage.find({ productId: id });
+    let variations=await ProductsVariation.find({product:id})
     if(productImages.length>0){
        let coverImage=productImages.filter((image:any)=> image.isCover==true)[0];
        let otherImages=productImages.filter((image:any)=> image.isCover==false);
@@ -180,15 +211,14 @@ let GetProductDetails = async (req: Request, res: Response) => {
        
        }
 
-      
-
        return res.status(200).json({
         success:true,
         data:{
             ...product._doc,
             coverImage:(productImages && coverImage) ? {id:coverImage._id,image:`${baseUrl}${FilePaths.productFilePath}/${id}/${coverImage.image}`} : {image:null},
             otherImages:otherImageList.length>0? otherImageList:[],   
-               }
+            variationList:(variations.length>0) ? variations:[]
+            }
        })
     }
     else{
@@ -198,7 +228,8 @@ let GetProductDetails = async (req: Request, res: Response) => {
                 ...product._doc,
                 coverImage:{ image:null},
                 otherImages:[]
-            }
+            },
+            variationList:(variations.length>0) ? variations:[]
         })
     }
   } catch (err: any) {
