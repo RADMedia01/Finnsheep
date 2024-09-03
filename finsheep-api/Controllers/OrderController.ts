@@ -29,7 +29,10 @@ let CreateOrder=async (req:Request, res:Response) => {
   let isAvailable=IsProductsAvailable(req.body.items)
   if(!isAvailable) return res.status(400).json({success:false, message:`Stock unavailable`})
 
-
+    return res.status(200).json({
+      success:true,
+      isAvailable
+    })
     //let total=CalculateOrderTotalPrice(req.body)
     const options = {
       amount: req.body.total * 100, // convert amount to paise

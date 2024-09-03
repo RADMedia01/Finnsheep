@@ -13,6 +13,7 @@ const OrderSchema=new mongoose.Schema({
     userId:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
     items:[{        
             productId:{type:Schema.ObjectId, ref : "product"},
+            productVariationId: {type:mongoose.Schema.Types.ObjectId,ref:'ProductVariation'},
             quantity:{
               type:Number,
               default:1

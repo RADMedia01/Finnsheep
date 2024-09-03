@@ -27,7 +27,7 @@ export class ProductDetailsComponent {
       length:0,
       height:0,
       width:0,
-      price:0,
+      retailPrice:0,
       quantity:0,
       size:``
   }
@@ -163,7 +163,7 @@ export class ProductDetailsComponent {
     if(!this.productSizeObject.width) return Notiflix.Notify.failure(`width is required`)
     if(!this.productSizeObject.length) return Notiflix.Notify.failure(`Length is required`)
     if(!this.productSizeObject.height) return Notiflix.Notify.failure(`Height is required`)
-    if(!this.productSizeObject.price) return Notiflix.Notify.failure(`Price is required`)
+    if(!this.productSizeObject.retailPrice) return Notiflix.Notify.failure(`Retail Price is required`)
     if(!this.productSizeObject.quantity) return Notiflix.Notify.failure(`Quantity is required`)
 
     this.productSizeList.push(this.productSizeObject)

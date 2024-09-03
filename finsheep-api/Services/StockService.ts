@@ -2,18 +2,20 @@ import { StockMaster } from "../Models/StockMaster";
 import { ProductsVariation } from "../Models/ProductsVariation";
 
 let IsProductsAvailable = (orderObj: any): Boolean => {
-  if (orderObj.items.length > 0) {
-    let updateStocksOfProducts = orderObj.items.forEach(
+
+  if (orderObj.length > 0) {
+      orderObj.forEach(
       async (product: any) => {
-        let currentProductStock = await ProductsVariation.findOne({
-          product: product.productId,
-          _id: product.sizeId,
-        });
+        let currentProductStock = await ProductsVariation.findById(
+          product.productVariationId
+        );
         if (currentProductStock.quantity < product.quantity) {
+          console.log(currentProductStock.quantity)
+          console.log(product.quantity)
           return false;
         }
       }
-    );
+    ); 
   }
   return true;
 };

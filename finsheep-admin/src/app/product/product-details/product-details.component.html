@@ -57,7 +57,7 @@
                            </div>        
                           <p > Size - {{item.size}}</p>
                             <p>Dimensions - {{item.length}} x {{item.width}} x {{item.height}} </p>
-                           <p> Price - ${{item.price}}</p>
+                           <p> Price - ${{item.retailPrice}}</p>
                             <p>Quantity - {{item.quantity}}</p>
                         </div>
                   </div>
@@ -92,9 +92,9 @@
                  [(ngModel)]="productSizeObject.height">
               </div>
               <div class="col-3 mb-3">
-                <label for="price" class="form-label">Price (in $)</label>
-                <input type="number" class="form-control"  id="price"  name="price"
-                 [(ngModel)]="productSizeObject.price">
+                <label for="retailPrice" class="form-label">Price (in $)</label>
+                <input type="number" class="form-control"  id="retailPrice"  name="retailPrice"
+                 [(ngModel)]="productSizeObject.retailPrice">
               </div>
               <div class="col-3 mb-3">
                 <label for="quantity" class="form-label">Quantity (units)</label>
@@ -116,7 +116,7 @@
                      <p *ngIf="size.weight"> Weight - {{size.weight}}</p>
                      <p *ngIf="size.size"> Size - {{size.size}}</p>
                        <p>Dimensions - {{size.length}} x {{size.width}} x {{size.height}}</p>
-                      <p> Price - {{size.price}}</p>
+                      <p> Price - {{size.retailPrice}}</p>
                        <p>Quantity - {{size.quantity}}</p>
                   </div>
                   </div>
