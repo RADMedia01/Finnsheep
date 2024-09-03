@@ -172,6 +172,20 @@ export class ProductDetailsComponent {
 
     }
 
+    async DeleteProductSize(id:string){
+      try{
+        debugger
+        Notiflix.Loading.circle()
+        let response=await (await this.common.DeleteVariation(id)).data
+        Notiflix.Loading.remove()
+        Notiflix.Notify.success(`Size deleted successfully`)
+      }
+      catch(err:any){
+        Notiflix.Loading.remove()
+        Notiflix.Notify.failure(err.response.data.message)
+      }
+    }
+
     RemoveProductSize(sizeObj:any){
         this.productSizeList=this.productSizeList
         .filter((element:any)=> element!=sizeObj )

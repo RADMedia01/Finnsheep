@@ -44,7 +44,7 @@ let AddSingleProductToStock=(variations:[]):void=>{
       variations.forEach(async(size:any)=>{
           let model=await StockMaster.create({
             product:size.product,
-            variation:size.variation,
+            variation:size._id,
             quantity:size.quantity
           })
       })

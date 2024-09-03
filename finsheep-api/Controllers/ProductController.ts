@@ -35,7 +35,8 @@ let AddUpdateProduct = async (req: Request, res: Response) => {
       if(variations){
         if(variations.length>0){
           console.log('Hiii');
-          variations =variations.map((element:any) =>({...element,product:req.body._id}  ));
+          variations.forEach((element:any) => element.product=req.body._id);
+          
           let addSizes=await ProductsVariation.create(variations)
           AddSingleProductToStock(addSizes);
         }
@@ -57,7 +58,8 @@ let AddUpdateProduct = async (req: Request, res: Response) => {
       if(variations){
         if(variations.length>0){
           console.log('Biii');
-          variations =variations.map((element:any) =>({...element,product:req.body._id}  ));
+          variations.forEach((element:any) => element.product=product._id);
+          console.log(variations)
           let addSizes=await ProductsVariation.create(variations)
           AddSingleProductToStock(addSizes);
         }
@@ -83,7 +85,7 @@ let DeleteProduct = async (req: Request, res: Response) => {
     if (id) {
       let product = await Product.findById(id);
       if (product) {
-        let removedProduct = await Product.findByIdAndRemove(id);
+        let removedProduct = await Product.deleteOne({_id:id});
         if (removedProduct) {
           return res.status(200).json({
             success: true,
@@ -233,9 +235,10 @@ let GetProductDetails = async (req: Request, res: Response) => {
                 ...product._doc,
                 coverImage:{ image:null},
                 otherImages:[],
-                reviews: product.reviews
+                reviews: product.reviews,
+                variationList:(variations.length>0) ? variations:[]
             },
-            variationList:(variations.length>0) ? variations:[]
+           
         })
     }
   } catch (err: any) {
