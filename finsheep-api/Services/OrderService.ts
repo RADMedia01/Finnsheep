@@ -3,7 +3,7 @@ import { IBoxItem } from "../Common/Common";
 import { StockMaster } from "../Models/StockMaster";
 
 //choose box type from product orders
-const ChooseBox=(cartItems:any)=>{
+const ChooseBox=(cartItems:any[])=>{
     let boxesRequired:IBoxItem[]=[] 
   
     if(cartItems.length>0){

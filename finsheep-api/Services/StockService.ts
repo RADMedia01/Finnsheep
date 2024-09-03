@@ -1,37 +1,35 @@
 import { StockMaster } from "../Models/StockMaster";
 import { ProductsVariation } from "../Models/ProductsVariation";
 
-let IsProductsAvailable = (orderObj: any): Boolean => {
+let IsProductsAvailable = async (orderObj: any): Promise<Boolean> => {
 
   if (orderObj.length > 0) {
-      orderObj.forEach(
-      async (product: any) => {
+      for(let order of orderObj) {
         let currentProductStock = await ProductsVariation.findById(
-          product.productVariationId
+          order.productVariationId
         );
-        if (currentProductStock.quantity < product.quantity) {
-          console.log(currentProductStock.quantity)
-          console.log(product.quantity)
+        if (currentProductStock.quantity < order.quantity) {
           return false;
         }
       }
-    ); 
+      return true;
   }
+
   return true;
 };
 
-let UpdateProductStock = (orderObj: any): Boolean => {
+let UpdateProductStock = async(orderId:string,cartItems: any[]): Promise<Boolean> => {
   try {
-    if(orderObj.items.length>0){
-        let updateStocksOfProducts = orderObj.items.forEach(
-            async (product: any) => {
-              let currentProductStock = await ProductsVariation.findById(product.sizeId);
-              if (currentProductStock) {
-                currentProductStock.quantity -= product.quantity;
-                await currentProductStock.save();
-              }
-            }
-          );
+    if(cartItems.length>0){
+      for(let item of cartItems) {
+        let currentProductStock = await ProductsVariation.findById(item.productVariationId);
+        if (currentProductStock) {
+          currentProductStock.quantity -= item.quantity;
+          await currentProductStock.save();          
+        }
+        else return false;
+      }
+      
           return true;
     }
     else return false;

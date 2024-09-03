@@ -155,11 +155,11 @@ let VerifyPayment=async(req: Request,res: Response)=>{
                 }
                 
                 //update stock
-                let updateStock=UpdateProductStock(orderObj);
+                let updateStock=await UpdateProductStock(orderObj._id,orderObj.items);
 
                 //clear cart
-                let removeCart=ClearUserCart(orderObj.userId)
-
+                let removeCart=await ClearUserCart(orderObj.userId)
+                
                 let saveData= Promise.all([await paymentObj.save(), await transaction.save(),await orderObj.save()])
 
                 return res.status(200).json({
