@@ -14,7 +14,6 @@ let IsProductsAvailable = async (orderObj: any): Promise<Boolean> => {
       }
       return true;
   }
-
   return true;
 };
 
