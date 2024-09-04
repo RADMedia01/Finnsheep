@@ -1,4 +1,5 @@
 import { Query } from 'mongoose';
+import { ParsedQs } from 'qs';
 
 interface QueryString {
     [key: string]: string | number | undefined;
@@ -8,16 +9,16 @@ interface QueryString {
     fields?: string;
 }
 class APIFeatures<T> {
-  private query: any;
-  private queryString: any;
+  public query: any;
+  public queryString: ParsedQs;
 
-  constructor(query: Query<T[], T>, queryString: QueryString) {
+  constructor(query: Query<T[], T>, queryString: ParsedQs) {
     this.query = query;
     this.queryString = queryString;
   }
 
   filter(): this {
-    const queryObj = { ...this.queryString };
+    const queryObj = { ...this.queryString } as { [key: string]: any };
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach(el => delete queryObj[el]);
 

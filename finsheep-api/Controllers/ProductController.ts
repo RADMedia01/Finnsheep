@@ -10,6 +10,7 @@ import { ProductsVariation } from "../Models/ProductsVariation";
 import { AddSingleProductToStock } from "../Services/StockService";
 import catchAsync from "../utils/CatchAsync";
 import AppError from "../utils/AppError";
+import APIFeatures from "../utils/ApiFeatures";
 
 
 let AddUpdateProduct = async (req: Request, res: Response) => {
@@ -117,7 +118,8 @@ let GetProducts = async (req: Request, res: Response) => {
   const search = String(req.query.search) || "";
   const currentPage = Number(req.query.page) || 1;
   const category =req.query.category || ``;
-
+  // let filter = {};
+  // if (req.params.productId) filter = { product: req.params.productId };
   try {
 
     let filter:any = {
@@ -142,7 +144,14 @@ let GetProducts = async (req: Request, res: Response) => {
       .sort({ createdOn: -1 })
       .skip((currentPage - 1) * limit)
       .limit(limit);
+    // const features = new APIFeatures(Product.find(filter), req.query)
+    // .filter()
+    // .sort()
+    // .paginate();
 
+  //let productList = await features.query.populate("category");
+    // console.log('Query:', features.query);
+    // console.log('Products:', productList);
     //add clg cover img
     if (productList.length > 1) {
       for (let idx = 0; idx < productList.length; idx++) {

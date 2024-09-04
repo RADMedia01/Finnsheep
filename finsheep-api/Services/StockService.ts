@@ -14,7 +14,6 @@ let IsProductsAvailable = async (orderObj: any): Promise<Boolean> => {
       }
       return true;
   }
-
   return true;
 };
 
@@ -22,15 +21,25 @@ let UpdateProductStock = async(orderId:string,cartItems: any[]): Promise<Boolean
   try {
     if(cartItems.length>0){
       for(let item of cartItems) {
-        let currentProductStock = await ProductsVariation.findById(item.productVariationId);
-        if (currentProductStock) {
-          currentProductStock.quantity -= item.quantity;
-          await currentProductStock.save();          
-        }
-        else return false;
+        let stockUpdate=await Promise.all([await ProductsVariation.findById(item.productVariationId),
+          await StockMaster.findOne({variation:item.productVariationId})
+        ])
+        if(stockUpdate){
+          let prodVariationData=stockUpdate[0];
+          let stockMasterData=stockUpdate[1];
+          prodVariationData.quantity-=item.quantity;
+          stockMasterData.quantity=prodVariationData.quantity;
+          stockMasterData.modifiedOn=Date.now();
+          prodVariationData.modifiedOn=Date.now();
+
+          await Promise.all([
+            await prodVariationData.save(),
+            await stockMasterData.save(),
+          ])
+        } else return false;
       }
       
-          return true;
+    return true;
     }
     else return false;
   } catch (error: any) {
