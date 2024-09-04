@@ -64,6 +64,7 @@ let CreateOrder=async (req:Request, res:Response) => {
           //payment via cash (COD)
           else{
          //update order status with payment status info 
+         console.log(model)
           let paymentObj=await Payment.create({
             orderId:model.id,
             userId:req.body.userId,
@@ -72,7 +73,7 @@ let CreateOrder=async (req:Request, res:Response) => {
             paymentStatus:PaymentStatus.COD,
           })
 
-          let order=await Order.findById(model.id)
+          let order=await Order.findOne({id: model.id})
          
           if(order){
             order.status=OrderStatus.OrderReceived;
