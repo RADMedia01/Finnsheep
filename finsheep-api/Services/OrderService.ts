@@ -1,3 +1,4 @@
+import { ProductsVariation } from "../Models/ProductsVariation";
 import { BoxInfoList } from "../Common/Common";
 import { IBoxItem } from "../Common/Common";
 import { StockMaster } from "../Models/StockMaster";
@@ -9,10 +10,9 @@ const ChooseBox=(cartItems:any[])=>{
     if(cartItems.length>0){
   
       let totalVolumeOfProducts=cartItems.reduce(async(volume:number,item:any)=>{
-        let itemStockInfo=await StockMaster.findOne({product:item.productId})
+        let itemStockInfo=await ProductsVariation.findById(item.productVariationId)
         if(itemStockInfo){
-          let productVolume=itemStockInfo.length*itemStockInfo.height*itemStockInfo.width;
-          volume+=productVolume;
+          volume+=itemStockInfo.length*itemStockInfo.height*itemStockInfo.width;
         } 
       },0);
   
@@ -52,7 +52,7 @@ const ChooseBox=(cartItems:any[])=>{
       return boxesRequired;
     
     }
-  }
+}
 
 
 
