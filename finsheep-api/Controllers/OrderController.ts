@@ -187,12 +187,11 @@ let CancelOrder=async(req:Request, res:Response)=>{
   }
 }
 
-let ChooseBoxForOrder=(req:Request, res:Response)=>{
+let ChooseBoxForOrder=async(req:Request, res:Response)=>{
   const { cartItems}=req.body
   try {   
     
-    let boxes = ChooseBox(cartItems)
-
+    let boxes = await ChooseBox(cartItems)
     return res.status(200).json({
       success:true, data:boxes
     })
@@ -203,11 +202,6 @@ let ChooseBoxForOrder=(req:Request, res:Response)=>{
       })
   }
 }
-
-let CalculateVolume=(length:number,width:number,height:number):number=>{
-  return Number(length*width*height);
-}
-
 
 
 export {

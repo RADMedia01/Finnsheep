@@ -1,32 +1,7 @@
-import { ProductsVariation } from "../Models/ProductsVariation";
-import { BoxInfoList } from "../Common/Common";
-import { IBoxItem } from "../Common/Common";
+import { BoxInfoList , IBoxItem } from "../Common/Common";
+import { totalVolumeOfProducts } from "./ProductService";
 
-
-
-//choose box type from product orders
-
-const totalVolumeOfProducts=
-  async(cartItems:any[])=>{
-    
-    let totalVolumeOfProducts = 0; //sum of producr volume * quantity
-      try {
-        if(cartItems.length>0){
-          for(let item of cartItems){
-            let itemStockInfo=await ProductsVariation.findById(item.productVariationId)
-            if(itemStockInfo){
-              totalVolumeOfProducts+=itemStockInfo.length*itemStockInfo.height*itemStockInfo.width*item.quantity;
-            } 
-          }
-        }
-        return totalVolumeOfProducts
-      } catch (error: any) {
-        throw new Error
-      }
-      
-}
-
-const ChooseBox=async(cartItems:any[])=>{
+const ChooseBox=async(cartItems:any[]):Promise<IBoxItem[]>=>{
     let boxesRequired:IBoxItem[]=[] 
       let remainingVolume:number=await totalVolumeOfProducts(cartItems);
       let SmallBox=BoxInfoList[0];
@@ -62,11 +37,10 @@ const ChooseBox=async(cartItems:any[])=>{
   
          
       }
-      console.log(boxesRequired);
-      console.log(remainingVolume);
       return boxesRequired;
     }
 
   export {
     ChooseBox
   }
+
