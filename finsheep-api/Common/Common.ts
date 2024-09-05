@@ -43,23 +43,23 @@ export const BoxInfoList:IBoxItem[]=[{
     width:5,
     height:5,
     price:5,
-    volume:5
+    volume:125
 },
 {
     type:"Medium",
-    length:5,
-    width:5,
-    height:5,
+    length:8,
+    width:8,
+    height:8,
     price:5,
-    volume:5
+    volume:512
 },
 {
     type:"Large",
-    length:5,
-    width:5,
-    height:5,
+    length:10,
+    width:10,
+    height:10,
     price:5,
-    volume:5
+    volume:1000,
 }]
 
 
