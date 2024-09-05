@@ -11,9 +11,7 @@ const ChooseBox=(cartItems:any[])=>{
   
       let totalVolumeOfProducts=cartItems.reduce(async(volume:number,item:any)=>{
         let itemStockInfo=await ProductsVariation.findById(item.productVariationId)
-        if(itemStockInfo){
-          volume+=itemStockInfo.length*itemStockInfo.height*itemStockInfo.width;
-        } 
+        if(itemStockInfo) volume+=itemStockInfo.length*itemStockInfo.height*itemStockInfo.width;
       },0);
   
       let boxVolumes:number[]=[];
