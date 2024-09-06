@@ -39,27 +39,27 @@ export enum StockStatus{
 
 export const BoxInfoList:IBoxItem[]=[{
     type:"Small",
-    length:5,
-    width:5,
-    height:5,
+    length:12.5, //reduced 1.5 from actual size
+    width:5.5,
+    height:10.5,
     price:5,
-    volume:125
+    volume:721 //.875 adjusted
 },
 {
     type:"Medium",
-    length:8,
-    width:8,
-    height:8,
+    length:16.5,
+    width:10.5,
+    height:8.5,
     price:5,
-    volume:512
+    volume:1472 //.625 adjusted
 },
 {
     type:"Large",
-    length:10,
-    width:10,
-    height:10,
+    length:19.5,
+    width:11.5,
+    height:11.5,
     price:5,
-    volume:1000,
+    volume:2578,//.875 adjusted
 }]
 
 
