@@ -1,13 +1,13 @@
 import { Request,Response,NextFunction } from "express";
 import { CreateRazorPayInstance } from "../Config/RazorPayConfig"
 import { Order } from "../Models/Order";
-import { baseUrl, OrderStatus, PaymentStatus,BoxInfoList,IBoxItem } from "../Common/Common";
-import { StockMaster } from "../Models/StockMaster";
+import { baseUrl, OrderStatus, PaymentStatus } from "../Common/Common";
 import { Product } from "../Models/Product";
 import { Payment } from "../Models/Payment";
 import { IsProductsAvailable, UpdateProductStock } from "../Services/StockService";
-import { ClearUserCart } from "../Services/CartService";
-import { ChooseBox } from "../Services/OrderService";
+import { CalculateOrderSummary, ChooseBox } from "../Services/OrderService";
+import { PaymentWithSquare } from "../Services/PaymentService";
+//import uuidv4 from "uuidv4"
 const razorpayInstance=CreateRazorPayInstance();
 
 export function CalculateOrderTotalPrice(order:any){
@@ -36,69 +36,64 @@ let CreateOrder=async (req:Request, res:Response) => {
       receipt: `order_`, //append order id
       payment_capture: 1,
     };
+
+    //get subtotal, tax and shipping
+    let orderSummary=await CalculateOrderSummary(req.body.items,req.body)
+
   
     try {
         
-         
-         //creating a order in razorpay
-      //console.log(options);
-      const createdOrder = await razorpayInstance.orders.create(options);
-      //console.log(createdOrder);
-      if(createdOrder){         
-         //create order object and save in db for info
-         let model=await Order.create({
-            id:createdOrder.id,
-            total:req.body.total,
-            subTotal:req.body.subTotal,
-            deliveryCharges:req.body.deliveryCharges,
-            items:req.body.items,
-            userId:req.body.userId,
-            shippingAddress:req.body.shippingAddress,
-            paymentMethod:req.body.paymentMethod,            
-         })
+      //create order 
+      let model=await Order.create({
+        total:req.body.total,
+        subTotal:{
+          tax:orderSummary.tax,
+          itemCost:orderSummary.subTotal
+        },
+        deliveryCharges:orderSummary.shipping,
+        items:req.body.items,
+        userId:req.body.userId,
+        shippingAddress:req.body.shippingAddress,
+        paymentMethod:req.body.paymentMethod,            
+     })
 
-         if(model.paymentMethod!='cash') {
-            return res.status(200).json({success:true,data:createdOrder})
-         }
-      
-          //payment via cash (COD)
-          else{
-         //update order status with payment status info 
-         console.log(model)
-          let paymentObj=await Payment.create({
-            orderId:model.id,
-            userId:req.body.userId,
-            amount:req.body.total,
-            paymentMethod:'cash',
-            paymentStatus:PaymentStatus.COD,
-          })
-
-          let order=await Order.findOne({id: model.id})
-         
-          if(order){
-            order.status=OrderStatus.OrderReceived;
-            order.paymentStatus=PaymentStatus.COD;
-            await order.save()
-          }
-
-          //update product stock
-          let updateStock=await UpdateProductStock(order._id,req.body.items);
-          if(!updateStock)  return res.status(400).json({success:false,message:`Stock not updated`})
-          //clear user cart
-
-          //ClearUserCart(req.body.userId);
-          return res.status(200).json({
-            success:true,
-            message:`Order Created with Cash on delivery`
-          })
-        }
-      }
+     if(model.paymentMethod!='cash') {
+      //got to payment endpoint
+        await PaymentWithSquare(req.body)    
+        return res.status(200).json({success:true,data:model})
+     }
+  
+      //payment via cash (COD)
       else{
-        return res.status(400).json({
-          success:false,
-          message:`Problem while creating order`
-        })
+     //update order status with payment status info 
+     console.log(model)
+      let paymentObj=await Payment.create({
+        orderId:model.id,
+        userId:req.body.userId,
+        amount:req.body.total,
+        paymentMethod:'cash',
+        paymentStatus:PaymentStatus.COD,
+      })
+
+      let order=await Order.findOne({id: model.id})
+     
+      if(order){
+        order.status=OrderStatus.OrderReceived;
+        order.paymentStatus=PaymentStatus.COD;
+        await order.save()
       }
+
+      //update product stock
+      let updateStock=await UpdateProductStock(order._id,req.body.items);
+      if(!updateStock)  return res.status(400).json({success:false,message:`Stock not updated`})
+      //clear user cart
+
+      //ClearUserCart(req.body.userId);
+      return res.status(200).json({
+        success:true,
+        message:`Order Created with Cash on delivery`
+      })
+    }
       
     } catch (err:any) {
       console.log(err.message);
@@ -187,12 +182,11 @@ let CancelOrder=async(req:Request, res:Response)=>{
   }
 }
 
-let ChooseBoxForOrder=(req:Request, res:Response)=>{
+let ChooseBoxForOrder=async(req:Request, res:Response)=>{
   const { cartItems}=req.body
   try {   
     
-    let boxes = ChooseBox(cartItems)
-
+    let boxes = await ChooseBox(cartItems)
     return res.status(200).json({
       success:true, data:boxes
     })
@@ -203,11 +197,6 @@ let ChooseBoxForOrder=(req:Request, res:Response)=>{
       })
   }
 }
-
-let CalculateVolume=(length:number,width:number,height:number):number=>{
-  return Number(length*width*height);
-}
-
 
 
 export {

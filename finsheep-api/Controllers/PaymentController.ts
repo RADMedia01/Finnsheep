@@ -5,12 +5,10 @@ require('dotenv').config()
 import crypto from 'crypto'
 import { Order } from "../Models/Order";
 import { Payment } from "../Models/Payment";
-import { OrderStatus, PaymentStatus, TransactionStatus, baseUrl, razorPayGatewayUrl } from "../Common/Common";
-import { Product } from '../Models/Product';
-import { StockMaster } from '../Models/StockMaster';
+import { OrderStatus, PaymentStatus, TransactionStatus, baseUrl, } from "../Common/Common";
 import { UpdateProductStock } from '../Services/StockService';
 import { ClearUserCart } from '../Services/CartService';
-
+import { PaymentWithSquare } from '../Services/PaymentService';
 
 
 const razorpayInstance=CreateRazorPayInstance();
@@ -38,6 +36,8 @@ let NewPayment=async(req: Request,res: Response) =>{
 
         //different for different methods
 
+        
+   
 
         const paymentData = {
             amount: order.amount*100, // amount in paise (e.g., 500 = ₹5)  
@@ -51,6 +51,7 @@ let NewPayment=async(req: Request,res: Response) =>{
             }
         }
 
+        await PaymentWithSquare(req.body);
         
         let payment=await razorpayInstance.payment.create(paymentData);
         if(payment){
@@ -280,6 +281,8 @@ let Webhook=async(req:Request, res:Response) => {
     }
 
 }
+
+
 
 export {
     NewPayment,

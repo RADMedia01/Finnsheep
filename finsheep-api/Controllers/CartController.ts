@@ -159,7 +159,7 @@ let GetUserCartData=async(req:Request, res:Response)=>{
                     price: product.productId.price,
                     quantity: product.quantity,
                     subTotal: product.productId.price*product.quantity,
-                  })),
+                })),
                 total:userCart.totalPrice,
                 itemCount:userCart.items.length
             })
@@ -176,17 +176,6 @@ let GetUserCartData=async(req:Request, res:Response)=>{
         })
     }
 }
-
-//remove cart items after placing successful order from user
-// let RemoveCart=async(req:Request, res:Response)=>{
-//     const {id}=req.params;
-//     try {
-        
-//     } catch (err:any) {
-        
-//     }
-// }
-
 
 
 

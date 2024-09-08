@@ -2,6 +2,109 @@
 # yarn lockfile v1
 
 
+"@apimatic/authentication-adapters@^0.5.4":
+  version "0.5.4"
+  resolved "https://registry.npmjs.org/@apimatic/authentication-adapters/-/authentication-adapters-0.5.4.tgz"
+  integrity sha512-UP4+LfvLQJjgtKaGr+hgQogM3JJGb9llEX8v9OVUp0xmiIVI8zt0m69nz/vk4GaNe4U6AvS3D4x0YiE5JtLVkg==
+  dependencies:
+    "@apimatic/core-interfaces" "^0.2.6"
+    "@apimatic/http-headers" "^0.3.2"
+    "@apimatic/http-query" "^0.3.2"
+    tslib "^2.1.0"
+
+"@apimatic/axios-client-adapter@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.npmjs.org/@apimatic/axios-client-adapter/-/axios-client-adapter-0.3.4.tgz"
+  integrity sha512-vRluB6E7AHnGRZp/ntPcvdj01RrxUj2ylzDR6ejsT/xbXf0SOw2awSDOEq1ZsglzakNvzbuGaWIBY+e2yq8e/Q==
+  dependencies:
+    "@apimatic/convert-to-stream" "^0.1.2"
+    "@apimatic/core-interfaces" "^0.2.6"
+    "@apimatic/file-wrapper" "^0.3.2"
+    "@apimatic/http-headers" "^0.3.2"
+    "@apimatic/http-query" "^0.3.2"
+    "@apimatic/json-bigint" "^1.2.0"
+    "@apimatic/schema" "^0.7.12"
+    axios "^1.6.0"
+    detect-browser "^5.3.0"
+    detect-node "^2.0.4"
+    form-data "^3.0.0"
+    lodash.flatmap "^4.5.0"
+    tiny-warning "^1.0.3"
+    tslib "^2.1.0"
+
+"@apimatic/convert-to-stream@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/@apimatic/convert-to-stream/-/convert-to-stream-0.0.2.tgz"
+  integrity sha512-1DRg17ItExfMYsXwjt6WIjJSCgV5RGg3fHPLgYD44/YmiU+7suWj7YfPKKUqmNcnJ/AvMh4lG1+tHrfOT01zXw==
+
+"@apimatic/convert-to-stream@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/@apimatic/convert-to-stream/-/convert-to-stream-0.1.2.tgz"
+  integrity sha512-4UzlEIbecy1Qubbx8KXVerpt1w/KD4iEtHRfE28p0eMEU6RoLksnHVONp5i4uycvfNJsA0z0kiTBRtXkmNsWag==
+
+"@apimatic/core-interfaces@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.npmjs.org/@apimatic/core-interfaces/-/core-interfaces-0.2.6.tgz"
+  integrity sha512-XbqyftDB4GO3rVOablFt7RnF03gLdctUgLT0flDP5JI3E4r+Cn2O66nFufWfSFhI/Vr0vJbVjjDG2xzZ2bHBjQ==
+  dependencies:
+    "@apimatic/file-wrapper" "^0.3.2"
+    tslib "^2.1.0"
+
+"@apimatic/core@^0.10.12":
+  version "0.10.13"
+  resolved "https://registry.npmjs.org/@apimatic/core/-/core-0.10.13.tgz"
+  integrity sha512-vqzaHTY+wq4agQZXmQYlkh6VmWdFm6SMlHtiQ84dbj9AWalq/N++ddgRlwUdd7H98/sJj7sJd3+5xsNhnZlKTg==
+  dependencies:
+    "@apimatic/convert-to-stream" "^0.0.2"
+    "@apimatic/core-interfaces" "^0.2.6"
+    "@apimatic/file-wrapper" "^0.3.2"
+    "@apimatic/http-headers" "^0.3.2"
+    "@apimatic/http-query" "^0.3.2"
+    "@apimatic/json-bigint" "^1.2.0"
+    "@apimatic/schema" "^0.7.12"
+    detect-browser "^5.3.0"
+    detect-node "^2.0.4"
+    form-data "^3.0.0"
+    json-ptr "^3.1.0"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.flatmap "^4.5.0"
+    tiny-warning "^1.0.3"
+    tslib "^2.1.0"
+
+"@apimatic/file-wrapper@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@apimatic/file-wrapper/-/file-wrapper-0.3.2.tgz"
+  integrity sha512-pU2n9eEw5lIb4qWbqfgNmjrWAw8oI6I9jduE97Qpoe71+GSFZ2DWY0VBo+LXTYVm+fQBKpfcXAdheF6Ec3ilOA==
+  dependencies:
+    tslib "^2.1.0"
+
+"@apimatic/http-headers@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@apimatic/http-headers/-/http-headers-0.3.2.tgz"
+  integrity sha512-n6f+hSKercj29wvlqGg0gjNGZbXbpcDKelHya0SekBH0072eCqo8ndXdQ2PVsTUjWR+yErF2ZqagwX7aPhJICQ==
+  dependencies:
+    tslib "^2.1.0"
+
+"@apimatic/http-query@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@apimatic/http-query/-/http-query-0.3.2.tgz"
+  integrity sha512-rT7HaoaLGraIeZE90FWo7ebwrYzW1FoaOu8NyUQKBiSo9rA6hmHcUPakUPCWIxh53tTqEnJVTSopMudpGVLZXQ==
+  dependencies:
+    "@apimatic/file-wrapper" "^0.3.2"
+    tslib "^2.1.0"
+
+"@apimatic/json-bigint@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@apimatic/json-bigint/-/json-bigint-1.2.0.tgz"
+  integrity sha512-+bmVzYMdZu0Ya5L+my4FXFUih54OvQA/qlZsFOYdOoostyUuB27UDrVWQs/WVCmS0ADdo5vTU0eeTrrBkHoySw==
+
+"@apimatic/schema@^0.7.12":
+  version "0.7.12"
+  resolved "https://registry.npmjs.org/@apimatic/schema/-/schema-0.7.12.tgz"
+  integrity sha512-JiIabKJuEKAF5QGFPwx2kG9vfTbQW7OLKxhRXbcIv8VvaH1DX/AdAfsDq3/+qCTmu6LpeNJmLWs8fwh8YRcsaQ==
+  dependencies:
+    tslib "^2.1.0"
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz"
@@ -161,6 +264,11 @@
   dependencies:
     undici-types "~6.13.0"
 
+"@types/node@^14.14.30":
+  version "14.18.63"
+  resolved "https://registry.npmjs.org/@types/node/-/node-14.18.63.tgz"
+  integrity sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==
+
 "@types/nodemailer@^6.4.15":
   version "6.4.15"
   resolved "https://registry.npmjs.org/@types/nodemailer/-/nodemailer-6.4.15.tgz"
@@ -194,6 +302,11 @@
     "@types/http-errors" "*"
     "@types/node" "*"
     "@types/send" "*"
+
+"@types/uuid@8.3.4":
+  version "8.3.4"
+  resolved "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.4.tgz"
+  integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
 
 "@types/webidl-conversions@*":
   version "7.0.3"
@@ -255,7 +368,7 @@ asynckit@^0.4.0:
   resolved "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
-axios@^1.6.8:
+axios@^1.6.0, axios@^1.6.8:
   version "1.7.3"
   resolved "https://registry.npmjs.org/axios/-/axios-1.7.3.tgz"
   integrity sha512-Ar7ND9pU99eJ9GpoGQKhKf58GpUOgnzuaB7ueNQ5BMi0p+LZ5oaEnfF999fAArcTIBwXTCHAmGcHOZJaWPq9Nw==
@@ -477,6 +590,16 @@ destroy@1.2.0:
   resolved "https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz"
   integrity sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==
 
+detect-browser@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.npmjs.org/detect-browser/-/detect-browser-5.3.0.tgz"
+  integrity sha512-53rsFbGdwMwlF7qvCt0ypLM5V5/Mbl0szB7GPN8y9NCcbknYOeVVXdrXEq+90IwAfrrzt6Hd+u2E2ntakICU8w==
+
+detect-node@^2.0.4:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/detect-node/-/detect-node-2.1.0.tgz"
+  integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
+
 diff@^4.0.1:
   version "4.0.2"
   resolved "https://registry.npmjs.org/diff/-/diff-4.0.2.tgz"
@@ -587,6 +710,15 @@ follow-redirects@^1.15.6:
   version "1.15.6"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.6.tgz"
   integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
+
+form-data@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/form-data/-/form-data-3.0.1.tgz"
+  integrity sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
 
 form-data@^4.0.0:
   version "4.0.0"
@@ -739,6 +871,11 @@ joi@^17.13.3:
     "@sideway/formula" "^3.0.1"
     "@sideway/pinpoint" "^2.0.0"
 
+json-ptr@^3.1.0:
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/json-ptr/-/json-ptr-3.1.1.tgz"
+  integrity sha512-SiSJQ805W1sDUCD1+/t1/1BIrveq2Fe9HJqENxZmMCILmrPI7WhS/pePpIOx85v6/H2z1Vy7AI08GV2TzfXocg==
+
 jsonwebtoken@^9.0.2:
   version "9.0.2"
   resolved "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.2.tgz"
@@ -776,6 +913,16 @@ kareem@2.6.3:
   version "2.6.3"
   resolved "https://registry.npmjs.org/kareem/-/kareem-2.6.3.tgz"
   integrity sha512-C3iHfuGUXK2u8/ipq9LfjFfXFxAZMQJJq7vLS45r3D9Y2xQ/m4S8zaR4zMLFWh9AsNPXmcFfUDhTEO8UIC/V6Q==
+
+lodash.defaultsdeep@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.npmjs.org/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz"
+  integrity sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA==
+
+lodash.flatmap@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npmjs.org/lodash.flatmap/-/lodash.flatmap-4.5.0.tgz"
+  integrity sha512-/OcpcAGWlrZyoHGeHh3cAoa6nGdX6QYtmzNP84Jqol6UEQQ2gIaU3H+0eICcjcKGl0/XF8LWOujNn9lffsnaOg==
 
 lodash.includes@^4.3.0:
   version "4.3.0"
@@ -1188,6 +1335,18 @@ sparse-bitfield@^3.0.3:
   dependencies:
     memory-pager "^1.0.2"
 
+square@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.npmjs.org/square/-/square-38.0.0.tgz"
+  integrity sha512-hoMEKtO5c+AXjJRX85qYmTebij2vStp0fSPk1jTdGB0bSGK/9BcVrxGEgOjZ8OWaA2APunuERFYS+mRxfKIbVQ==
+  dependencies:
+    "@apimatic/authentication-adapters" "^0.5.4"
+    "@apimatic/axios-client-adapter" "^0.3.4"
+    "@apimatic/core" "^0.10.12"
+    "@apimatic/json-bigint" "^1.2.0"
+    "@apimatic/schema" "^0.7.12"
+    "@types/node" "^14.14.30"
+
 statuses@2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz"
@@ -1211,6 +1370,11 @@ supports-color@^5.5.0:
   integrity sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==
   dependencies:
     has-flag "^3.0.0"
+
+tiny-warning@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
+  integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
 to-regex-range@^5.0.1:
   version "5.0.1"
@@ -1255,6 +1419,11 @@ ts-node@^10.9.2:
     v8-compile-cache-lib "^3.0.1"
     yn "3.1.1"
 
+tslib@^2.1.0:
+  version "2.7.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.7.0.tgz"
+  integrity sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==
+
 type-is@^1.6.4, type-is@~1.6.18:
   version "1.6.18"
   resolved "https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz"
@@ -1297,6 +1466,19 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
+
+uuid@8.3.2:
+  version "8.3.2"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuidv4@^6.2.13:
+  version "6.2.13"
+  resolved "https://registry.npmjs.org/uuidv4/-/uuidv4-6.2.13.tgz"
+  integrity sha512-AXyzMjazYB3ovL3q051VLH06Ixj//Knx7QnUSi1T//Ie3io6CpsPu9nVMOx5MoLWh6xV0B9J0hIaxungxXUbPQ==
+  dependencies:
+    "@types/uuid" "8.3.4"
+    uuid "8.3.2"
 
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"

@@ -1,21 +1,9 @@
-import { ProductsVariation } from "../Models/ProductsVariation";
-import { BoxInfoList } from "../Common/Common";
-import { IBoxItem } from "../Common/Common";
-import { StockMaster } from "../Models/StockMaster";
+import { BoxInfoList , IBoxItem } from "../Common/Common";
+import { totalVolumeOfProducts } from "./ProductService";
 
-//choose box type from product orders
-const ChooseBox=(cartItems:any[])=>{
+const ChooseBox=async(cartItems:any[]):Promise<IBoxItem[]>=>{
     let boxesRequired:IBoxItem[]=[] 
-  
-    if(cartItems.length>0){
-  
-      let totalVolumeOfProducts=cartItems.reduce(async(volume:number,item:any)=>{
-        let itemStockInfo=await ProductsVariation.findById(item.productVariationId)
-        if(itemStockInfo) volume+=itemStockInfo.length*itemStockInfo.height*itemStockInfo.width;
-      },0);
-  
-      let boxVolumes:number[]=[];
-      let remainingVolume:number=totalVolumeOfProducts;   
+      let remainingVolume:number=await totalVolumeOfProducts(cartItems);
       let SmallBox=BoxInfoList[0];
       let MediumBox=BoxInfoList[1];
       let LargeBox=BoxInfoList[2];
@@ -24,21 +12,24 @@ const ChooseBox=(cartItems:any[])=>{
         //product is bigger than largest available box so get another one
           if(remainingVolume>LargeBox.volume){
             //get another box
-            remainingVolume-=LargeBox.volume;
             boxesRequired.push(BoxInfoList[2])
+            remainingVolume-=LargeBox.volume;
             continue;
           }
           else{
             if(remainingVolume<SmallBox.volume) {
               boxesRequired.push(BoxInfoList[0])
+              remainingVolume-=SmallBox.volume;
               break;
             }
             if(remainingVolume>SmallBox.volume && remainingVolume<MediumBox.volume){
               boxesRequired.push(BoxInfoList[1])
+              remainingVolume-=MediumBox.volume;
               break;
             }
             if(remainingVolume>MediumBox.volume && remainingVolume<LargeBox.volume) {
               boxesRequired.push(BoxInfoList[2])
+              remainingVolume-=LargeBox.volume;
               break;
             }
   
@@ -46,14 +37,10 @@ const ChooseBox=(cartItems:any[])=>{
   
          
       }
-  
       return boxesRequired;
-    
     }
-}
-
-
 
   export {
     ChooseBox
   }
+
