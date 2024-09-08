@@ -26,7 +26,6 @@ let BulkStockUpload=async(req: Request, res: Response)=>{
     .then(() => {
       const worksheet = workbook.worksheets[0];
       const data = [];
-
       worksheet.eachRow((row:any, rowNumber:Number) => {
         const rowData: any[] = [];
         row.eachCell((cell:any, cellNumber:Number) => {
