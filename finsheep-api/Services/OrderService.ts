@@ -1,9 +1,10 @@
-import { BoxInfoList , IBoxItem } from "../Common/Common";
-import { totalVolumeOfProducts } from "./ProductService";
+import { ProductsVariation } from "../Models/ProductsVariation";
+import { BoxInfoList , IBoxItem, OriginAddress } from "../Common/Common";
+import { TotalVolumeOfProducts } from "./ProductService";
 
 const ChooseBox=async(cartItems:any[]):Promise<IBoxItem[]>=>{
     let boxesRequired:IBoxItem[]=[] 
-      let remainingVolume:number=await totalVolumeOfProducts(cartItems);
+      let remainingVolume:number=await TotalVolumeOfProducts(cartItems);
       let SmallBox=BoxInfoList[0];
       let MediumBox=BoxInfoList[1];
       let LargeBox=BoxInfoList[2];
@@ -40,7 +41,80 @@ const ChooseBox=async(cartItems:any[]):Promise<IBoxItem[]>=>{
       return boxesRequired;
     }
 
+const CalculateOrderSummary=async(cartItems:any[],payload:any)=>{
+
+  try {
+    let OrderSummary=await Promise.all([
+      await CalculateSubTotal(cartItems),
+      await CalculateTax(cartItems,payload),
+      await CalculateShipping(cartItems),
+    ])
+
+    return {
+      subTotal:OrderSummary[0],
+      tax:OrderSummary[1],
+      shipping:OrderSummary[2]
+    }
+
+  } catch (error:any) {
+    
+  }
+
+ 
+
+} 
+
+const CalculateSubTotal=async(cartItems:any[])=>{
+  let total=0;
+  try {
+    if(cartItems.length>0){
+      for(let item of cartItems){
+        let currentStock=await ProductsVariation.findById(item.productVariationId)
+        if(currentStock){
+          total+=currentStock.price*item.quantity
+        }
+      }
+    }
+
+    return total;
+  } catch (error:any) {
+    
+  }
+}
+
+const CalculateTax=async(cartItems:any[],payload:any)=>{
+  let tax=0
+  try {
+    const request={
+      "apiLoginID": "YOUR_API_LOGIN_ID",
+      "apiToken": "YOUR_API_TOKEN",
+      "cartID": "YOUR_CART_ID",
+      "customerID": payload.userId,
+      "deliveredBySeller": true,
+      "exemptionNo": "YOUR_EXEMPTION_NO",
+      "items": cartItems,
+      "origin": OriginAddress,
+      "destination": payload.shippingAddress
+    }
+
+    //get tax details from taxcloud api
+
+
+
+    return tax;
+  } catch (error:any) {
+    
+  }
+}
+
+const CalculateShipping=async(cartItems:any[])=>{
+  let shipping=0;
+  return shipping;
+}
+
+
   export {
-    ChooseBox
+    ChooseBox,
+    CalculateOrderSummary
   }
 

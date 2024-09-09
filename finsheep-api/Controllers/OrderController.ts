@@ -47,10 +47,10 @@ let CreateOrder=async (req:Request, res:Response) => {
       let model=await Order.create({
         total:req.body.total,
         subTotal:{
-          tax:orderSummary.tax,
-          itemCost:orderSummary.subTotal
+          tax:orderSummary?.tax,
+          itemCost:orderSummary?.subTotal
         },
-        deliveryCharges:orderSummary.shipping,
+        deliveryCharges:orderSummary?.shipping,
         items:req.body.items,
         userId:req.body.userId,
         shippingAddress:req.body.shippingAddress,
