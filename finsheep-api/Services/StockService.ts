@@ -84,6 +84,7 @@ let BulkUpload=async(file:Express.Multer.File)=>{
           rowItems.push(rowData);
         });
       })
+      return rowItems[0];
 
       if(rowItems.length>0){
 
@@ -133,7 +134,7 @@ let BulkUpload=async(file:Express.Multer.File)=>{
 
 
   } catch (error:any) {
-    
+      return error
   }
 }
 

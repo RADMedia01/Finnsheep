@@ -12,6 +12,7 @@ import userRouter from './Routes/UserRoute';
 import productVariationRouter from './Routes/ProductVariationRouter';
 import blogRouter from './Routes/BlogRouter';
 import reviewRouter from './Routes/ReviewRouter';
+import stockMasterRouter from './Routes/StockMasterRoute';
 
 dotenv.config();
 const port=process.env.PORT || 3000;
@@ -37,7 +38,7 @@ app.use('/api/payment/',paymentRouter)
 app.use('/api/user/',userRouter)
 app.use('/api/blog/', blogRouter)
 app.use('/api/review/', reviewRouter)
-
+app.use('/api/stock/', stockMasterRouter)
 
 app.listen(port,async()=>{
     await DbConnect();

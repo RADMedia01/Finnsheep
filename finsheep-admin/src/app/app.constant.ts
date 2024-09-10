@@ -14,7 +14,9 @@ export const  AppConstants={
     blogDetails:`/blog/`,
     upsertBlog:`/blog/upsert`,
     deleteBlog:`/blog/`,
-
+    //Stock bulk Upload
+    bulkUpload: `/stock/bulkUpload`,
+    
     //category
     categoryList:`/category/`,
     categoryDetails:`/category/`,

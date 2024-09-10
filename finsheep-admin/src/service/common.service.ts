@@ -206,4 +206,8 @@ NewPayment(orderId:string,data:any){
   return axios.post(`${AppConstants.baseUrl}${AppConstants.newPayment}${orderId}`,data);
 }
 
+//Stock bulk upload
+// StockBulkUpload(productId:string, data:any)
+
 }
+

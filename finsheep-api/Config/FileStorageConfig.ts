@@ -23,3 +23,5 @@ const productImageStorage = multer.diskStorage({
     }
 });
 export const uploadProductImage = multer({ storage: productImageStorage });
+
+export const bulkUpload = multer({ storage: multer.memoryStorage() });
