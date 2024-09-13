@@ -1,7 +1,8 @@
 import { StockMaster } from "../Models/StockMaster";
 import { ProductsVariation } from "../Models/ProductsVariation";
 import { ProductMetaDetails } from "../Models/ProductMetaDetails";
-const ExcelJS = require('exceljs');
+import xlsx from 'xlsx';
+import mongoose from 'mongoose';
 
 
 
@@ -69,74 +70,76 @@ let AddSingleProductToStock=(variations:[]):void=>{
   }
 }
 
-let BulkUpload=async(file:Express.Multer.File)=>{
-  let rowItems: any[][]=[]
+
+let BulkUpload = async (file: Express.Multer.File) => {
+  let rowItems: any[][] = [];
+
   try {
-      const workbook = new ExcelJS.Workbook();
-      workbook.xlsx.readFile(file.path)
-      .then(() => {
-        const worksheet = workbook.worksheets[0];
-        worksheet.eachRow((row:any, rowNumber:Number) => {
-          const rowData: any[] = [];
-          row.eachCell((cell:any, cellNumber:Number) => {
-            rowData.push(cell.value);
-          });
-          rowItems.push(rowData);
-        });
-      })
-      return rowItems[0];
+      // Read the file buffer using xlsx
+      const workbook = xlsx.read(file.buffer, { type: 'buffer' });
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows = xlsx.utils.sheet_to_json(worksheet, { header: 1 });
+      rowItems = rows.slice(1) as any[][];
+      if (rowItems.length > 0) {
+          for (let item of rowItems) {
+              if (item[0] != null) {
+                  // Convert necessary fields to appropriate types before saving
+                  let productId = item[0];
+                  let weight = item[1] != null ? Number(item[1]) : -1;
+                  let length = item[2] != null ? Number(item[2]) : -1;
+                  let width = item[3] != null ? Number(item[3]) : -1;
+                  let height = item[4] != null ? Number(item[4]) : -1;
+                  let quantity = item[5] != null ? Number(item[5]) : -1;
+                  let retailPrice = item[6] != null ? Number(item[6]) : -1;
+                  let wholesalePrice = item[7] != null ? Number(item[7]) : -1;
+                  let tax = item[8] != null ? Number(item[8]) : -1;
+                  let description = item[9] != null ? item[9] : '';
+                  let shippingCharges = item[10] != null ? Number(item[10]) : -1;
 
-      if(rowItems.length>0){
+                  // Validate ObjectId for product (assuming this is expected)
+                  if (!mongoose.Types.ObjectId.isValid(productId)) {
+                      throw new Error(`Invalid product ObjectId: ${productId}`);
+                  }
 
-      for(let item of rowItems){
-          //item is a single row of uploaded excel
-          if(item[0]!=null){
+                  // Create the product variation
+                  let prodVariation = await ProductsVariation.create({
+                      product: productId,
+                      weight,
+                      length,
+                      width,
+                      height,
+                      quantity,
+                      retailPrice,
+                      wholesalePrice,
+                      tax,
+                      description,
+                      shippingCharges,
+                  });
 
-            //add a different product variation,stock and its prod meta details
+                  let stockMaster = await StockMaster.create({
+                      product: productId,
+                      variation: prodVariation._id,
+                      quantity: prodVariation.quantity,
+                  });
 
-            let prodVariation=await ProductsVariation.create({
-              product:item[0],
-              weight:(item[1]!=null) ? item[1] :-1,
-              length:(item[2]!=null) ? item[2] :-1,
-              width:(item[3]!=null) ? item[3] :-1,
-              height:(item[4]!=null) ? item[4] :-1,
-              quantity:(item[5]!=null) ? item[5] :-1,
-              retailPrice:(item[6]!=null) ? item[6] :-1,
-              wholesalePrice:(item[7]!=null) ? item[7] :-1,
-              tax:(item[8]!=null) ? item[8] :-1,
-              description:(item[9]!=null) ? item[9] :``,
-              shippingCharges:(item[10]!=null) ? item[10] :``,
-            })
-
-            let stockMaster=await StockMaster.create({
-              product:item[0],
-              variation:prodVariation._id,
-              quantity:prodVariation.quantity
-            })
-
-            let prodItemMeta=await ProductMetaDetails.create({
-              productVariation:prodVariation._id,
-              metaSize:(item[11]!=null) ? item[11] :``,
-              metaWeight:(item[12]!=null) ? item[12] :``,
-              metaColor:(item[13]!=null) ? item[13] :``,
-              metaFabric:(item[14]!=null) ? item[14] :``,
-              metaLength:(item[15]!=null) ? item[15] :``,
-              metaGender:(item[16]!=null) ? item[16] :``,
-            })
-
+                  let prodItemMeta = await ProductMetaDetails.create({
+                      productVariation: prodVariation._id,
+                      metaSize: item[11] != null ? item[11] : '',
+                      metaWeight: item[12] != null ? item[12] : '',
+                      metaColor: item[13] != null ? item[13] : '',
+                      metaFabric: item[14] != null ? item[14] : '',
+                      metaLength: item[15] != null ? item[15] : '',
+                      metaGender: item[16] != null ? item[16] : '',
+                  });
+              }
           }
-        
       }
-
-      }
-
-
-
-
-  } catch (error:any) {
-      return error
+  } catch (error) {
+      console.error('Error processing Excel file:', error);
+      throw error;
   }
-}
+};
+
 
 export {
     IsProductsAvailable,

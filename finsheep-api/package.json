@@ -24,7 +24,8 @@
     "nodemon": "^3.1.4",
     "razorpay": "^2.9.4",
     "square": "^38.0.0",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

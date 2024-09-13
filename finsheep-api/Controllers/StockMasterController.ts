@@ -17,31 +17,33 @@ let AddSingleStock=(req: Request, res: Response)=>{
   }
 }
 
-let BulkStockUpload=async(req: Request, res: Response)=>{
-    try {
-        const file = req.files as Express.Multer.File[];
-        console.log(req.files)
-        // Read data from the uploaded Excel file using exceljs
-        console.log(file);
-        if (!file || file.length === 0) {
+
+let BulkStockUpload = async (req: Request, res: Response) => {
+  try {
+      const file = req.file as Express.Multer.File; 
+
+      if (!file) {
           return res.status(400).json({
-            status: false,
-            message: "No file uploaded",
-        });
+              status: false,
+              message: "No file uploaded",
+          });
       }
-        return res.status(200).json({
+
+      await BulkUpload(file);
+
+      return res.status(200).json({
           status: true,
-          data: file,
-        })
-        let firstRow = await BulkUpload(file[0])
-        
-    } catch (err:any) {
-        res.status(500).json({
+          message: "File processed successfully",
+      });
+
+  } catch (err: any) {
+      res.status(500).json({
           status: false,
-          message: err.message 
-        })
-    }
-}
+          message: err.message,
+      });
+  }
+};
+
 export {
   AddSingleStock,
   BulkStockUpload
