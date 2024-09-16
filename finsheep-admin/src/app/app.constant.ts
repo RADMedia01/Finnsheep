@@ -14,7 +14,9 @@ export const  AppConstants={
     blogDetails:`/blog/`,
     upsertBlog:`/blog/upsert`,
     deleteBlog:`/blog/`,
-    //Stock bulk Upload
+
+
+    //Stock
     bulkUpload: `/stock/bulkUpload`,
     
     //category
@@ -44,7 +46,8 @@ export const  AppConstants={
 
     //payment
     newPayment:`/payment/new/`,
-    verifyPayment:`/payment/verify/`
+    verifyPayment:`/payment/verify/`,
+
 }
 
 

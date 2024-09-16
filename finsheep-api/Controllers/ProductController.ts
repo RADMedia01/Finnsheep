@@ -35,9 +35,7 @@ let AddUpdateProduct = async (req: Request, res: Response) => {
 
       if(variations){
         if(variations.length>0){
-          console.log('Hiii');
-          variations.forEach((element:any) => element.product=req.body._id);
-          
+          variations.forEach((element:any) => element.product=req.body._id);          
           let addSizes=await ProductsVariation.create(variations)
           AddSingleProductToStock(addSizes);
         }
