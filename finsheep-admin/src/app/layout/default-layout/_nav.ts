@@ -66,12 +66,17 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Stock',
-    url: '/stocks',
+    url: '/stock',
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
         name: 'Stock list',
-        url: '/stock/list',
+        url: '/list',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Bulk Upload',
+        url: '/bulkUpload',
         icon: 'nav-icon-bullet'
       },
     ]

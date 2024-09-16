@@ -3,7 +3,7 @@ import { BlogsComponent } from './blog/blogs/blogs.component';
 import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './layout';
 import {AuthGuard} from '../app/authGuard.service'
-
+import { BulkuploadComponent} from './stock/bulkupload/bulkupload.component';
 
 
 export const routes: Routes = [
@@ -42,6 +42,10 @@ export const routes: Routes = [
       {
         path: 'blog/:id',
         component:BlogDetailsComponent
+      },
+      {
+        path: 'stock/bulkUpload',
+        component:BulkuploadComponent
       },
       
     ]
