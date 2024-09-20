@@ -5,23 +5,23 @@ import squareClient from '../Config/SquareConfig';
 export const PaymentWithSquare=async(payload:any)=>{
     try {
         const body = {
-            sourceId: "ccof:card-nonce-okmtbtk6gtnvxpkm", // Replace with a valid card nonce
+            sourceId: "sandbox-sq0idb-SH2ggZPf5KG-3cRx0mK0-A", // Replace with a valid card nonce
             amountMoney: {
-              amount: payload.total*100,
-              currency: payload.currency,
+            amount: 10000, //payload.total*100,
+            currency: "USD",
             },
-            idempotencyKey: payload.orderId,
+            idempotencyKey:"hj1uenqwnfasjdjasndj23849",
           };
        
           const paymentResponse = await squareClient.paymentsApi.createPayment(body);
     
           if(paymentResponse){
-    
+                return paymentResponse;
             //go to verify payment method and verify payment
     
           }
     } catch (error:any) {
-        
+        throw error;
     }
 }
 
@@ -31,7 +31,6 @@ export const VerifyPaymentWithSquare=async(paymentId:string)=>{
         if(paymentResponse){
             if(paymentResponse.result.payment.status=='COMPLETED'){
                 //SUCCESSFUL PAYMENT
-
             }
             else if(paymentResponse.result.payment.status=='FAILED'){
                 //FAILED PAYMENT

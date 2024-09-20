@@ -3,14 +3,15 @@ import { Product } from "../Models/Product";
 import { ProductImage } from "../Models/ProductImage";
 import { baseUrl, FilePaths, rootDir } from "../Common/Common";
 import fs from 'fs';
+import { ParsedQs } from 'qs';
 import  {ObjectId}  from 'mongodb';
 import mongoose from "mongoose";
 import { string } from "joi";
 import { ProductsVariation } from "../Models/ProductsVariation";
 import { AddSingleProductToStock } from "../Services/StockService";
-import catchAsync from "../utils/CatchAsync";
-import AppError from "../utils/AppError";
 import APIFeatures from "../utils/ApiFeatures";
+
+
 
 
 let AddUpdateProduct = async (req: Request, res: Response) => {
@@ -113,46 +114,44 @@ let DeleteProduct = async (req: Request, res: Response) => {
   }
 };
 
+
 let GetProducts = async (req: Request, res: Response) => {
   const limit = Number(req.query.limit) || 5;
-  const search = String(req.query.search) || "";
+  const search = req.query.search ? String(req.query.search) : "";
   const currentPage = Number(req.query.page) || 1;
-  const category =req.query.category || ``;
-  // let filter = {};
-  // if (req.params.productId) filter = { product: req.params.productId };
-  try {
+  const category = req.query.category || '';
 
-    let filter:any = {
+  try {
+    // Define initial filter
+    let filter: any = {
       $or: [
-          { name:{ $regex: search, $options: "i" } },
-          // { price: { $regex: regex } },
-          { description: { $regex: search, $options: "i" } },
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } }
       ],
     };
-  
 
-  if (category) {
-    console.log(`inside category`)
-    filter.category = { $in: [category]} 
-  }
-  // console.log(category,typeof category,filter)
-  // return res.status(200).json({category,filter})
+    // Add category filter if present
+    if (category) {
+      filter.category = { $in: [category] };
+    }
 
+    // Initialize APIFeatures with query and req.query
+    const features = new APIFeatures(Product.find(filter), req.query as ParsedQs)
+      .filter()
+      .sort()
+      .paginate()
+      .limitFields();  // Add fields limiting if needed
 
-    let productList = await Product.find(filter)
-      .populate("category")
-      .sort({ createdOn: -1 })
-      .skip((currentPage - 1) * limit)
-      .limit(limit);
-    // const features = new APIFeatures(Product.find(filter), req.query)
-    // .filter()
-    // .sort()
-    // .paginate();
+    // Fetch the products
+    //let productList = await features.getQuery().populate("category");
+    // Limit fields in the populate as well
+    let productList = await features.getQuery()
+     .populate({
+       path: 'category',
+       select: 'name'  // Limit category fields to name only
+    });
 
-  //let productList = await features.query.populate("category");
-    // console.log('Query:', features.query);
-    // console.log('Products:', productList);
-    //add clg cover img
+    // Add cover image logic
     if (productList.length > 1) {
       for (let idx = 0; idx < productList.length; idx++) {
         let coverPic = await ProductImage.findOne({
@@ -179,15 +178,21 @@ let GetProducts = async (req: Request, res: Response) => {
       }
     }
 
-    let totalProductCount = await Product.find(filter).countDocuments();
-    if (productList) {
-      return res.status(200).json({
-        success: true,
-        totalCount: totalProductCount,
-        data: productList,
-        currentPage: currentPage,
-      });
-    }
+    // Get total count for pagination info
+    //let totalProductCount = await Product.find(filter).countDocuments();
+    const filteredQuery = new APIFeatures(Product.find(filter), req.query as ParsedQs)
+      .filter(); 
+
+    let totalProductCount = await filteredQuery.getQuery().countDocuments();
+
+
+    // Return response
+    return res.status(200).json({
+      success: true,
+      totalCount: totalProductCount,
+      data: productList,
+      currentPage: currentPage,
+    });
   } catch (err: any) {
     return res.status(500).json({
       success: false,
@@ -195,6 +200,7 @@ let GetProducts = async (req: Request, res: Response) => {
     });
   }
 };
+
 
 let GetProductDetails = async (req: Request, res: Response) => {
   const { id } = req.params;

@@ -23,7 +23,14 @@ let NewPayment=async(req: Request,res: Response) =>{
             id: orderId
         });
 
-        if(!order) return res.status(404).json({message:"Order not found"})
+        if(!order){
+            let response = await PaymentWithSquare(req.body);
+            return res.status(200).json({
+                success: true,
+                response,
+            })
+
+        }
 
         if(order){
             if(order.status===OrderStatus.Cancelled ){
@@ -53,40 +60,38 @@ let NewPayment=async(req: Request,res: Response) =>{
 
         await PaymentWithSquare(req.body);
         
-        let payment=await razorpayInstance.payment.create(paymentData);
-        if(payment){
-                //create payment object 
-                let paymentObj=new Payment({
-                    id: payment.id,
-                    userId:order.userId,
-                    orderId:order.id,
-                    paymentMethod:payment.method,
-                    amount:order.amount,               
-                })
-                console.log(paymentObj);
+        //let payment=await razorpayInstance.payment.create(paymentData);
+        // if(payment){
+        //         //create payment object 
+        //         let paymentObj=new Payment({
+        //             id: payment.id,
+        //             userId:order.userId,
+        //             orderId:order.id,
+        //             paymentMethod:payment.method,
+        //             amount:order.amount,               
+        //         })
+        //         console.log(paymentObj);
 
-                if(payment.method=='card'){
-                    paymentObj.card=payment.card
-                }
-                if(payment.method=='upi'){
-                    paymentObj.upi=payment.upi.vpa;
-                }
+        //         if(payment.method=='card'){
+        //             paymentObj.card=payment.card
+        //         }
+        //         if(payment.method=='upi'){
+        //             paymentObj.upi=payment.upi.vpa;
+        //         }
 
-                await paymentObj.save()
+                // await paymentObj.save()
                 
-                //create new transaction
-                let transaction=await Transaction.create({
-                    orderId:order.id,
-                    paymentId:payment.id,
-                    amount:order.amount,                    
-                })
-                res.redirect(payment.url)
+                // //create new transaction
+                // let transaction=await Transaction.create({
+                //     orderId:order.id,
+                //     paymentId:payment.id,
+                //     amount:order.amount,                    
+                // })
+                // res.redirect(payment.url)
                 //redirect user to payment gateway
                 //const paymentUrl = `${razorPayGatewayUrl}${paymentObj.id}`;
                 //res.redirect(paymentUrl);
-
-        }
-
+    // }
         
         
     } catch (error:any) {

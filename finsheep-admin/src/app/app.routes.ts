@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './layout';
 import {AuthGuard} from '../app/authGuard.service'
 import { BulkuploadComponent} from './stock/bulkupload/bulkupload.component';
-
+import {PaymentListComponent} from './payment/payment-list/payment-list.component';
 
 export const routes: Routes = [
   {
@@ -47,7 +47,10 @@ export const routes: Routes = [
         path: 'stock/bulkUpload',
         component:BulkuploadComponent
       },
-      
+      {
+        path: 'payments',
+        component:PaymentListComponent
+      },
     ]
   },
   {
