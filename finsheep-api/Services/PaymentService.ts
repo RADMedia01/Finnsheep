@@ -10,7 +10,7 @@ export const PaymentWithSquare=async(payload:any)=>{
               amount: payload.total*100,
               currency: payload.currency,
             },
-            idempotencyKey: payload.orderId,
+            idempotencyKey: `${Date.now()}_`+payload.orderId,
           };
        
           const paymentResponse = await squareClient.paymentsApi.createPayment(body);

@@ -24,7 +24,7 @@ let BulkStockUpload = async (req: Request, res: Response) => {
 
       if (!file) {
           return res.status(400).json({
-              status: false,
+            success: false,
               message: "No file uploaded",
           });
       }
@@ -32,13 +32,13 @@ let BulkStockUpload = async (req: Request, res: Response) => {
       await BulkUpload(file);
 
       return res.status(200).json({
-          status: true,
+          success: true,
           message: "File processed successfully",
       });
 
   } catch (err: any) {
       res.status(500).json({
-          status: false,
+        success: false,
           message: err.message,
       });
   }

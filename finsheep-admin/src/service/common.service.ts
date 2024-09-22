@@ -207,7 +207,7 @@ NewPayment(orderId:string,data:any){
 }
 
 //Stock bulk upload
- StockBulkUpload(productId:string, data:any){
+ StockBulkUpload(data:any){
   return axios.post(`${AppConstants.baseUrl}${AppConstants.bulkUpload}`,data);
  }
 
