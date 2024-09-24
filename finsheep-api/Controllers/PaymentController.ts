@@ -13,95 +13,111 @@ import { PaymentWithSquare } from '../Services/PaymentService';
 
 const razorpayInstance=CreateRazorPayInstance();
 
-let NewPayment=async(req: Request,res: Response) =>{
-    const {orderId}=req.params;
-    const {paymentMethod,amount,currency}=req.body
-    try {
-        console.log(orderId)
-        //check if order is abandoned or expired
-        let order=await Order.findOne({
-            id: orderId
-        });
+// let NewPayment=async(req: Request,res: Response) =>{
+//     const {id}=req.params;
+//     const {paymentMethod,amount,currency}=req.body
+//     try {
+//         console.log(id)
+//         //check if order is abandoned or expired
+//         // let order=await Order.findOne({
+//         //     id: id
+//         // });
 
-        if(!order){
-            let response = await PaymentWithSquare(req.body);
-            return res.status(200).json({
-                success: true,
-                response,
-            })
+        
+//             let response = await PaymentWithSquare(req.body);
+//             return res.status(200).json({
+//                 success: true,
+//                 response,
+//             })
 
-        }
+        
 
-        if(order){
-            if(order.status===OrderStatus.Cancelled ){
-                return res.status(400).json({
-                    success:false,
-                    message:"Order is cancelled"
-                })
-            }
-        }
+//         // if(order){
+//         //     if(order.status===OrderStatus.Cancelled ){
+//         //         return res.status(400).json({
+//         //             success:false,
+//         //             message:"Order is cancelled"
+//         //         })
+//         //     }
+//         // }
 
-        //different for different methods
+//         //different for different methods
 
         
    
 
-        const paymentData = {
-            amount: order.amount*100, // amount in paise (e.g., 500 = ₹5)  
-            currency: order.currency,
-            order_id: orderId,
-            callback_url:`${baseUrl}verify`,
-            customer: {
-              name: '',
-              email: '',
-              contact: ''
-            }
-        }
+//         // const paymentData = {
+//         //     amount: order.amount*100, // amount in paise (e.g., 500 = ₹5)  
+//         //     currency: order.currency,
+//         //     order_id: id,
+//         //     callback_url:`${baseUrl}verify`,
+//         //     customer: {
+//         //       name: '',
+//         //       email: '',
+//         //       contact: ''
+//         //     }
+//         // }
 
-        await PaymentWithSquare(req.body);
+//         await PaymentWithSquare(req.body);
         
-        //let payment=await razorpayInstance.payment.create(paymentData);
-        // if(payment){
-        //         //create payment object 
-        //         let paymentObj=new Payment({
-        //             id: payment.id,
-        //             userId:order.userId,
-        //             orderId:order.id,
-        //             paymentMethod:payment.method,
-        //             amount:order.amount,               
-        //         })
-        //         console.log(paymentObj);
+//         //let payment=await razorpayInstance.payment.create(paymentData);
+//         // if(payment){
+//         //         //create payment object 
+//         //         let paymentObj=new Payment({
+//         //             id: payment.id,
+//         //             userId:order.userId,
+//         //             orderId:order.id,
+//         //             paymentMethod:payment.method,
+//         //             amount:order.amount,               
+//         //         })
+//         //         console.log(paymentObj);
 
-        //         if(payment.method=='card'){
-        //             paymentObj.card=payment.card
-        //         }
-        //         if(payment.method=='upi'){
-        //             paymentObj.upi=payment.upi.vpa;
-        //         }
+//         //         if(payment.method=='card'){
+//         //             paymentObj.card=payment.card
+//         //         }
+//         //         if(payment.method=='upi'){
+//         //             paymentObj.upi=payment.upi.vpa;
+//         //         }
 
-                // await paymentObj.save()
+//                 // await paymentObj.save()
                 
-                // //create new transaction
-                // let transaction=await Transaction.create({
-                //     orderId:order.id,
-                //     paymentId:payment.id,
-                //     amount:order.amount,                    
-                // })
-                // res.redirect(payment.url)
-                //redirect user to payment gateway
-                //const paymentUrl = `${razorPayGatewayUrl}${paymentObj.id}`;
-                //res.redirect(paymentUrl);
-    // }
+//                 // //create new transaction
+//                 // let transaction=await Transaction.create({
+//                 //     orderId:order.id,
+//                 //     paymentId:payment.id,
+//                 //     amount:order.amount,                    
+//                 // })
+//                 // res.redirect(payment.url)
+//                 //redirect user to payment gateway
+//                 //const paymentUrl = `${razorPayGatewayUrl}${paymentObj.id}`;
+//                 //res.redirect(paymentUrl);
+//     // }
         
         
-    } catch (error:any) {
-        console.log(error.message);
-        return res.status(500).json({
-            success:false,
-            message:error.message
-        })
+//     } catch (error:any) {
+//         console.log(error.message);
+//         return res.status(500).json({
+//             success:false,
+//             message:error.message
+//         })
+//     }
+// }
+
+let NewPayment = async (req: Request, res: Response) => {
+    try {
+      const response = await PaymentWithSquare(req.body);
+      return res.status(200).json({
+        success: true,
+        response,
+      });
+    } catch (error) {
+      console.error('Payment processing error:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'An error occurred while processing the payment',
+      });
     }
-}
+  }
 
 let VerifyPayment=async(req: Request,res: Response)=>{
     const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body;
