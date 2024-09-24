@@ -12,10 +12,6 @@ declare var Square: any;
   standalone: true,
   imports: [FormsModule,CommonModule,RouterModule,  HttpClientModule],
   templateUrl: './payment-list.component.html',
-// template: `
-//     <div id="card-container"></div>
-//     <button (click)="handlePayment()">Pay</button>
-//   `,
   styleUrls: ['./payment-list.component.scss']
 })
 export class PaymentListComponent implements OnInit {
