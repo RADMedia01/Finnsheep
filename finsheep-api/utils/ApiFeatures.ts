@@ -26,7 +26,21 @@ class APIFeatures<T> {
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
 
-    this.query = this.query.find(JSON.parse(queryStr));
+    const parsedQuery = JSON.parse(queryStr);
+
+    // Ensure numeric filters are working
+    Object.keys(parsedQuery).forEach(key => {
+        if (typeof parsedQuery[key] === 'object') {
+            Object.keys(parsedQuery[key]).forEach(innerKey => {
+                if (['$gte', '$gt', '$lte', '$lt'].includes(innerKey)) {
+                    parsedQuery[key][innerKey] = Number(parsedQuery[key][innerKey]);
+                }
+            });
+        }
+    });
+
+    this.query = this.query.find(parsedQuery);
+    
 
     return this;
   }

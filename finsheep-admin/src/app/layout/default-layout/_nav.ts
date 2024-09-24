@@ -103,6 +103,11 @@ export const navItems: INavData[] = [
       },
     ]
   },
+  {
+    name: 'Payment',
+    url: '/payments',
+    iconComponent: { name: 'cil-speedometer' },
+  },
   // {
   //   name: 'Docs',
   //   url: 'https://coreui.io/angular/docs/5.x/',
