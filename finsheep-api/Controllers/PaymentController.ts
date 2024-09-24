@@ -105,10 +105,16 @@ const razorpayInstance=CreateRazorPayInstance();
 
 let NewPayment = async (req: Request, res: Response) => {
     try {
+
+        
       const response = await PaymentWithSquare(req.body);
+      const result = JSON.parse(JSON.stringify(response, (key, value) =>
+        typeof value === 'bigint' ? value.toString() : value
+      ));
+  
       return res.status(200).json({
         success: true,
-        response,
+        response: result
       });
     } catch (error) {
       console.error('Payment processing error:', error);

@@ -31,10 +31,10 @@ import squareClient from '../Config/SquareConfig';
       const body = {
         sourceId: payload.sourceId,
         amountMoney: {
-          amount: payload.amount, // Amount should be in cents
+          amount: payload.amount.toString(), // Amount should be in cents
           currency: "USD",
         },
-        idempotencyKey: `${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}`,
+        idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
       };
      
       const paymentResponse = await squareClient.paymentsApi.createPayment(body);

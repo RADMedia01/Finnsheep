@@ -47,9 +47,14 @@ export const routes: Routes = [
         path: 'stock/bulkUpload',
         component:BulkuploadComponent
       },
+      // {
+      //   path: 'payments',
+      //   component:PaymentListComponent
+
+      // },
       {
         path: 'payments',
-        component:PaymentListComponent
+        loadComponent: () => import('./payment/payment-list/payment-list.component').then(m => m.PaymentListComponent),
       },
     ]
   },
