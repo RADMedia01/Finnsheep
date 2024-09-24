@@ -104,9 +104,7 @@ const razorpayInstance=CreateRazorPayInstance();
 // }
 
 let NewPayment = async (req: Request, res: Response) => {
-    try {
-
-        
+    try { 
       const response = await PaymentWithSquare(req.body);
       const result = JSON.parse(JSON.stringify(response, (key, value) =>
         typeof value === 'bigint' ? value.toString() : value

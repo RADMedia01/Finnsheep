@@ -73,4 +73,15 @@ export enum UserRole{
     SuperAdmin=1,
     Client=2,
   }
+
+export enum ProductCut{
+    ribs="ribs",
+    shanks="shanks",
+    loin = "loin",
+    shoulder="shoulder",
+    rack="rack",
+    ground="ground",
+    boneless="boneless",
+    stewMeat = "stewMeat"
+}
   
