@@ -5,6 +5,7 @@ import { CreateOrder,
     GetUserOrders,
     CancelOrder,
     ChooseBoxForOrder,
+    GetOrderSummary,
 } from '../Controllers/OrderController';
 
 
@@ -13,5 +14,6 @@ orderRouter.get('/all',GetAllOrders)
 orderRouter.get('/my/:id',GetUserOrders)
 orderRouter.get('/cancel/:id',CancelOrder)
 orderRouter.get('/box',ChooseBoxForOrder)
+orderRouter.get('/summary', GetOrderSummary)
 
 export default orderRouter

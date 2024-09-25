@@ -41,7 +41,7 @@ const ChooseBox=async(cartItems:any[]):Promise<IBoxItem[]>=>{
       return boxesRequired;
     }
 
-const CalculateOrderSummary=async(cartItems:any[],payload:any)=>{
+const CalculateOrderSummary=async(cartItems:any[],payload?:any)=>{
 
   try {
     let OrderSummary=await Promise.all([
@@ -71,7 +71,7 @@ const CalculateSubTotal=async(cartItems:any[])=>{
       for(let item of cartItems){
         let currentStock=await ProductsVariation.findById(item.productVariationId)
         if(currentStock){
-          total+=currentStock.price*item.quantity
+          total+=currentStock.retailPrice*item.quantity
         }
       }
     }
@@ -85,17 +85,17 @@ const CalculateSubTotal=async(cartItems:any[])=>{
 const CalculateTax=async(cartItems:any[],payload:any)=>{
   let tax=0
   try {
-    const request={
-      "apiLoginID": "YOUR_API_LOGIN_ID",
-      "apiToken": "YOUR_API_TOKEN",
-      "cartID": "YOUR_CART_ID",
-      "customerID": payload.userId,
-      "deliveredBySeller": true,
-      "exemptionNo": "YOUR_EXEMPTION_NO",
-      "items": cartItems,
-      "origin": OriginAddress,
-      "destination": payload.shippingAddress
-    }
+    // const request={
+    //   "apiLoginID": "YOUR_API_LOGIN_ID",
+    //   "apiToken": "YOUR_API_TOKEN",
+    //   "cartID": "YOUR_CART_ID",
+    //   "customerID": payload.userId,
+    //   "deliveredBySeller": true,
+    //   "exemptionNo": "YOUR_EXEMPTION_NO",
+    //   "items": cartItems,
+    //   "origin": OriginAddress,
+    //   "destination": payload.shippingAddress
+    // }
 
     //get tax details from taxcloud api
 

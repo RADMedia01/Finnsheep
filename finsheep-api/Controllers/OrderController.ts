@@ -198,11 +198,30 @@ let ChooseBoxForOrder=async(req:Request, res:Response)=>{
   }
 }
 
+let GetOrderSummary=async(req:Request, res:Response)=>{
+  const { cartItems}=req.body
+  try {   
+    
+    let orderSummary = await CalculateOrderSummary(cartItems)
+    return res.status(200).json({
+      success:true, data:orderSummary
+    })
+
+  } catch (err:any) {
+      res.status(500).json({
+        success:true, message:err.message
+      })
+  }
+}
+
+
+
 
 export {
   CreateOrder,
   GetAllOrders,
   GetUserOrders,
   CancelOrder,
-  ChooseBoxForOrder
+  ChooseBoxForOrder,
+  GetOrderSummary
 }
