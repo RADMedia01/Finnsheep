@@ -2,28 +2,50 @@ import { ApiError } from 'square';
 import squareClient from '../Config/SquareConfig';
 
 
-export const PaymentWithSquare=async(payload:any)=>{
-    try {
-        const body = {
-            sourceId: "sandbox-sq0idb-SH2ggZPf5KG-3cRx0mK0-A", // Replace with a valid card nonce
-            amountMoney: {
-            amount: 10000, //payload.total*100,
-            currency: "USD",
-            },
-            idempotencyKey: `${Date.now()}_`+payload.orderId,
-          };
+// export const PaymentWithSquare=async(payload:any)=>{
+//     try {
+//         const body = {
+//             sourceId: payload.sourceId, // Replace with a valid card nonce
+//             amountMoney: {
+//             amount: payload.amount * 100, //payload.total*100,
+//             currency: "USD",
+//             },
+//             idempotencyKey: `${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}`,
+//           };
        
-          const paymentResponse = await squareClient.paymentsApi.createPayment(body);
+//           const paymentResponse = await squareClient.paymentsApi.createPayment(body);
     
-          if(paymentResponse){
-                return paymentResponse;
-            //go to verify payment method and verify payment
+//           if(paymentResponse){
+//                 return paymentResponse;
+//             //go to verify payment method and verify payment
     
-          }
-    } catch (error:any) {
-        throw error;
+//           }
+//     } catch (error:any) {
+//         throw error;
+//     }
+// }
+
+  
+  export const PaymentWithSquare = async (payload: any) => {
+    try {
+      const body = {
+        sourceId: payload.sourceId,
+        amountMoney: {
+          amount: payload.amount.toString(), // Amount should be in cents
+          currency: "USD",
+        },
+        idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
+      };
+     
+      const paymentResponse = await squareClient.paymentsApi.createPayment(body);
+      return paymentResponse.result;
+    } catch (error) {
+      if (error instanceof ApiError) {
+        console.error('Square API Error:', error.errors);
+      }
+      throw error;
     }
-}
+  }
 
 export const VerifyPaymentWithSquare=async(paymentId:string)=>{
     try {

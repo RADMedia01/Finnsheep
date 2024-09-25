@@ -5,7 +5,7 @@ import {  NewPayment,
 } from '../Controllers/PaymentController';
 
 
-paymentRouter.post('/new/:orderId',NewPayment)
+paymentRouter.post('/new',NewPayment)
 paymentRouter.get('/new/:orderId',NewPayment)
 paymentRouter.post('/verify',VerifyPayment)
 

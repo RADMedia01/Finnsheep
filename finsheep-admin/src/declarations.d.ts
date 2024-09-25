@@ -3,3 +3,9 @@ declare module '*.json' {
   export default value;
 }
 
+
+interface Window {
+  Square: any;
+}
+
+
