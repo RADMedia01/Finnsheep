@@ -115,9 +115,12 @@ let DeleteProduct = async (req: Request, res: Response) => {
 
 let GetProducts = async (req: Request, res: Response) => {
   const limit = Number(req.query.limit) || 5;
-  const search = req.query.search ? String(req.query.search) : "";
+  // const search = req.query.search ? String(req.query.search) : "";
+  // const currentPage = Number(req.query.page) || 1;
+  // const category = req.query.category || '';
+  const search = String(req.query.search) || "";
   const currentPage = Number(req.query.page) || 1;
-  const category = req.query.category || '';
+  const category =req.query.category || ``;
 
   try {
     // Define initial filter
@@ -134,20 +137,25 @@ let GetProducts = async (req: Request, res: Response) => {
     }
 
     // Initialize APIFeatures with query and req.query
-    const features = new APIFeatures(Product.find(filter), req.query as ParsedQs)
-      .filter()
-      .sort()
-      .paginate()
-      .limitFields();  // Add fields limiting if needed
+    // const features = new APIFeatures(Product.find(filter), req.query as ParsedQs)
+    //   .filter()
+    //   .sort()
+    //   .paginate()
+    //   .limitFields();  // Add fields limiting if needed
 
     // Fetch the products
     //let productList = await features.getQuery().populate("category");
     // Limit fields in the populate as well
-    let productList = await features.getQuery()
-     .populate({
-       path: 'category',
-       select: 'name'  // Limit category fields to name only
-    });
+    let productList = await Product.find(filter)
+      .populate("category")
+      .sort({ createdOn: -1 })
+      .skip((currentPage - 1) * limit)
+      .limit(limit);
+    //let productList = await features.getQuery()
+    //  .populate({
+    //    path: 'category',
+    //    select: 'name'  // Limit category fields to name only
+    // });
 
     // Add cover image logic
     if (productList.length > 1) {
@@ -157,7 +165,7 @@ let GetProducts = async (req: Request, res: Response) => {
           isCover: true,
         });
         if (coverPic) {
-          const coverFilePath = `${baseUrl}${FilePaths.productFilePath}/${productList[idx]._id}/${coverPic.image}`;
+          const coverFilePath = `${baseUrl}${FilePaths.productFilePath}/${productList[idx]._id}/thumbnail_${coverPic.image}`;
           productList[idx] = {
             ...productList[idx]._doc,
             coverImage: {
@@ -178,19 +186,22 @@ let GetProducts = async (req: Request, res: Response) => {
 
     // Get total count for pagination info
     //let totalProductCount = await Product.find(filter).countDocuments();
-    const filteredQuery = new APIFeatures(Product.find(filter), req.query as ParsedQs)
-      .filter(); 
+    // const filteredQuery = new APIFeatures(Product.find(filter), req.query as ParsedQs)
+    //   .filter(); 
 
-    let totalProductCount = await filteredQuery.getQuery().countDocuments();
+    // let totalProductCount = await filteredQuery.getQuery().countDocuments();
 
 
     // Return response
-    return res.status(200).json({
-      success: true,
-      totalCount: totalProductCount,
-      data: productList,
-      currentPage: currentPage,
-    });
+    let totalProductCount = await Product.find(filter).countDocuments();
+    if (productList) {
+      return res.status(200).json({
+        success: true,
+        totalCount: totalProductCount,
+        data: productList,
+        currentPage: currentPage,
+      });
+    }
   } catch (err: any) {
     return res.status(500).json({
       success: false,
