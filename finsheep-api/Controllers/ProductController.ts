@@ -292,7 +292,7 @@ let AddProductImages=async(req: Request, res: Response)=>{
         }
         else{
           //if different file name 
-          const removeExistingCover=await ProductImage.deleteOne({
+          await ProductImage.deleteOne({
             productId:id,
             isCover:true
           })
@@ -322,49 +322,30 @@ let AddProductImages=async(req: Request, res: Response)=>{
       }
     }
 
-    //handle other images
-    if(otherImagesExist.length > 0){
-      if(otherImages){
-        if(otherImages.length>0){
-          otherImages.forEach(async(uploadedFile:any,index:number)=>{
-            const fileWithSameName=otherImagesExist.find((ele:any)=>{
-                ele.image===uploadedFile.originalname
-            })
-    
-            if(fileWithSameName){
-              //update image in db
-              const updateFile=await ProductImage.updateOne({_id:fileWithSameName._id},{
-                modifiedOn:Date.now()
-              })
-            }
-            else{
-              //add image in db
-              otherImages.forEach(async(uploadedFile:any,index:number)=>{
-                const fileModel=await ProductImage.create({
-                  image:uploadedFile.originalname,
-                  isCover:false,
-                  productId:id,
-                })
-              })
-            }
-    
-            
-          })
-         }
-      }
-    }
-    else{
-      if(otherImages){
-        if(otherImages.length>0){
-          //add all files in db
-          otherImages.forEach(async(uploadedFile:any,index:number)=>{
-            const fileModel=await ProductImage.create({
-              image:uploadedFile.originalname,
-              isCover:false,
-              productId:id
-            })
-          })
-        }
+    if (otherImages) {
+      if (otherImages.length > 0) {
+        const promises = otherImages.map(async (uploadedFile: any) => {
+          const fileWithSameName = otherImagesExist.find(
+            (ele: any) => ele.image === uploadedFile.originalname
+          );
+
+          if (fileWithSameName) {
+            // Update existing image in db
+            await ProductImage.updateOne(
+              { _id: fileWithSameName._id },
+              { modifiedOn: Date.now() }
+            );
+          } else {
+            // Add new image in db
+            await ProductImage.create({
+              image: uploadedFile.originalname,
+              isCover: false,
+              productId: id,
+            });
+          }
+        });
+
+        await Promise.all(promises);
       }
     }
 
