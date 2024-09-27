@@ -17,28 +17,21 @@ const productImageStorage = multer.diskStorage({
         console.log(`middleware error => `+err.stack)
       }
     },
-    filename: function (req, file, cb) {
+    filename: async function (req, file, cb) {
       const productId = req.params.id;
       const rootDir = process.cwd() //root directory
       const uploadPath=`${rootDir}${FilePaths.productFilePath}/${productId}/`
-      const ext = path.extname(file.originalname);
       const filename = `${file.originalname}`; //file saved with name
       const thumbnailFilename = `thumbnail_${filename}`; //thumbnail filename/file saved with name
-      cb(null, filename);
-
+      
+      try {
       //generate and save thumbnail 
-      const filePath = `${uploadPath}${filename}`;
-      const thumbnailPath = `${uploadPath}${thumbnailFilename}`;
-      sharp(filePath)
-        .resize(200, 200) // resize to 200x200
-        .toFormat('png')
-        .toFile(thumbnailPath)
-        .then((info:any) => {
-          console.log(`Thumbnail generated: ${thumbnailPath}`);
-        })
-        .catch((err:any) => {
-          console.log(`Error generating thumbnail: ${err}`);
-        });
+      const thumbnailPath =path.join(uploadPath,thumbnailFilename)
+      await sharp(file.buffer).resize(200, 200).toFile(thumbnailPath)
+      cb(null, filename);
+      } catch (error:any) {
+          console.log(`Thumbnail error => ${error}`)
+      }
     }
 });
 export const uploadProductImage = multer({ storage: productImageStorage });
