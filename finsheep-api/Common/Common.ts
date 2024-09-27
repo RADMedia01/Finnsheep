@@ -1,3 +1,6 @@
+import sharp from "sharp";
+import fs from "fs";
+
 export enum UserRole{
     Admin=0,
     SuperAdmin=1,
@@ -62,7 +65,7 @@ export const BoxInfoList:IBoxItem[]=[{
 
 
 export const rootDir = process.cwd();
-export const baseUrl = `http://localhost:2000`;
+export const baseUrl = `http://localhost:3000`;
 
 export function EncodeBase64(input:string) {
     return btoa(input);
@@ -98,4 +101,15 @@ export const OriginAddress={
     city:``,
     state:``,
     zip:``
+}
+
+export const GenerateThumbnail= async(filePath:string, size:number, thumbnailFilePath:string)=>{
+  try {
+     let thumbnailBuffer = await sharp(`${filePath}`)
+      .resize(size, size) // Resize to 200x200 pixels
+      .toBuffer()
+      fs.writeFileSync(`${thumbnailFilePath}`, thumbnailBuffer);
+  } catch (error:any) {
+    throw error;
+  }
 }

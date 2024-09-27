@@ -1,15 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import { Product } from "../Models/Product";
 import { ProductImage } from "../Models/ProductImage";
-import { baseUrl, FilePaths, rootDir } from "../Common/Common";
+import { baseUrl, FilePaths, GenerateThumbnail, rootDir } from "../Common/Common";
 import fs from 'fs';
 import { ParsedQs } from 'qs';
 import  {ObjectId}  from 'mongodb';
 import mongoose from "mongoose";
-import { string } from "joi";
+import { any, string } from "joi";
 import { ProductsVariation } from "../Models/ProductsVariation";
 import { AddSingleProductToStock } from "../Services/StockService";
 import APIFeatures from "../utils/ApiFeatures";
+import sharp from "sharp";
+import { error } from "console";
 
 
 
@@ -158,7 +160,7 @@ let GetProducts = async (req: Request, res: Response) => {
     // });
 
     // Add cover image logic
-    if (productList.length > 1) {
+    if (productList.length >= 1) {
       for (let idx = 0; idx < productList.length; idx++) {
         let coverPic = await ProductImage.findOne({
           productId: productList[idx]._id,
@@ -280,6 +282,14 @@ let AddProductImages=async(req: Request, res: Response)=>{
     let otherImagesExist=await ProductImage.find({productId:id,isCover:false})
     //handle cover image
     if(coverImage){
+      console.log(coverImage.buffer);
+      const filename = coverImage.originalname;
+      const thumbnailFilename = `thumbnail_${filename}`;
+      const thumbnailPath = `${rootDir}${FilePaths.productFilePath}/${id}/${thumbnailFilename}`;
+      const fileNamePath = `./${FilePaths.productFilePath}/${id}/${filename}`;
+
+      await GenerateThumbnail(fileNamePath, 200, thumbnailPath);
+
       let coverImageExist=await ProductImage.findOne({productId:id,isCover:true})
       if(coverImageExist){
         //file with same name
@@ -308,8 +318,6 @@ let AddProductImages=async(req: Request, res: Response)=>{
             productId:id,
             isCover: true,
           })
-
-          
           
         }
       }
