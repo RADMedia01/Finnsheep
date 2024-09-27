@@ -328,7 +328,6 @@ let AddProductImages=async(req: Request, res: Response)=>{
           const fileWithSameName = otherImagesExist.find(
             (ele: any) => ele.image === uploadedFile.originalname
           );
-
           if (fileWithSameName) {
             // Update existing image in db
             await ProductImage.updateOne(
@@ -344,7 +343,6 @@ let AddProductImages=async(req: Request, res: Response)=>{
             });
           }
         });
-
         await Promise.all(promises);
       }
     }
