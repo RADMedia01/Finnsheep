@@ -42,7 +42,7 @@
         <tr *ngFor="let product of productList;let i=index;">
           <th scope="row">{{i+1}}</th>
           <td>
-            <img src="{{product.coverImage.image}}" *ngIf="product.coverImage.image!=null" alt="">
+            <img src="{{product.coverImage.image}}" *ngIf="product?.coverImage?.image!=null" alt="">
             {{product.name}}</td>
             <td>{{product.category.name}}</td>
           <td>${{product.price}}</td>

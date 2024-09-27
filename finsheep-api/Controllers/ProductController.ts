@@ -115,9 +115,12 @@ let DeleteProduct = async (req: Request, res: Response) => {
 
 let GetProducts = async (req: Request, res: Response) => {
   const limit = Number(req.query.limit) || 5;
-  const search = req.query.search ? String(req.query.search) : "";
+  // const search = req.query.search ? String(req.query.search) : "";
+  // const currentPage = Number(req.query.page) || 1;
+  // const category = req.query.category || '';
+  const search = String(req.query.search) || "";
   const currentPage = Number(req.query.page) || 1;
-  const category = req.query.category || '';
+  const category =req.query.category || ``;
 
   try {
     // Define initial filter
@@ -134,20 +137,25 @@ let GetProducts = async (req: Request, res: Response) => {
     }
 
     // Initialize APIFeatures with query and req.query
-    const features = new APIFeatures(Product.find(filter), req.query as ParsedQs)
-      .filter()
-      .sort()
-      .paginate()
-      .limitFields();  // Add fields limiting if needed
+    // const features = new APIFeatures(Product.find(filter), req.query as ParsedQs)
+    //   .filter()
+    //   .sort()
+    //   .paginate()
+    //   .limitFields();  // Add fields limiting if needed
 
     // Fetch the products
     //let productList = await features.getQuery().populate("category");
     // Limit fields in the populate as well
-    let productList = await features.getQuery()
-     .populate({
-       path: 'category',
-       select: 'name'  // Limit category fields to name only
-    });
+    let productList = await Product.find(filter)
+      .populate("category")
+      .sort({ createdOn: -1 })
+      .skip((currentPage - 1) * limit)
+      .limit(limit);
+    //let productList = await features.getQuery()
+    //  .populate({
+    //    path: 'category',
+    //    select: 'name'  // Limit category fields to name only
+    // });
 
     // Add cover image logic
     if (productList.length > 1) {
@@ -157,7 +165,7 @@ let GetProducts = async (req: Request, res: Response) => {
           isCover: true,
         });
         if (coverPic) {
-          const coverFilePath = `${baseUrl}${FilePaths.productFilePath}/${productList[idx]._id}/${coverPic.image}`;
+          const coverFilePath = `${baseUrl}${FilePaths.productFilePath}/${productList[idx]._id}/thumbnail_${coverPic.image}`;
           productList[idx] = {
             ...productList[idx]._doc,
             coverImage: {
@@ -178,19 +186,22 @@ let GetProducts = async (req: Request, res: Response) => {
 
     // Get total count for pagination info
     //let totalProductCount = await Product.find(filter).countDocuments();
-    const filteredQuery = new APIFeatures(Product.find(filter), req.query as ParsedQs)
-      .filter(); 
+    // const filteredQuery = new APIFeatures(Product.find(filter), req.query as ParsedQs)
+    //   .filter(); 
 
-    let totalProductCount = await filteredQuery.getQuery().countDocuments();
+    // let totalProductCount = await filteredQuery.getQuery().countDocuments();
 
 
     // Return response
-    return res.status(200).json({
-      success: true,
-      totalCount: totalProductCount,
-      data: productList,
-      currentPage: currentPage,
-    });
+    let totalProductCount = await Product.find(filter).countDocuments();
+    if (productList) {
+      return res.status(200).json({
+        success: true,
+        totalCount: totalProductCount,
+        data: productList,
+        currentPage: currentPage,
+      });
+    }
   } catch (err: any) {
     return res.status(500).json({
       success: false,
@@ -281,7 +292,7 @@ let AddProductImages=async(req: Request, res: Response)=>{
         }
         else{
           //if different file name 
-          const removeExistingCover=await ProductImage.deleteOne({
+          await ProductImage.deleteOne({
             productId:id,
             isCover:true
           })
@@ -311,49 +322,30 @@ let AddProductImages=async(req: Request, res: Response)=>{
       }
     }
 
-    //handle other images
-    if(otherImagesExist.length > 0){
-      if(otherImages){
-        if(otherImages.length>0){
-          otherImages.forEach(async(uploadedFile:any,index:number)=>{
-            const fileWithSameName=otherImagesExist.find((ele:any)=>{
-                ele.image===uploadedFile.originalname
-            })
-    
-            if(fileWithSameName){
-              //update image in db
-              const updateFile=await ProductImage.updateOne({_id:fileWithSameName._id},{
-                modifiedOn:Date.now()
-              })
-            }
-            else{
-              //add image in db
-              otherImages.forEach(async(uploadedFile:any,index:number)=>{
-                const fileModel=await ProductImage.create({
-                  image:uploadedFile.originalname,
-                  isCover:false,
-                  productId:id,
-                })
-              })
-            }
-    
-            
-          })
-         }
-      }
-    }
-    else{
-      if(otherImages){
-        if(otherImages.length>0){
-          //add all files in db
-          otherImages.forEach(async(uploadedFile:any,index:number)=>{
-            const fileModel=await ProductImage.create({
-              image:uploadedFile.originalname,
-              isCover:false,
-              productId:id
-            })
-          })
-        }
+    if (otherImages) {
+      if (otherImages.length > 0) {
+        const promises = otherImages.map(async (uploadedFile: any) => {
+          const fileWithSameName = otherImagesExist.find(
+            (ele: any) => ele.image === uploadedFile.originalname
+          );
+
+          if (fileWithSameName) {
+            // Update existing image in db
+            await ProductImage.updateOne(
+              { _id: fileWithSameName._id },
+              { modifiedOn: Date.now() }
+            );
+          } else {
+            // Add new image in db
+            await ProductImage.create({
+              image: uploadedFile.originalname,
+              isCover: false,
+              productId: id,
+            });
+          }
+        });
+
+        await Promise.all(promises);
       }
     }
 
