@@ -105,12 +105,12 @@ const AllProducts = () => {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await fetch('/api/categories');
+        const response = await axiosInstance.get('/api/category/dropdown/list');
         if (!response.ok) {
           throw new Error('Failed to fetch categories');
         }
-        const data = await response.json();
-        setCategories(data);
+        setCategories(response.data.data);
+        console.log("New Categories", categories);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
