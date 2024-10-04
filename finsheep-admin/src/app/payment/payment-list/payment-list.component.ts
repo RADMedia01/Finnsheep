@@ -50,16 +50,19 @@ export class PaymentListComponent implements OnInit {
   sendToBackend(sourceId: string) {
     this.http.post('http://localhost:3000/api/payment/new', {
       sourceId: sourceId,
-      amount: 100, // Example amount in cents
+      amount: 100,
+       // send orderid and userid
     }).subscribe(
-      (response: any) => {
+    {
+      next:(response: any) => {
         if (response.success) {
           alert('Payment successful!');
         } else {
           alert('Payment failed!');
         }
       },
-      (error) => console.error('Error processing payment:', error)
+      error:(error) => console.error('Error processing payment:', error)
+    }
     );
   }
 }

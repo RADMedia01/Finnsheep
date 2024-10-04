@@ -1,51 +1,48 @@
 import { ApiError } from 'square';
 import squareClient from '../Config/SquareConfig';
+import { Payment } from '../Models/Payment';
+import { PaymentStatus } from '../Common/Common';
 
 
-// export const PaymentWithSquare=async(payload:any)=>{
-//     try {
-//         const body = {
-//             sourceId: payload.sourceId, // Replace with a valid card nonce
-//             amountMoney: {
-//             amount: payload.amount * 100, //payload.total*100,
-//             currency: "USD",
-//             },
-//             idempotencyKey: `${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}`,
-//           };
-       
-//           const paymentResponse = await squareClient.paymentsApi.createPayment(body);
-    
-//           if(paymentResponse){
-//                 return paymentResponse;
-//             //go to verify payment method and verify payment
-    
-//           }
-//     } catch (error:any) {
-//         throw error;
-//     }
-// }
 
-  
-  export const PaymentWithSquare = async (payload: any) => {
+export const PaymentWithSquare = async (payload: any) => {
     try {
       const body = {
         sourceId: payload.sourceId,
         amountMoney: {
-          amount: payload.amount.toString(), // Amount should be in cents
-          currency: "USD",
+          amount: payload.amount*100, // Amount should be in cents
+          currency: payload.currency,
         },
         idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
-      };
-     
+      };     
       const paymentResponse = await squareClient.paymentsApi.createPayment(body);
-      return paymentResponse.result;
+
+      if (paymentResponse.paymentStatus=='approved') {
+        //succesful payment
+        let paymentObj=await Payment.create({
+          id:paymentResponse.id,
+          userId:payload.userId,
+          orderId:payload.orderId,
+          paymentMethod:'card',
+          paymentStatus:PaymentStatus.Success,
+          amount:paymentResponse.transactionAmount.total,   
+          card:{
+            number:paymentResponse.card.number,
+            expiry:paymentResponse.card.expirationDate,
+            cvv:paymentResponse.card.cvv,
+          }
+        })
+
+      }
+
+      return paymentResponse;
     } catch (error) {
       if (error instanceof ApiError) {
         console.error('Square API Error:', error.errors);
       }
       throw error;
     }
-  }
+}
 
 export const VerifyPaymentWithSquare=async(paymentId:string)=>{
     try {

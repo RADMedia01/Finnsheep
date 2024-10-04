@@ -29,17 +29,11 @@ let CreateOrder=async (req:Request, res:Response) => {
   let isAvailable=await IsProductsAvailable(req.body.items)
   if(!isAvailable) return res.status(400).json({success:false, message:`Stock unavailable`})
 
-    //let total=CalculateOrderTotalPrice(req.body)
-    const options = {
-      amount: req.body.total * 100, // convert amount to paise
-      currency: req.body.currency, // convert currency to paise
-      receipt: `order_`, //append order id
-      payment_capture: 1,
-    };
-
     //get subtotal, tax and shipping
     let orderSummary=await CalculateOrderSummary(req.body.items,req.body)
-
+    let shippingCost=orderSummary?.shipping ?? 0
+    let taxCost=orderSummary?.tax ?? 0
+    let subTotal=orderSummary?.subTotal ?? 0
   
     try {
         
@@ -47,10 +41,10 @@ let CreateOrder=async (req:Request, res:Response) => {
       let model=await Order.create({
         total:req.body.total,
         subTotal:{
-          tax:orderSummary?.tax,
-          itemCost:orderSummary?.subTotal
+          tax:taxCost,
+          itemCost:subTotal
         },
-        deliveryCharges:orderSummary?.shipping,
+        deliveryCharges:shippingCost,
         items:req.body.items,
         userId:req.body.userId,
         shippingAddress:req.body.shippingAddress,
@@ -59,8 +53,15 @@ let CreateOrder=async (req:Request, res:Response) => {
 
      if(model.paymentMethod!='cash') {
       //got to payment endpoint
-        await PaymentWithSquare(req.body)    
-        return res.status(200).json({success:true,data:model})
+       
+        return res.status(200).json({success:true,
+          data:
+          {
+          orderId:model._id,
+          amount:taxCost+shippingCost+subTotal,
+          currency:req.body.currency,
+        }
+      })
      }
   
       //payment via cash (COD)

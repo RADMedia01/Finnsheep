@@ -50,11 +50,13 @@ const CalculateOrderSummary=async(cartItems:any[],payload?:any)=>{
       await CalculateShipping(cartItems),
     ])
 
+   if(OrderSummary){
     return {
-      subTotal:OrderSummary[0],
-      tax:OrderSummary[1],
-      shipping:OrderSummary[2]
+      subTotal:OrderSummary?.[0] ?? 0,
+      tax:OrderSummary?.[1] ?? 0,
+      shipping:OrderSummary?.[2] ?? 0,
     }
+   }
 
   } catch (error:any) {
     
