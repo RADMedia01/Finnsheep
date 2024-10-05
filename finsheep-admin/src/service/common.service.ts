@@ -202,8 +202,8 @@ CancelOrder(orderId:string){
 
 // -------------------- payment api -------------------
 
-NewPayment(orderId:string,data:any){
-  return axios.post(`${AppConstants.baseUrl}${AppConstants.newPayment}${orderId}`,data);
+NewPayment(data:any){
+  return axios.post(`${AppConstants.baseUrl}${AppConstants.newPayment}`,data);
 }
 
 //Stock bulk upload

@@ -11,15 +11,17 @@ const PaymentSchema=new mongoose.Schema({
     paymentMethod:{type:Joi.string()},
     paymentStatus:{type:Joi.string(),default:PaymentStatus.Processing},
     amount:{type:Number},
+    currency:{type:String},
     card:{
         type:{
             name:String,
             number:String,
-            expiry:String,
-            cvv:String
+            exp_month:Number,
+            exp_year: Number,
+            cvv:String,
+            card_type: String,
         }
     },
-    upi:{type:String},
     createdOn:{
         type: Date,
         default: Date.now

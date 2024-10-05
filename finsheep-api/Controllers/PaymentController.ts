@@ -107,6 +107,7 @@ let NewPayment = async (req: Request, res: Response) => {
  // sourceID, Amount, OrderID, UserID
     try { 
       const response = await PaymentWithSquare(req.body);
+      console.log(response)
       const result = JSON.parse(JSON.stringify(response, (key, value) =>
         typeof value === 'bigint' ? value.toString() : value
       ));

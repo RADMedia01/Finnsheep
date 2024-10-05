@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonService } from 'src/service/common.service';
 
 declare var Square: any;
 @Component({
@@ -17,7 +18,7 @@ declare var Square: any;
 export class PaymentListComponent implements OnInit {
   payments: any;
   card: any;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private common: CommonService) {}
 
   ngOnInit(): void {
     this.initializeSquarePayments();
@@ -47,23 +48,23 @@ export class PaymentListComponent implements OnInit {
     }
   }
 
-  sendToBackend(sourceId: string) {
-    this.http.post('http://localhost:3000/api/payment/new', {
+  async sendToBackend(sourceId: string) {
+    const payload = {
       sourceId: sourceId,
-      amount: 100,
-       // send orderid and userid
-    }).subscribe(
-    {
-      next:(response: any) => {
-        if (response.success) {
-          alert('Payment successful!');
-        } else {
-          alert('Payment failed!');
-        }
+      amountMoney: {
+        amount: 10000,  // Dynamic amount in cents
+        currency: "USD",  // Dynamic currency
       },
-      error:(error) => console.error('Error processing payment:', error)
+    };
+    
+    console.log('Sending to backend:', payload);  // Log the request payload before sending
+    
+    let response = await this.common.NewPayment(payload)
+    if(response && response.status == 200){
+      console.log("Successss");
     }
-    );
+    else console.log("error");
+    
   }
 }
 

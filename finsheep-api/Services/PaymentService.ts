@@ -10,31 +10,33 @@ export const PaymentWithSquare = async (payload: any) => {
       const body = {
         sourceId: payload.sourceId,
         amountMoney: {
-          amount: payload.amount*100, // Amount should be in cents
-          currency: payload.currency,
+          amount: payload.amountMoney.amount, // Amount should be in cents
+          currency: payload.amountMoney.currency,
         },
         idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
       };     
       const paymentResponse = await squareClient.paymentsApi.createPayment(body);
-
-      if (paymentResponse.paymentStatus=='approved') {
+      const response = paymentResponse.result;
+      console.log(response.payment.cardDetails);
+      if (response.payment.status=='COMPLETED') {
         //succesful payment
         let paymentObj=await Payment.create({
-          id:paymentResponse.id,
+          id:response.payment.id,
           userId:payload.userId,
           orderId:payload.orderId,
-          paymentMethod:'card',
+          paymentMethod:response.payment.sourceType,
           paymentStatus:PaymentStatus.Success,
-          amount:paymentResponse.transactionAmount.total,   
+          amount:Number(response.payment.amountMoney.amount),
+          currency: response.payment.amountMoney.currency,   
           card:{
-            number:paymentResponse.card.number,
-            expiry:paymentResponse.card.expirationDate,
-            cvv:paymentResponse.card.cvv,
+            number:response.payment.cardDetails.card.last4,
+            exp_month:Number(response.payment.cardDetails.card.expMonth),
+            exp_year:Number(response.payment.cardDetails.card.expYear),
+            card_type: response.payment.cardDetails.card.cardType,
           }
         })
 
       }
-
       return paymentResponse;
     } catch (error) {
       if (error instanceof ApiError) {
