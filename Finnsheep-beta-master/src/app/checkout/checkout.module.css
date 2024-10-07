@@ -1,0 +1,165 @@
+.checkout {
+  display: flex;
+  justify-content: center;
+  padding-inline: 12rem;
+  gap: 10rem;
+  padding-bottom: 7rem;
+  padding-top: 3rem;
+}
+
+.checkout__left {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.checkout__left__back {
+  color: #747373;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 500;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.checkout__left h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0c4a6e;
+  margin-bottom: 1.5rem;
+}
+
+.checkout__left span {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: #dcdcdc;
+}
+
+.checkout__left__message {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  background-color: rgb(246, 236, 226);
+  padding-block: 0.3rem;
+  padding-inline: 1.3rem;
+  border: 1px solid #ffdfbe;
+  border-radius: 5px;
+}
+
+.checkout__left__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.5rem;
+}
+
+.checkout__left__form__container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.checkout__left__form__container__inputcontainer {
+  width: calc(50% - 1.5rem / 2);
+}
+
+.checkout__left__form__container__inputcontainer,
+.checkout__left__form__inputcontainer,
+.checkout__left__form__inputcontainer__address,
+.checkout__left__form__inputcontainer__message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkout__left__form__container__inputcontainer input,
+.checkout__left__form__inputcontainer input,
+.checkout__left__form__inputcontainer__address input,
+.checkout__left__form__inputcontainer__message input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #b1b1b1;
+  border-radius: 12px;
+}
+
+.checkout__left__form__container__inputcontainer label,
+.checkout__left__form__inputcontainer label,
+.checkout__left__form__inputcontainer__address label,
+.checkout__left__form__inputcontainer__message label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.checkout__left__form__inputcontainer__message input {
+  height: 6rem;
+}
+
+.checkout__left__form__inputcontainer__message {
+  margin-bottom: 1rem;
+}
+
+.checkout__left__message a {
+  color: #0c4a6e;
+}
+
+.checkout__left__message a:hover {
+  text-decoration: underline;
+}
+
+.checkout__left h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0c4a6e;
+  margin-bottom: 1.5rem;
+}
+
+.checkout__left__form__inputcontainer__radiogroup {
+  margin-top: -2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+}
+
+.checkout__left__form__inputcontainer__radio {
+  display: flex;
+  gap: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.checkout__left__form__inputcontainer__radio input {
+  color: black;
+}
+
+.checkout__left__form__submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0c4a6e;
+  color: white;
+  padding-block: 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.checkout__right {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  padding-top: 7.3rem;
+}
+
+.checkout__right__header {
+  padding-inline: 2rem;
+  padding-block: 1.3rem;
+  background-color: #0c4a6e;
+  color: white;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.checkout__right__header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
