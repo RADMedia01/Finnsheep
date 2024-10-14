@@ -24,7 +24,7 @@ const CartProducts = () => {
 <CartProduct product={product}/>
  ))}
     </div>
-  
+
   )
 }
 
@@ -67,7 +67,7 @@ const handleRemoveFromCart = (product) => {
             className="mx-auto rounded-xl aspect-square h-auto w-40 object-cover object-center"
           />
         </div>
-      
+
         <div className="grid grid-cols-1 md:grid-cols-4 w-full gap-6">
           <div className="md:col-span-2">
             <div className="flex flex-col gap-1 md:gap-3 max-[500px]:items-start">
@@ -102,7 +102,7 @@ const handleRemoveFromCart = (product) => {
               </div>
             </div>
           </div>
-      
+
           <div className=" md:col-span-2 flex items-center justify-between w-full gap-6">
             <div className="flex items-center justify-end w-full max-[500px]:justify-end h-full order-last md:order-none max-md:mt-">
               <div className="flex items-center justify-end w-full h-full">
@@ -121,14 +121,14 @@ const handleRemoveFromCart = (product) => {
                     <path
                       d="M16.5 11H5.5"
                       stroke=""
-                      stroke-width="1.6"
-                      stroke-linecap="round"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
                     />
                     <path
                       d="M16.5 11H5.5"
                       stroke-opacity="0.2"
-                      stroke-width="1.6"
-                      stroke-linecap="round"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
                     />
                   </svg>
                 </button>
@@ -152,22 +152,22 @@ const handleRemoveFromCart = (product) => {
                     <path
                       d="M11 5.5V16.5M16.5 11H5.5"
                       stroke=""
-                      stroke-width="1.6"
-                      stroke-linecap="round"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
                     />
                     <path
                       d="M11 5.5V16.5M16.5 11H5.5"
                       stroke-opacity="0.2"
-                      stroke-width="1.6"
-                      stroke-linecap="round"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
                     />
                   </svg>
                 </button>
               </div>
             </div>
-      
-        
-      
+
+
+
             <div className="flex items-center justify-end h-full max-[500px]:justify-end  md:min-w-ful max-md:mt-">
               <p className="font-bold text-lg leading-8 text-gray-600 transition-all duration-300 group-hover:text-green-600">
                 ${product.price * quantity}
@@ -179,9 +179,7 @@ const handleRemoveFromCart = (product) => {
 
 
 
-  
-      
+
+
     )
 }
-
-

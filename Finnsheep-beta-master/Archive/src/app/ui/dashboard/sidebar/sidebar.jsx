@@ -30,7 +30,7 @@ const menuItems = [
       {
         title: "Users",
         path: "/dashboard/users",
-        subPath:"/dashboard/users/add",
+        subPath: "/dashboard/users/add",
         icon: <MdSupervisedUserCircle />,
       },
       {
@@ -134,9 +134,8 @@ const Sidebar = () => {
       <aside
         id="default-sidebar"
         ref={sidebarRef}
-        className={`fixed top-0 left-0 w-60 p-4 z-50 lg:w-64 h-screen bg-[#F9FAFB bg-gray-800 border- shadow  transition duration-300   ${
-          isSidebarOpen ? "" : "translate-x-[-100%]  lg:translate-x-0"
-        }`}
+        className={`fixed top-0 left-0 w-60 p-4 z-50 lg:w-64 h-screen bg-[#F9FAFB bg-gray-800 border- shadow  transition duration-300   ${isSidebarOpen ? "" : "translate-x-[-100%]  lg:translate-x-0"
+          }`}
         aria-label="default-sidebar"
       >
         {/* <div className=" flex items-center gap-5 mb-5">
@@ -154,23 +153,23 @@ const Sidebar = () => {
         </div> */}
 
         <div className="flex justify-between items-center mb-9">
-        <a className="w-fit h-12 flex items-center " href="/">
-          {/* <Image
+          <a className="w-fit h-12 flex items-center " href="/">
+            {/* <Image
             src="/logo6.svg"
             alt="logo"
             width={200}
             height={200}
             className="h-full w-full object-contain object-left"
           /> */}
-          <div className="flex mt-2 gap- items-center justify-center ">
-          <Image width={300} height={300} alt="FinnSheep Logo" src="/finnsheep_white-Logo.svg" className="w-3/4 "/>
-      </div>
-        </a>
+            <div className="flex mt-2 gap- items-center justify-center ">
+              <Image width={300} height={300} alt="FinnSheep Logo" src="/finnsheep_white-Logo.svg" className="w-3/4 " />
+            </div>
+          </a>
 
-        <button onClick={toggleSidebar} className="text-white mt-2 p-2 bg-white/10 border border-white/30 rounded-lg lg:hidden "> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-</svg>
- </button>
+          <button onClick={toggleSidebar} className="text-white mt-2 p-2 bg-white/10 border border-white/30 rounded-lg lg:hidden "> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-4 h-4">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+          </svg>
+          </button>
         </div>
 
         <ul className="h-[66vh]">
@@ -184,7 +183,7 @@ const Sidebar = () => {
           ))}
         </ul>
         <ul className="mt-[11px]">
-              
+
 
           <a
             className="flex items-center justify-center gap-2 bg-[#FFFFFF] text-[13px] font-medium rounded-[5px] px-3 py-2 text-[#363A43] w-full h-[38px] mb-5 hover:opacity-80 border border-[#E7E4F5]"
@@ -209,22 +208,22 @@ const Sidebar = () => {
               <polyline points="8 7 17 7 17 16"></polyline>
             </svg>
           </a>
-          
+
         </ul>
       </aside>
       <button
-                    className="text-[#363A43] absolute top-6 left-5  lg:hidden"
-                    id="open-sidebar"
-                    onClick={toggleSidebar}
-                  >
-                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-</svg>
+        className="text-[#363A43] absolute top-6 left-5  lg:hidden"
+        id="open-sidebar"
+        onClick={toggleSidebar}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-8 h-8">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
 
-                  </button>
+      </button>
       {/* <div className="lg:hidden bg-gray-100"> */}
-      
-        {/* <div className="flex overflow-hidden bg-gray-200">
+
+      {/* <div className="flex overflow-hidden bg-gray-200">
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="bg-[#F9FAFB] shadow fixed left-0 right-0 z-20">
               <div className="w-full mx-auto">
@@ -249,7 +248,7 @@ const Sidebar = () => {
                       ></path>
                     </svg>
                   </button>
-                 
+
                 </div>
               </div>
             </div>

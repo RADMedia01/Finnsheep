@@ -132,6 +132,10 @@
   color: black;
 }
 
+.checkout__left__form__inputcontainer__card {
+  margin-top: 1rem;
+}
+
 .checkout__left__form__submit {
   display: flex;
   justify-content: center;

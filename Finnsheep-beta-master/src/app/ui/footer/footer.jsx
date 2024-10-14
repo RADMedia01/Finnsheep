@@ -5,13 +5,13 @@ import React from 'react'
 const Footer = () => {
   return (
     <footer className="w-full border-t bg-gradient-to-b from-blue-100 to-indigo-50">
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="py-14 grid grid-cols-12 gap-x-5 gap-y-8">
-            <div className="col-span-full xl:col-span-3 relative bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl gap-12 p-6 xl:w-72 h-96 flex flex-col justify-center items-center">
-                
-                <Link href="/" className="flex justify-center lg:justify-start">
-                <Image src="finnsheep_white-Logo.svg" alt="logo-finnsheep" className="h-10" width={200} height={200}/>
-                    {/* <svg className="w-40 h-8" viewBox="0 0 165 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div className="col-span-full xl:col-span-3 relative bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl gap-12 p-6 xl:w-72 h-96 flex flex-col justify-center items-center">
+
+            <Link href="/" className="flex justify-center lg:justify-start">
+              <Image src="finnsheep_white-Logo.svg" alt="logo-finnsheep" className="h-10" width={200} height={200} />
+              {/* <svg className="w-40 h-8" viewBox="0 0 165 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M47.5 25.6059V7.88281H54.9171C55.0916 7.88281 55.316 7.89102 55.5903 7.90743C55.8645 7.91563 56.118 7.94025 56.3507 7.98127C57.3895 8.13717 58.2455 8.47768 58.9186 9.00281C59.6001 9.52794 60.1029 10.1926 60.427 10.9967C60.7594 11.7926 60.9256 12.6787 60.9256 13.6551C60.9256 14.6233 60.7594 15.5095 60.427 16.3136C60.0945 17.1095 59.5876 17.77 58.9061 18.2951C58.233 18.8202 57.3812 19.1608 56.3507 19.3167C56.118 19.3495 55.8604 19.3741 55.5778 19.3905C55.3035 19.4069 55.0833 19.4151 54.9171 19.4151H50.5042V25.6059H47.5ZM50.5042 16.6459H54.7925C54.9587 16.6459 55.1457 16.6377 55.3534 16.6213C55.5612 16.6049 55.7523 16.572 55.9268 16.5228C56.4255 16.3997 56.8161 16.1823 57.0986 15.8705C57.3895 15.5587 57.5931 15.2059 57.7094 14.812C57.8341 14.4182 57.8964 14.0326 57.8964 13.6551C57.8964 13.2777 57.8341 12.892 57.7094 12.4982C57.5931 12.0961 57.3895 11.7392 57.0986 11.4274C56.8161 11.1156 56.4255 10.8982 55.9268 10.7751C55.7523 10.7259 55.5612 10.6972 55.3534 10.689C55.1457 10.6726 54.9587 10.6644 54.7925 10.6644H50.5042V16.6459Z"
                             fill="white" />
@@ -43,121 +43,121 @@ const Footer = () => {
                             d="M0.5 5.42955C0.5 2.91846 2.57211 0.882812 5.12819 0.882812H22.0399V0.884053C29.4908 0.982665 35.5 6.9471 35.5 14.2904C35.5 21.6951 29.3897 27.6979 21.8523 27.6979C19.1648 27.6979 16.6587 26.9348 14.5463 25.617L7.08815 32.7885C4.63431 35.148 0.5 33.4401 0.5 30.0669V5.42955ZM12.0194 23.5883C9.65709 21.1778 8.20452 17.9007 8.20452 14.2904C8.20452 13.4105 8.93056 12.6972 9.82619 12.6972C10.7218 12.6972 11.4479 13.4105 11.4479 14.2904C11.4479 19.9354 16.1061 24.5116 21.8523 24.5116C27.5985 24.5116 32.2567 19.9354 32.2567 14.2904C32.2567 8.6453 27.5985 4.06907 21.8523 4.06907H5.12819C4.36336 4.06907 3.74334 4.67818 3.74334 5.42955V30.0669C3.74334 30.6179 4.41866 30.8968 4.81948 30.5114L12.0194 23.5883Z"
                             fill="white" />
                     </svg> */}
-                </Link>
-                <p className="text-center text-gray-200">Trusted by over 10,000 happy customers and 4,000 farmers. Got questions? Reach out to us—we&apos;re here to help you!</p>
-               
-                <div className="flex  space-x-4 sm:justify-center  ">
-                    <a href="javascript:;"
-                        className="w-9 h-9 rounded-full bg-white flex justify-center items-center hover:shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"
-                            fill="none">
-                            <g id="Social Media">
-                                <path id="Vector"
-                                    d="M11.8214 9.81691L16.9919 3.93591H15.7667L11.2772 9.0423L7.6914 3.93591H3.55566L8.97803 11.6577L3.55566 17.8248H4.78097L9.522 12.4323L13.3088 17.8248H17.4446L11.8211 9.81691H11.8214ZM10.1432 11.7257L9.59382 10.9568L5.22246 4.83846H7.10445L10.6322 9.77615L11.1816 10.5451L15.7672 16.9633H13.8852L10.1432 11.726V11.7257Z"
-                                    fill="url(#paint0_linear_9147_17049)" />
-                            </g>
-                        </svg>
+            </Link>
+            <p className="text-center text-gray-200">Trusted by over 10,000 happy customers and 4,000 farmers. Got questions? Reach out to us—we&apos;re here to help you!</p>
+
+            <div className="flex  space-x-4 sm:justify-center  ">
+              <a href="javascript:;"
+                className="w-9 h-9 rounded-full bg-white flex justify-center items-center hover:shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"
+                  fill="none">
+                  <g id="Social Media">
+                    <path id="Vector"
+                      d="M11.8214 9.81691L16.9919 3.93591H15.7667L11.2772 9.0423L7.6914 3.93591H3.55566L8.97803 11.6577L3.55566 17.8248H4.78097L9.522 12.4323L13.3088 17.8248H17.4446L11.8211 9.81691H11.8214ZM10.1432 11.7257L9.59382 10.9568L5.22246 4.83846H7.10445L10.6322 9.77615L11.1816 10.5451L15.7672 16.9633H13.8852L10.1432 11.726V11.7257Z"
+                      fill="url(#paint0_linear_9147_17049)" />
+                  </g>
+                </svg>
 
 
-                    </a>
-                    <a href="javascript:;"
-                        className="w-9 h-9 rounded-full bg-white flex justify-center items-center hover:shadow-md">
-                        <svg className="w-[1.25rem] h-[1.125rem]" viewBox="0 0 15 15" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M5.20975 7.81944C5.20975 6.54106 6.26102 5.50444 7.5582 5.50444C8.85537 5.50444 9.90721 6.54106 9.90721 7.81944C9.90721 9.09783 8.85537 10.1344 7.5582 10.1344C6.26102 10.1344 5.20975 9.09783 5.20975 7.81944ZM3.93991 7.81944C3.93991 9.78889 5.55982 11.3853 7.5582 11.3853C9.55658 11.3853 11.1765 9.78889 11.1765 7.81944C11.1765 5.85 9.55658 4.25356 7.5582 4.25356C5.55982 4.25356 3.93991 5.85 3.93991 7.81944ZM10.4741 4.11217C10.4741 4.27698 10.5236 4.43812 10.6165 4.5752C10.7093 4.71228 10.8413 4.81914 10.9958 4.88227C11.1503 4.94541 11.3203 4.96198 11.4844 4.92989C11.6484 4.8978 11.7991 4.81849 11.9174 4.70199C12.0357 4.58549 12.1163 4.43704 12.149 4.2754C12.1817 4.11376 12.165 3.9462 12.1011 3.79391C12.0371 3.64161 11.9288 3.51142 11.7898 3.41979C11.6508 3.32817 11.4873 3.27923 11.3201 3.27917H11.3197C11.0955 3.27927 10.8806 3.36705 10.722 3.52324C10.5635 3.67943 10.4743 3.89124 10.4741 4.11217ZM4.71142 13.4721C4.02442 13.4412 3.65101 13.3284 3.40286 13.2332C3.07387 13.1069 2.83914 12.9566 2.59235 12.7137C2.34555 12.4708 2.19278 12.2397 2.06527 11.9155C1.96854 11.6711 1.8541 11.3029 1.82287 10.6259C1.78871 9.89389 1.78189 9.674 1.78189 7.8195C1.78189 5.965 1.78927 5.74572 1.82287 5.01311C1.85416 4.33606 1.96944 3.96867 2.06527 3.7235C2.19335 3.39928 2.34589 3.16794 2.59235 2.92472C2.8388 2.6815 3.07331 2.53094 3.40286 2.40528C3.6509 2.30994 4.02442 2.19717 4.71142 2.16639C5.45417 2.13272 5.67729 2.126 7.5582 2.126C9.4391 2.126 9.66244 2.13328 10.4058 2.16639C11.0928 2.19722 11.4656 2.31083 11.7144 2.40528C12.0434 2.53094 12.2781 2.68183 12.5249 2.92472C12.7717 3.16761 12.9239 3.39928 13.052 3.7235C13.1487 3.96794 13.2631 4.33606 13.2944 5.01311C13.3285 5.74572 13.3354 5.965 13.3354 7.8195C13.3354 9.674 13.3285 9.89328 13.2944 10.6259C13.2631 11.3029 13.1481 11.6709 13.052 11.9155C12.9239 12.2397 12.7714 12.4711 12.5249 12.7137C12.2784 12.9564 12.0434 13.1069 11.7144 13.2332C11.4663 13.3285 11.0928 13.4413 10.4058 13.4721C9.66306 13.5057 9.43994 13.5124 7.5582 13.5124C5.67645 13.5124 5.45395 13.5057 4.71142 13.4721ZM4.65307 0.917056C3.90294 0.950722 3.39035 1.06794 2.9427 1.23961C2.4791 1.41689 2.08663 1.65472 1.69446 2.04061C1.30228 2.4265 1.06157 2.81389 0.881687 3.27078C0.707498 3.71222 0.588554 4.21711 0.554392 4.95639C0.519667 5.69683 0.511719 5.93356 0.511719 7.81944C0.511719 9.70533 0.519667 9.94206 0.554392 10.6825C0.588554 11.4218 0.707498 11.9267 0.881687 12.3681C1.06157 12.8247 1.30233 13.2126 1.69446 13.5983C2.08658 13.984 2.4791 14.2215 2.9427 14.3993C3.39119 14.5709 3.90294 14.6882 4.65307 14.7218C5.40479 14.7555 5.6446 14.7639 7.5582 14.7639C9.4718 14.7639 9.712 14.7561 10.4633 14.7218C11.2135 14.6882 11.7258 14.5709 12.1737 14.3993C12.637 14.2215 13.0298 13.9842 13.4219 13.5983C13.8141 13.2124 14.0543 12.8247 14.2347 12.3681C14.4089 11.9267 14.5284 11.4218 14.562 10.6825C14.5962 9.9415 14.6041 9.70533 14.6041 7.81944C14.6041 5.93356 14.5962 5.69683 14.562 4.95639C14.5278 4.21706 14.4089 3.71194 14.2347 3.27078C14.0543 2.81417 13.8135 2.42711 13.4219 2.04061C13.0304 1.65411 12.637 1.41689 12.1743 1.23961C11.7258 1.06794 11.2135 0.950167 10.4639 0.917056C9.71256 0.883389 9.47236 0.875 7.55876 0.875C5.64516 0.875 5.40479 0.882833 4.65307 0.917056Z"
-                                fill="url(#paint0_linear_9147_17049)" />
-                            <defs>
-                                <linearGradient id="paint0_linear_9147_17049" x1="14.6041" y1="1.67072"
-                                    x2="0.399812" y2="14.3286" gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#7C3AED" />
-                                    <stop offset="0.993738" stop-color="#4F46E5" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+              </a>
+              <a href="javascript:;"
+                className="w-9 h-9 rounded-full bg-white flex justify-center items-center hover:shadow-md">
+                <svg className="w-[1.25rem] h-[1.125rem]" viewBox="0 0 15 15" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M5.20975 7.81944C5.20975 6.54106 6.26102 5.50444 7.5582 5.50444C8.85537 5.50444 9.90721 6.54106 9.90721 7.81944C9.90721 9.09783 8.85537 10.1344 7.5582 10.1344C6.26102 10.1344 5.20975 9.09783 5.20975 7.81944ZM3.93991 7.81944C3.93991 9.78889 5.55982 11.3853 7.5582 11.3853C9.55658 11.3853 11.1765 9.78889 11.1765 7.81944C11.1765 5.85 9.55658 4.25356 7.5582 4.25356C5.55982 4.25356 3.93991 5.85 3.93991 7.81944ZM10.4741 4.11217C10.4741 4.27698 10.5236 4.43812 10.6165 4.5752C10.7093 4.71228 10.8413 4.81914 10.9958 4.88227C11.1503 4.94541 11.3203 4.96198 11.4844 4.92989C11.6484 4.8978 11.7991 4.81849 11.9174 4.70199C12.0357 4.58549 12.1163 4.43704 12.149 4.2754C12.1817 4.11376 12.165 3.9462 12.1011 3.79391C12.0371 3.64161 11.9288 3.51142 11.7898 3.41979C11.6508 3.32817 11.4873 3.27923 11.3201 3.27917H11.3197C11.0955 3.27927 10.8806 3.36705 10.722 3.52324C10.5635 3.67943 10.4743 3.89124 10.4741 4.11217ZM4.71142 13.4721C4.02442 13.4412 3.65101 13.3284 3.40286 13.2332C3.07387 13.1069 2.83914 12.9566 2.59235 12.7137C2.34555 12.4708 2.19278 12.2397 2.06527 11.9155C1.96854 11.6711 1.8541 11.3029 1.82287 10.6259C1.78871 9.89389 1.78189 9.674 1.78189 7.8195C1.78189 5.965 1.78927 5.74572 1.82287 5.01311C1.85416 4.33606 1.96944 3.96867 2.06527 3.7235C2.19335 3.39928 2.34589 3.16794 2.59235 2.92472C2.8388 2.6815 3.07331 2.53094 3.40286 2.40528C3.6509 2.30994 4.02442 2.19717 4.71142 2.16639C5.45417 2.13272 5.67729 2.126 7.5582 2.126C9.4391 2.126 9.66244 2.13328 10.4058 2.16639C11.0928 2.19722 11.4656 2.31083 11.7144 2.40528C12.0434 2.53094 12.2781 2.68183 12.5249 2.92472C12.7717 3.16761 12.9239 3.39928 13.052 3.7235C13.1487 3.96794 13.2631 4.33606 13.2944 5.01311C13.3285 5.74572 13.3354 5.965 13.3354 7.8195C13.3354 9.674 13.3285 9.89328 13.2944 10.6259C13.2631 11.3029 13.1481 11.6709 13.052 11.9155C12.9239 12.2397 12.7714 12.4711 12.5249 12.7137C12.2784 12.9564 12.0434 13.1069 11.7144 13.2332C11.4663 13.3285 11.0928 13.4413 10.4058 13.4721C9.66306 13.5057 9.43994 13.5124 7.5582 13.5124C5.67645 13.5124 5.45395 13.5057 4.71142 13.4721ZM4.65307 0.917056C3.90294 0.950722 3.39035 1.06794 2.9427 1.23961C2.4791 1.41689 2.08663 1.65472 1.69446 2.04061C1.30228 2.4265 1.06157 2.81389 0.881687 3.27078C0.707498 3.71222 0.588554 4.21711 0.554392 4.95639C0.519667 5.69683 0.511719 5.93356 0.511719 7.81944C0.511719 9.70533 0.519667 9.94206 0.554392 10.6825C0.588554 11.4218 0.707498 11.9267 0.881687 12.3681C1.06157 12.8247 1.30233 13.2126 1.69446 13.5983C2.08658 13.984 2.4791 14.2215 2.9427 14.3993C3.39119 14.5709 3.90294 14.6882 4.65307 14.7218C5.40479 14.7555 5.6446 14.7639 7.5582 14.7639C9.4718 14.7639 9.712 14.7561 10.4633 14.7218C11.2135 14.6882 11.7258 14.5709 12.1737 14.3993C12.637 14.2215 13.0298 13.9842 13.4219 13.5983C13.8141 13.2124 14.0543 12.8247 14.2347 12.3681C14.4089 11.9267 14.5284 11.4218 14.562 10.6825C14.5962 9.9415 14.6041 9.70533 14.6041 7.81944C14.6041 5.93356 14.5962 5.69683 14.562 4.95639C14.5278 4.21706 14.4089 3.71194 14.2347 3.27078C14.0543 2.81417 13.8135 2.42711 13.4219 2.04061C13.0304 1.65411 12.637 1.41689 12.1743 1.23961C11.7258 1.06794 11.2135 0.950167 10.4639 0.917056C9.71256 0.883389 9.47236 0.875 7.55876 0.875C5.64516 0.875 5.40479 0.882833 4.65307 0.917056Z"
+                    fill="url(#paint0_linear_9147_17049)" />
+                  <defs>
+                    <linearGradient id="paint0_linear_9147_17049" x1="14.6041" y1="1.67072"
+                      x2="0.399812" y2="14.3286" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#7C3AED" />
+                      <stop offset="0.993738" stopColor="#4F46E5" />
+                    </linearGradient>
+                  </defs>
+                </svg>
 
-                    </a>
-                    <a href="https://www.facebook.com/finnsheep.net?_ga=2.207188049.317552464.1722666971-1378611946.1722360058" target='_blank'
-                        className="w-9 h-9 rounded-full bg-white flex justify-center items-center hover:shadow-md">
+              </a>
+              <a href="https://www.facebook.com/finnsheep.net?_ga=2.207188049.317552464.1722666971-1378611946.1722360058" target='_blank'
+                className="w-9 h-9 rounded-full bg-white flex justify-center items-center hover:shadow-md">
 
-<svg className='size-5' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="url(#paint0_linear_9147_18425)"><path  d="M14 13.5H16.5L17.5 9.5H14V7.5C14 6.47062 14 5.5 16 5.5H17.5V2.1401C17.1743 2.09685 15.943 2 14.6429 2C11.9284 2 10 3.65686 10 6.69971V9.5H7V13.5H10V22H14V13.5Z"></path></svg>
+                <svg className='size-5' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="url(#paint0_linear_9147_18425)"><path d="M14 13.5H16.5L17.5 9.5H14V7.5C14 6.47062 14 5.5 16 5.5H17.5V2.1401C17.1743 2.09685 15.943 2 14.6429 2C11.9284 2 10 3.65686 10 6.69971V9.5H7V13.5H10V22H14V13.5Z"></path></svg>
 
-                    </a>
-                    <a href="javascript:;"
-                        className="w-9 h-9 rounded-full bg-white flex justify-center items-center hover:shadow-md">
+              </a>
+              <a href="javascript:;"
+                className="w-9 h-9 rounded-full bg-white flex justify-center items-center hover:shadow-md">
 
 
-                        <svg className="w-[1.25rem] h-[0.875rem]" viewBox="0 0 16 12" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M13.4346 1.0181C14.0684 1.18926 14.5665 1.68869 14.7349 2.32177C15.0413 3.47069 15.0413 5.86935 15.0413 5.86935C15.0413 5.86935 15.0413 8.26801 14.7349 9.41693C14.5642 10.0524 14.0661 10.5518 13.4346 10.7206C12.2886 11.0278 7.69058 11.0278 7.69058 11.0278C7.69058 11.0278 3.09491 11.0278 1.94657 10.7206C1.31277 10.5494 0.814613 10.05 0.646222 9.41693C0.339844 8.26801 0.339844 5.86935 0.339844 5.86935C0.339844 5.86935 0.339844 3.47069 0.646222 2.32177C0.816952 1.68635 1.31511 1.18692 1.94657 1.0181C3.09491 0.710938 7.69058 0.710938 7.69058 0.710938C7.69058 0.710938 12.2886 0.710938 13.4346 1.0181ZM10.041 5.86935L6.22178 8.08043V3.65827L10.041 5.86935Z"
-                                fill="url(#paint0_linear_9147_18425)" />
-                            <defs>
-                                <linearGradient id="paint0_linear_9147_18425" x1="15.0413" y1="1.30201" x2="4.68186"
-                                    y2="14.2671" gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#7C3AED" />
-                                    <stop offset="0.993738" stop-color="#4F46E5" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                <svg className="w-[1.25rem] h-[0.875rem]" viewBox="0 0 16 12" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" clipRule="evenodd"
+                    d="M13.4346 1.0181C14.0684 1.18926 14.5665 1.68869 14.7349 2.32177C15.0413 3.47069 15.0413 5.86935 15.0413 5.86935C15.0413 5.86935 15.0413 8.26801 14.7349 9.41693C14.5642 10.0524 14.0661 10.5518 13.4346 10.7206C12.2886 11.0278 7.69058 11.0278 7.69058 11.0278C7.69058 11.0278 3.09491 11.0278 1.94657 10.7206C1.31277 10.5494 0.814613 10.05 0.646222 9.41693C0.339844 8.26801 0.339844 5.86935 0.339844 5.86935C0.339844 5.86935 0.339844 3.47069 0.646222 2.32177C0.816952 1.68635 1.31511 1.18692 1.94657 1.0181C3.09491 0.710938 7.69058 0.710938 7.69058 0.710938C7.69058 0.710938 12.2886 0.710938 13.4346 1.0181ZM10.041 5.86935L6.22178 8.08043V3.65827L10.041 5.86935Z"
+                    fill="url(#paint0_linear_9147_18425)" />
+                  <defs>
+                    <linearGradient id="paint0_linear_9147_18425" x1="15.0413" y1="1.30201" x2="4.68186"
+                      y2="14.2671" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#7C3AED" />
+                      <stop offset="0.993738" stopColor="#4F46E5" />
+                    </linearGradient>
+                  </defs>
+                </svg>
 
-                    </a>
-                </div>
+              </a>
             </div>
+          </div>
 
-            <div className="block text-center xl:text-left xl:py-16 col-span-full min-[500px]:col-span-6 md:col-span-4 xl:col-span-3 xl:pl-5">
-                <h4 className="text-lg text-gray-900 font-bold mb-9">Get In Touch</h4>
-                <ul className="text-gray-900 transition-all duration-500 grid gap-6">
-                    <li>support@finnsheep.net</li>
-                    <li>+1 123456789</li>
-                    <li>Hudson Valley, New York, USA.</li>
-                </ul>
+          <div className="block text-center xl:text-left xl:py-16 col-span-full min-[500px]:col-span-6 md:col-span-4 xl:col-span-3 xl:pl-5">
+            <h4 className="text-lg text-gray-900 font-bold mb-9">Get In Touch</h4>
+            <ul className="text-gray-900 transition-all duration-500 grid gap-6">
+              <li>support@finnsheep.net</li>
+              <li>+1 123456789</li>
+              <li>Hudson Valley, New York, USA.</li>
+            </ul>
+          </div>
+          <div className="block xl:py-16 col-span-full min-[500px]:col-span-6 md:col-span-4 xl:col-span-3">
+            <h4 className="text-lg text-gray-900 font-bold mb-9 text-center xl:text-left">Quick Links</h4>
+            <div className="flex gap-6 xl:gap-12 max-xl:justify-center">
+              <ul className="text-gray-600 transition-all duration-500 grid gap-6">
+                <li><Link href="/">Home</Link></li>
+                <li><a href="javascript:;">FAQs</a></li>
+                <li><a href="javascript:;">Visit Farm</a></li>
+                <li><a href="javascript:;">Blogs</a></li>
+              </ul>
+              <ul className="text-gray-600 transition-all duration-500 grid gap-6">
+                <li><Link href="/shop">Shop</Link></li>
+                <li><Link href="/about-us">About </Link></li>
+                <li><Link href="/contact">Contact</Link></li>
+                <li><a href="javascript:;">Gallery</a></li>
+              </ul>
             </div>
-            <div className="block xl:py-16 col-span-full min-[500px]:col-span-6 md:col-span-4 xl:col-span-3">
-                <h4 className="text-lg text-gray-900 font-bold mb-9 text-center xl:text-left">Quick Links</h4>
-                <div className="flex gap-6 xl:gap-12 max-xl:justify-center">
-                    <ul className="text-gray-600 transition-all duration-500 grid gap-6">
-                        <li><Link href="/">Home</Link></li>
-                        <li><a href="javascript:;">FAQs</a></li>
-                        <li><a href="javascript:;">Visit Farm</a></li>
-                        <li><a href="javascript:;">Blogs</a></li>
-                    </ul>
-                    <ul className="text-gray-600 transition-all duration-500 grid gap-6">
-                        <li><Link href="/shop">Shop</Link></li>
-                        <li><Link href="/about-us">About </Link></li>
-                        <li><Link href="/contact">Contact</Link></li>
-                        <li><a href="javascript:;">Gallery</a></li>
-                    </ul>
-                </div>
+          </div>
+          <div className="block xl:py-16 col-span-full md:col-span-4 xl:col-span-3">
+            <h4 className="text-lg text-gray-900 font-bold mb-9 text-center xl:text-left">Newsletter</h4>
+            <div className="grid gap-7 ">
+              <input type="text" name="email"
+                className="py-2 px-4 border border-gray-300 shadow-sm h-14 text-lg text-gray-800 rounded-full w-full  xl:w-64 placeholder:text-gray-400 focus:outline-none"
+                placeholder="Enter email.." />
+              <button type="submit"
+                className="flex gap-2 justify-center items-center py-3.5 px-7 rounded-full text-white bg-blue-600 shadow-md w-fit transition-all duration-500 mx-auto xl:mx-0 hover:bg-blue-700 ">Subscribe<svg
+                  width="17" height="13" viewBox="0 0 17 13" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1.5 6.88281L14.8333 6.88281M10.6667 11.8828L15.0774 7.47207C15.3552 7.19429 15.4941 7.0554 15.4941 6.88281C15.4941 6.71022 15.3552 6.57133 15.0774 6.29356L10.6667 1.88281"
+                    stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
             </div>
-            <div className="block xl:py-16 col-span-full md:col-span-4 xl:col-span-3">
-                <h4 className="text-lg text-gray-900 font-bold mb-9 text-center xl:text-left">Newsletter</h4>
-                <div className="grid gap-7 ">
-                    <input type="text" name="email"
-                        className="py-2 px-4 border border-gray-300 shadow-sm h-14 text-lg text-gray-800 rounded-full w-full  xl:w-64 placeholder:text-gray-400 focus:outline-none"
-                        placeholder="Enter email.." />
-                    <button type="submit"
-                        className="flex gap-2 justify-center items-center py-3.5 px-7 rounded-full text-white bg-blue-600 shadow-md w-fit transition-all duration-500 mx-auto xl:mx-0 hover:bg-blue-700 ">Subscribe<svg
-                            width="17" height="13" viewBox="0 0 17 13" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M1.5 6.88281L14.8333 6.88281M10.6667 11.8828L15.0774 7.47207C15.3552 7.19429 15.4941 7.0554 15.4941 6.88281C15.4941 6.71022 15.3552 6.57133 15.0774 6.29356L10.6667 1.88281"
-                                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+          </div>
 
         </div>
-    </div>
-    <div className="py-4 bg-gradient-to-tr from-blue-600 to-indigo-600 border-t border-gray-300">
+      </div>
+      <div className="py-4 bg-gradient-to-tr from-blue-600 to-indigo-600 border-t border-gray-300">
         <div className="flex items-center justify-center">
-            <span className="text-sm text-white ">Copyright@2024 All Right Reserved  by <Link href="/">Finnsheep</Link></span>
+          <span className="text-sm text-white ">Copyright@2024 All Right Reserved  by <Link href="/">Finnsheep</Link></span>
         </div>
-    </div>
+      </div>
 
-</footer>
-                                        
+    </footer>
+
   )
 }
 

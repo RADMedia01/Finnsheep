@@ -29,7 +29,7 @@ import { format } from 'date-fns';
 //                 <Image src={tutor.img || "/noavatar.svg"} alt="user-avatar-image" width={200} height={200} className="border-4 border-solid border-white rounded-full aspect-square object-cover"/>
 //             </div>
 //             <div className="flex flex-col sm:flex-row max-sm:gap-5 items-center justify-between mb-5">
-                
+
 //                 {/* <div
 //                                 className="rounded-xl p-4 bg-indigo-50  font-medium text-lg text-indigo-600">{tutor.yearsOfExperience}+
 //                                 <p className="text-base font-normal text-gray-600">Years Experiences</p>
@@ -39,7 +39,7 @@ import { format } from 'date-fns';
 //                                 <button
 //                                 className="py-2 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-sm leading-7 shadow-sm shadow-transparent uppercase transition-all duration-500 hover:bg-indigo-100" key={i}>{board}</button>
 //                                ))}</p>
-                               
+
 //                 <div className="flex items-center gap-4">
 //                     <button
 //                         className="rounded-full border border-solid border-gray-300 bg-gray-50 py-3 px-4 text-sm font-semibold text-gray-900 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-50 hover:bg-gray-100 hover:border-gray-300">{tutor.tutorType}</button>
@@ -64,7 +64,7 @@ import { format } from 'date-fns';
 //   <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
 // </svg>
 // Joined {tutor.createdAt
-//                   ? 
+//                   ?
 //                     format(new Date(tutor.createdAt), 'MMMM yyyy')
 //                   : "N/A"}
 //               </span>
@@ -159,7 +159,7 @@ import { format } from 'date-fns';
 // <div>
 //             </div>
 //         </div>
-  
+
 
 // <Table className="mt-8">
 //       {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
@@ -177,12 +177,12 @@ import { format } from 'date-fns';
 //           </TableRow>
 //         ))}
 //       </TableBody>
-    
+
 //     </Table>
 
 //   </div>
 //     </section>
-                                            
+
 //     </div>
 //   )
 // }
@@ -197,49 +197,49 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import ImagesComponent from './image';
 
-const ProductPage = async({params}) => {
+const ProductPage = async ({ params }) => {
     const { id } = params;
     const product = await fetchProduct(id);
 
     // const dispatch = useAppDispatch()
 
- const handlehandleAddToCart = (product) => {
-   console.log('Adding to cart', product)
-//    dispatch(add({ ...product, quantity }))
- }
-  
-
-  
-  return (
-    <div>
-        <div className="md:grid grid-cols-2 min-h-80 container gap-8">
-            <div className="bg-indigo-5 py-10 md:py-20">
-                <ImagesComponent/>
+    const handlehandleAddToCart = (product) => {
+        console.log('Adding to cart', product)
+        //    dispatch(add({ ...product, quantity }))
+    }
 
 
-            </div>
 
-            
-            <div className="bg-red-5 md:p-10 md:py-20">
+    return (
+        <div>
+            <div className="md:grid grid-cols-2 min-h-80 container gap-8">
+                <div className="bg-indigo-5 py-10 md:py-20">
+                    <ImagesComponent />
 
-                <h2 className='capitalize text-4xl'>{product.name}</h2>
-                <p className='mt-4 text-gray-700'>{product.description}</p>
-                <div className="flex gap-6">
-                <p className='mt-4 text-gray-700 text-lg font-semibold'>${product.price}</p>
 
-                {product.stock >= 0 ?
-                <Badge className='mt-4 text-gray-700 bg-green-200 border border-green-500'>In Stock</Badge>
-            :
-            <Badge className='mt-4 text-gray-700 bg-red-200 border border-red-500'>Out of Stock</Badge>}
                 </div>
-               <Quantity product={product}/>
-            
+
+
+                <div className="bg-red-5 md:p-10 md:py-20">
+
+                    <h2 className='capitalize text-4xl'>{product.name}</h2>
+                    <p className='mt-4 text-gray-700'>{product.description}</p>
+                    <div className="flex gap-6">
+                        <p className='mt-4 text-gray-700 text-lg font-semibold'>${product.price}</p>
+
+                        {product.stock >= 0 ?
+                            <Badge className='mt-4 text-gray-700 bg-green-200 border border-green-500'>In Stock</Badge>
+                            :
+                            <Badge className='mt-4 text-gray-700 bg-red-200 border border-red-500'>Out of Stock</Badge>}
+                    </div>
+                    <Quantity product={product} />
+
+                </div>
             </div>
+            <div className="bg-green-5 h-80 md:p-20 container my-10">Related Products</div>
+            <div className="bg-violet-5 h-80 md:p-20 container">Review</div>
         </div>
-        <div className="bg-green-5 h-80 md:p-20 container my-10">Related Products</div>
-        <div className="bg-violet-5 h-80 md:p-20 container">Review</div>
-    </div>
-  )
+    )
 }
 
 export default ProductPage

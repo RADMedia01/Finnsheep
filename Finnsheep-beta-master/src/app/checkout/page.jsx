@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import checkout_styles from "./checkout.module.css";
+import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
+import axiosInstance from "@/utils/axiosInstance";
 
 const Checkout = () => {
   const [cart, setCart] = useState([]);
@@ -18,10 +20,37 @@ const Checkout = () => {
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cartState")).cart.items;
     setCart(cart);
-  });
+  }, []);
 
   const handlePlaceOrder = (e) => {
     alert("Order placed successfully!");
+  };
+
+  const handlePayment = async (token) => {
+    /*
+    const body = {
+        sourceId: payload.sourceId,
+        amountMoney: {
+          amount: payload.amountMoney.amount, // Amount should be in cents
+          currency: payload.amountMoney.currency,
+        },
+        idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
+      };
+    */
+    const body = {
+      sourceId: token,
+      amountMoney: {
+        amount: 100, // Amount should be in cents
+        currency: "USD",
+      },
+      idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
+    };
+    try {
+      const response = await axiosInstance.post("/api/payment/new", body);
+      console.log("response:", response);
+    } catch (error) {
+      console.error("error:", error);
+    }
   };
 
   return (
@@ -196,6 +225,20 @@ const Checkout = () => {
                 Cash on Delivery
               </label>
             </div>
+            {paymentMethodCard && (
+              <div className={checkout_styles.checkout__left__form__inputcontainer__card}>
+                <PaymentForm
+                  applicationId="sandbox-sq0idb-SH2ggZPf5KG-3cRx0mK0-A"
+                  cardTokenizeResponseReceived={async (token) => {
+                    console.log("token:", token);
+                    await handlePayment(token);
+                  }}
+                  locationId="LF45MA5ZPCCVM"
+                >
+                  <CreditCard />
+                </PaymentForm>
+              </div>
+            )}
           </div>
           <input className={checkout_styles.checkout__left__form__submit} type="submit" value="Place Order" />
         </form>
