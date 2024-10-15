@@ -14,7 +14,7 @@ export const PaymentWithSquare = async (payload: any) => {
           currency: payload.amountMoney.currency,
         },
         idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
-      };     
+      }; 
       const paymentResponse = await squareClient.paymentsApi.createPayment(body);
       const response = paymentResponse.result;
       console.log(response.payment.cardDetails);

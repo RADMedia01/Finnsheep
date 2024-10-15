@@ -23,6 +23,7 @@ const Checkout = () => {
   }, []);
 
   const handlePlaceOrder = (e) => {
+    debugger
     alert("Order placed successfully!");
   };
 
@@ -37,6 +38,7 @@ const Checkout = () => {
         idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
       };
     */
+   debugger
     const body = {
       sourceId: token,
       amountMoney: {
@@ -45,8 +47,10 @@ const Checkout = () => {
       },
       idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
     };
+    debugger
     try {
       const response = await axiosInstance.post("/api/payment/new", body);
+      debugger
       console.log("response:", response);
     } catch (error) {
       console.error("error:", error);
@@ -230,6 +234,7 @@ const Checkout = () => {
                 <PaymentForm
                   applicationId="sandbox-sq0idb-SH2ggZPf5KG-3cRx0mK0-A"
                   cardTokenizeResponseReceived={async (token) => {
+                    debugger
                     console.log("token:", token);
                     await handlePayment(token);
                   }}

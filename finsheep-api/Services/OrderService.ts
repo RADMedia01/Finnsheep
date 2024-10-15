@@ -61,9 +61,6 @@ const CalculateOrderSummary=async(cartItems:any[],payload?:any)=>{
   } catch (error:any) {
     
   }
-
- 
-
 } 
 
 const CalculateSubTotal=async(cartItems:any[])=>{
