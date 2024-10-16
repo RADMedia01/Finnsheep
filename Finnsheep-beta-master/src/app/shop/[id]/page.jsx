@@ -1,8 +1,8 @@
-
-import { fetchProduct, fetchTutor } from '@/app/lib/data';
-import Image from 'next/image';
-import Link from 'next/link';
-import { format } from 'date-fns';
+"use client";
+// import { fetchTutor } from '@/app/lib/data';
+// import Image from 'next/image';
+// import Link from 'next/link';
+// import { format } from 'date-fns';
 // import {
 //   Table,
 //   TableBody,
@@ -190,16 +190,31 @@ import { format } from 'date-fns';
 // export default TutorDetailPage
 
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { HiOutlineMinus, HiOutlinePlus } from 'react-icons/hi';
 import Quantity from './quantity';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import ImagesComponent from './image';
+import axiosInstance from '@/utils/axiosInstance';
 
 const ProductPage = async ({ params }) => {
   const { id } = params;
-  const product = await fetchProduct(id);
+  const [product, setProduct] = useState({});
+
+  const fetchProduct = async (id) => {
+    const response = await axiosInstance.get(`/api/product/${id}`);
+    return response.data;
+  };
+
+  useEffect(() => {
+    const updateProduct = async () => {
+      const productResponse = await fetchProduct(id);
+      console.log(productResponse.data)
+      setProduct(productResponse.data);
+    };
+    updateProduct();
+  }, [id]);
 
   // const dispatch = useAppDispatch()
 
@@ -214,7 +229,7 @@ const ProductPage = async ({ params }) => {
     <div>
       <div className="md:grid grid-cols-2 min-h-80 container gap-8">
         <div className="bg-indigo-5 py-10 md:py-20">
-          <ImagesComponent />
+          <ImagesComponent otherImages={product.otherImages} />
 
 
         </div>

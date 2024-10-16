@@ -22,9 +22,34 @@ const Checkout = () => {
     setCart(cart);
   }, []);
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
+    console.log("cart:", cart);
+    const transformedCart = cart.map(item => {
+      return {
+        productId: item._id, // using _id as productId
+        productVariationId: item.category._id, // using category._id as productVariationId
+        quantity: item.quantity,
+      };
+    });
+
+    console.log(transformedCart);
     debugger
-    alert("Order placed successfully!");
+    const body = {
+      userId: "66d041362baacc7ecec25463",
+      items: transformedCart,
+      deliveryCharges: 10,
+      subTotal: 40,
+      total: 50,
+      shippingAddress: {
+        address: "Near Central Park",
+        state: "California",
+        city: "Los Angeles",
+        zipcode: "90001"
+      },
+      paymentMethod: "cash",
+      currency: "USD",
+    };
+    await axiosInstance.post("/api/order", body);
   };
 
   const handlePayment = async (token) => {
@@ -38,7 +63,7 @@ const Checkout = () => {
         idempotencyKey: `${Date.now()}_${Math.floor(100 + Math.random() * 900)}`,
       };
     */
-   debugger
+    debugger
     const body = {
       sourceId: token,
       amountMoney: {
@@ -245,7 +270,9 @@ const Checkout = () => {
               </div>
             )}
           </div>
-          <input className={checkout_styles.checkout__left__form__submit} type="submit" value="Place Order" />
+          {!paymentMethodCard && (
+            <input className={checkout_styles.checkout__left__form__submit} type="submit" value="Place Order" />
+          )}
         </form>
       </div>
       <div className={checkout_styles.checkout__right}>

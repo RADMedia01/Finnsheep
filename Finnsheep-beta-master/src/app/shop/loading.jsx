@@ -4,7 +4,7 @@ import React from 'react'
 const Loading = () => {
   return (
     <div className=' h-[85vh] flex flex-col items-center justify-center gap-4'>
-             <div role="status">
+      <div role="status">
         <svg
           aria-hidden="true"
           className="inline w-10 h-10 text-neutral-200 animate-spin dark:text-neutral-600 fill-neutral-600 dark:fill-neutral-300"
@@ -22,9 +22,9 @@ const Loading = () => {
           />
         </svg>
         <span className="sr-only">Loading...</span>
-       
-    </div>
-        <span className="text-sm text-gray-700">Loading... Please Wait!</span>
+
+      </div>
+      <span className="text-sm text-gray-700">Loading... Please Wait!</span>
     </div>
   )
 }

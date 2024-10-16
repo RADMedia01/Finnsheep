@@ -119,7 +119,7 @@ const CartProduct = ({ product }) => {
                   />
                   <path
                     d="M16.5 11H5.5"
-                    stroke-opacity="0.2"
+                    strokeOpacity="0.2"
                     strokeWidth="1.6"
                     strokeLinecap="round"
                   />
@@ -150,7 +150,7 @@ const CartProduct = ({ product }) => {
                   />
                   <path
                     d="M11 5.5V16.5M16.5 11H5.5"
-                    stroke-opacity="0.2"
+                    strokeOpacity="0.2"
                     strokeWidth="1.6"
                     strokeLinecap="round"
                   />

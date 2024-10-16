@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -14,13 +14,23 @@ import 'swiper/css/thumbs';
 // import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
-const ImagesComponent = () => {
-  
-    
-  
-
+const ImagesComponent = ({ otherImages }) => {
 
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  console.log(otherImages)
+
+  const [images, setImages] = useState([]);
+
+  // otherImages value might be undefined at first and then it will be updated
+
+  useEffect(() => {
+    if (otherImages) {
+      console.log("Updating images", otherImages);
+      setImages(otherImages);
+      console.log("Images updated", images);
+    }
+  }, [otherImages]);
+
 
   return (
     <div className=''>
@@ -36,36 +46,15 @@ const ImagesComponent = () => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper h-80 mb-4"
       >
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" alt="Nature 1" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" alt="Nature 2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" alt="Nature 3" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-4.jpg" alt="Nature 4" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-5.jpg" alt="Nature 5" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-6.jpg" alt="Nature 6" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-7.jpg" alt="Nature 7" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-8.jpg" alt="Nature 8" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-9.jpg" alt="Nature 9" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-10.jpg" alt="Nature 10" />
-        </SwiperSlide>
+        {
+          Array(images).map(
+            (item, index) => (
+              <SwiperSlide key={index}>
+                <img src={item?.image} alt={`Nature ${index}`} />
+              </SwiperSlide>
+            )
+          )
+        }
       </Swiper>
 
       <Swiper
@@ -78,40 +67,19 @@ const ImagesComponent = () => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper "
       >
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" alt="Nature 1 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" alt="Nature 2 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" alt="Nature 3 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-4.jpg" alt="Nature 4 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-5.jpg" alt="Nature 5 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-6.jpg" alt="Nature 6 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-7.jpg" alt="Nature 7 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-8.jpg" alt="Nature 8 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-9.jpg" alt="Nature 9 Thumbnail" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-10.jpg" alt="Nature 10 Thumbnail" />
-        </SwiperSlide>
+        {
+          Array(images).map(
+            (item, index) => (
+              <SwiperSlide key={index}>
+                <img src={item?.image} alt={`Nature ${index}`} />
+              </SwiperSlide>
+            )
+          )
+        }
       </Swiper>
     </div>
   );
-}
+};
 
 
 export default ImagesComponent
