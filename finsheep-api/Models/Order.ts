@@ -9,19 +9,19 @@ import { AddressSchema } from "./Users";
 
 
 const OrderSchema=new mongoose.Schema({
-    id:{type:String},
-    userId:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
-    items:[{        
-            productId:{type:Schema.ObjectId, ref : "product"},
-            productVariationId: {type:mongoose.Schema.Types.ObjectId,ref:'ProductVariation'},
-            quantity:{
-              type:Number,
-              default:1
-            },   
-    }],
-    deliveryCharges:{type:Number},
-    subTotal:{type:Number},
-    total:{type:Number},
+    id: { type: String },
+    _id: { type: String },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    items: [
+        {
+        productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+        productVariationId: { type: Schema.Types.ObjectId, ref: 'ProductVariation' },
+        quantity: { type: Number, default: 1, min: 1 }
+        }
+    ],
+    deliveryCharges: { type: Number, default: 0 },
+    subTotal: { type: Number, required: true },
+    total: { type: Number, required: true },
     shippingAddress:AddressSchema,
     paymentMethod:{type:Joi.string()},
     paymentStatus:{type:Joi.string(),default:PaymentStatus.Pending},

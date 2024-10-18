@@ -22,6 +22,23 @@ export function CalculateOrderTotalPrice(order:any){
     return order.total;
 }
 
+// export async function CalculateOrderTotalPrice(order:any) {
+//   let subTotal = 0;
+
+//   for (const element of order.items) {
+//     const curProduct = await Product.findById(element.productId);
+//     if (curProduct) {
+//       subTotal += curProduct.price * element.quantity;
+//     }
+//   }
+
+//   order.subTotal = subTotal;  // Ensure it's a number, not an object
+//   order.deliveryCharges = subTotal > 150 ? 0 : 4;
+//   order.total = order.subTotal + order.deliveryCharges;
+
+//   return order.total;
+// }
+
 let CreateOrder=async (req:Request, res:Response) => {
     //calculate total cost of order
 
@@ -40,10 +57,7 @@ let CreateOrder=async (req:Request, res:Response) => {
       //create order 
       let model=await Order.create({
         total:req.body.total,
-        subTotal:{
-          tax:taxCost,
-          itemCost:subTotal
-        },
+        subTotal:req.body.subTotal,
         deliveryCharges:shippingCost,
         items:req.body.items,
         userId:req.body.userId,

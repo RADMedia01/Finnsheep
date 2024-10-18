@@ -13,7 +13,7 @@ orderRouter.post('/',CreateOrder)
 orderRouter.get('/all',GetAllOrders)
 orderRouter.get('/my/:id',GetUserOrders)
 orderRouter.get('/cancel/:id',CancelOrder)
-orderRouter.get('/box',ChooseBoxForOrder)
+orderRouter.post('/box',ChooseBoxForOrder)
 orderRouter.get('/summary', GetOrderSummary)
 
 export default orderRouter
