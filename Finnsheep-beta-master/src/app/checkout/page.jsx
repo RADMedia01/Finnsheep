@@ -5,6 +5,7 @@ import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
 import axiosInstance from "@/utils/axiosInstance";
 
 const Checkout = () => {
+  debugger;
   const [cart, setCart] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -18,6 +19,7 @@ const Checkout = () => {
   const [paymentMethodCard, setPaymentMethodCard] = useState(true);
 
   useEffect(() => {
+    debugger;
     const cart = JSON.parse(localStorage.getItem("cartState")).cart.items;
     setCart(cart);
   }, []);

@@ -7,11 +7,21 @@ import { useAppSelector } from '@/lib/store/hooks'
 import Link from 'next/link'
 import OrderSummary from '../ui/cart/orderSummary'
 import axiosInstance from '@/utils/axiosInstance'
+import "./cart.css"
 
 const CartPage = () => {
   const [products, setProducts] = useState();
   const cartItems = useAppSelector((state) => state.cart.items);
-  const [box, setBox] = useState({});
+  const [box, setBox] = useState([{
+    "type": "Large",
+    "length": 19.5,
+    "width": 11.5,
+    "height": 11.5,
+    "price": 5,
+    "volume": 2578
+  }]);
+  const [boxSelected, setBoxSelected] = useState(true);
+  const [boxPrice, setBoxPrice] = useState(0);
 
   useEffect(() => {
     // Ensure client-side data is used
@@ -28,12 +38,21 @@ const CartPage = () => {
         cartItems: transformedCart,
       }
       const boxResponse = axiosInstance.post("/api/order/box", body);
-      setBox(boxResponse.data);
+      setBox(boxResponse.data.data);
       console.log("boxResponse", boxResponse.data);
       console.log("box", box);
     };
     fetchBox();
   }, [cartItems]);
+
+  useEffect(() => {
+    // Calculate price by summing up price of all box types
+    let price = 0;
+    box.forEach(boxType => {
+      price += boxType.price;
+    });
+    setBoxPrice(price);
+  }, [box]);
 
 
   const handlePayment = async () => {
@@ -124,6 +143,12 @@ const CartPage = () => {
                   </div>
                 </div>
                 <CartProducts />
+                {/* Checkbox */}
+                <div className="box__container">
+                  <input type="checkbox" id="box" className="box__input" checked={boxSelected} onChange={() => setBoxSelected(!boxSelected)} />
+                  <img src="/box.jpeg" alt="box" className="box__img" />
+                  <label htmlFor="box" className="box__label">Rent a cooler box for this order<br />For just ${boxPrice}</label>
+                </div>
 
 
 
@@ -131,7 +156,7 @@ const CartPage = () => {
 
 
               </div>
-              <OrderSummary />
+              <OrderSummary boxSelected={boxSelected} box={box} />
 
             </div>
           </div>

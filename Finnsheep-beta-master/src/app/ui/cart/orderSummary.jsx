@@ -2,10 +2,11 @@
 import { useAppSelector } from '@/lib/store/hooks';
 import { useSelector } from 'react-redux';
 import React, { useMemo, useEffect, useState } from 'react';
-import { redirect } from 'next/navigation';
+// Redirect to another page using next/router
 
-const OrderSummary = () => {
+import { useRouter } from 'next/navigation';
 
+const OrderSummary = ({ boxSelected, box }) => {
 
   const cartItems = useAppSelector((state) => state.cart.items);
   // const cartItems = useSelector((state) => state.cart.items);
@@ -17,6 +18,8 @@ const OrderSummary = () => {
     total: 0,
   });
 
+  const router = useRouter();
+
   useEffect(() => {
     const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
     const subtotal = cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
@@ -27,6 +30,15 @@ const OrderSummary = () => {
   }, [cartItems]);
 
   const { itemCount, subtotal, deliveryCharges, total } = clientState;
+
+  const handleCheckoutClick = () => {
+    debugger;
+    localStorage.setItem("boxSelected", boxSelected);
+    localStorage.setItem("box", JSON.stringify(box));
+    debugger;
+    router.push("/checkout");
+    debugger;
+  };
 
   return (
     <div className="col-span-12 xl:col-span-4 bg-gradient-to-tr from-blue-50 to-blue-50 w-full max-xl:px-6 max-w-3xl xl:max-w-lg mx-auto lg:px-8 py-14 sticky top-0">
@@ -76,7 +88,7 @@ const OrderSummary = () => {
             <p className="font-medium text-xl leading-8 text-black">Total</p>
             <p className="font-semibold text-xl leading-8 text-blue-600">${total.toFixed(2)}</p>
           </div>
-          <button onClick={() => redirect('/checkout')} className="w-full text-center bg-blue-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-blue-700">
+          <button onClick={handleCheckoutClick} className="w-full text-center bg-blue-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-blue-700">
             Checkout
           </button>
         </form>
